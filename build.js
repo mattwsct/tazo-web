@@ -5,19 +5,24 @@ const baseURL = 'https://tazo.wtf';
 const linksPath = path.join(__dirname, 'links.json');
 const srcDir = path.join(__dirname, 'src');
 const outputDir = path.join(__dirname, 'public');
+const heroPath = path.join(__dirname, 'src/partials/hero.html');
+const indexTemplatePath = path.join(__dirname, 'src/index.template.html');
 
-// Recursively copy folders
+// Load hero partial
+const hero = fs.readFileSync(heroPath, 'utf-8');
+
+// Copy folders recursively
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
-
   for (const item of fs.readdirSync(src)) {
     const srcPath = path.join(src, item);
     const destPath = path.join(dest, item);
     const stat = fs.statSync(srcPath);
-
-    stat.isDirectory()
-      ? copyDir(srcPath, destPath)
-      : fs.copyFileSync(srcPath, destPath);
+    if (stat.isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else if (item !== 'index.template.html') {
+      fs.copyFileSync(srcPath, destPath);
+    }
   }
 }
 
@@ -25,14 +30,20 @@ function copyDir(src, dest) {
 if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir);
 
-// Copy everything from src/
+// Copy all static files from src/ (except index.template.html)
 copyDir(srcDir, outputDir);
 console.log('Copied src/ into public/');
+
+// Generate homepage index.html with hero injected
+const indexTemplate = fs.readFileSync(indexTemplatePath, 'utf-8');
+const indexFinal = indexTemplate.replace('<!-- {{hero}} -->', hero);
+fs.writeFileSync(path.join(outputDir, 'index.html'), indexFinal);
+console.log('Built index.html');
 
 // Read and parse links.json
 const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
 
-// Generate redirect pages
+// Generate redirect pages with injected hero
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
   const filepath = path.join(folder, 'index.html');
@@ -64,15 +75,7 @@ links.forEach(link => {
   </head>
 
   <body class="min-h-screen flex flex-col bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-    <section class="relative min-h-[288px] py-12 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]"></div>
-      <div class="absolute inset-0 bg-black/60"></div>
-      <div class="relative z-10 flex flex-col items-center justify-center h-full">
-        <img src="${baseURL}/assets/images/profile.jpg" alt="Tazo avatar" class="w-24 h-24 rounded-full shadow-md object-cover" />
-        <h1 class="text-4xl uppercase mt-3 drop-shadow-md" style="font-family: 'Bebas Neue', sans-serif;">Tazo</h1>
-        <p class="text-zinc-300 text-sm">Livestreamer from Australia</p>
-      </div>
-    </section>
+    ${hero}
 
     <div class="flex flex-col items-center justify-center text-center py-12 px-4">
       <p class="text-lg">Redirecting to <strong>${link.title}</strong>…</p>
@@ -94,7 +97,7 @@ links.forEach(link => {
   console.log(`Built /${link.id}/index.html`);
 });
 
-// robots.txt
+// Generate robots.txt
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
 fs.writeFileSync(
   path.join(outputDir, 'robots.txt'),
@@ -102,6 +105,6 @@ fs.writeFileSync(
 );
 console.log('Built robots.txt');
 
-// Copy links.json to public/
+// Copy links.json
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
 console.log('Copied links.json to /public/');
