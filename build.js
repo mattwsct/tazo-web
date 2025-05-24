@@ -44,18 +44,18 @@ console.log('Copied static files into public/');
 
 // 2. Homepage
 const indexMeta = `
-  <title>Tazo | IRL Streamer from Japan</title>
+  <title>Tazo | Livestreamer from Australia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tazo is a livestreamer based in Tokyo, Japan — streaming on Kick, Twitch, and more as HyperTazo." />
+  <meta name="description" content="Tazo is a livestreamer from Australia — live on Kick, Twitch, and more as HyperTazo." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Tazo" />
-  <meta property="og:title" content="Tazo | IRL Streamer from Japan" />
-  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — IRL content, Japan travel, livestreams, and more." />
+  <meta property="og:title" content="Tazo | Livestreamer from Australia" />
+  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — IRL content, global travel, livestreams, and more." />
   <meta property="og:image" content="${baseURL}/assets/images/profile.jpg" />
   <meta property="og:url" content="${baseURL}/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tazo | IRL Streamer from Japan" />
-  <meta name="twitter:description" content="Streaming live on Kick & Twitch — HyperTazo explores Japan, Asia, and the world." />
+  <meta name="twitter:title" content="Tazo | Livestreamer from Australia" />
+  <meta name="twitter:description" content="Streaming live on Kick & Twitch — HyperTazo explores Australia, Asia, and beyond." />
   <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg" />
 `;
 const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
