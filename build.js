@@ -63,7 +63,7 @@ const indexHTML = `<!DOCTYPE html>
             a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ${link.bg} transition hover:scale-105`;
             a.innerHTML = `
               ${link.icon ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" loading="lazy" alt="${link.icon} logo" />` : ''}
-              <span id="${link.icon ? `${link.icon}-lbl` : ''}">${link.title}</span>
+              <span${link.icon ? ` id="${link.icon}-lbl"` : ''}>${link.title}</span>
             `;
             linksEl.appendChild(a);
           });
