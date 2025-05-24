@@ -11,7 +11,8 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['"Space Grotesk"', 'sans-serif'],
+              sans: ['Inter', 'sans-serif'],
+              display: ['"Bebas Neue"', 'sans-serif'],
             },
             colors: {
               accent: '#00ffe0',
@@ -29,7 +30,7 @@
         },
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
   </head>
   <body class="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 text-white font-sans">
     <!-- Hero / Profile Section -->
@@ -39,8 +40,9 @@
       <div class="relative z-10 flex flex-col items-center justify-center h-full">
         <img src="/profile.jpg"
              class="rounded-full w-28 h-28 border-4 border-white shadow-md object-cover" alt="Tazo profile" />
-        <h1 class="text-3xl font-bold mt-4">Tazo</h1>
-        <p class="text-zinc-300 text-sm">IRL Streamer from the Gold Coast, Australia 💚</p>
+        <h1 class="text-5xl font-display font-bold mt-4 tracking-wide uppercase text-white drop-shadow-md">Tazo</h1>
+        <p class="text-zinc-300 text-base font-normal mt-1">IRL livestreamer from Australia</p>
+<p class="text-zinc-400 text-sm font-light">Follow the chaos. Streams from streets to skies.</p>
       </div>
     </div>
 
@@ -62,17 +64,17 @@
     let isTwitchLive = false;
 
     const allLinks = [
-  { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-[#43d314] hover:opacity-90 text-white" },
-  { name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-[#772ce8] hover:opacity-90 text-white""bg-[#9146FF] hover:bg-[#772ce8] border-[#772ce8]" },
-  { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-[#cc0000] hover:opacity-90 text-white""bg-[#FF0000] hover:bg-[#cc0000] border-[#cc0000]" },
-  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-white" },
-  { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-white" },
-  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-white" },
-  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-[#4752c4]" },
-  { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "handshake", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-[#219ac9] hover:opacity-90 text-white""bg-[#29abe0] hover:bg-[#219ac9] border-[#219ac9]" },
-  { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-[#cc7a00]" },
-  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-[#00246b] hover:opacity-90 text-white""bg-[#003087] hover:bg-[#00246b] border-[#00246b]" },
-  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "cog", class: "bg-zinc-800 hover:bg-zinc-700 border-zinc-600" },
+  { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-[#43d314] hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-[#772ce8] hover:scale-105 hover:opacity-90 text-white" },
+  { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-[#cc0000] hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-white hover:scale-105" },
+  { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-white text-white hover:scale-105" },
+  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-white text-white hover:scale-105" },
+  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-[#4752c4] text-white hover:scale-105" },
+  { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "handshake", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-[#219ac9] hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-[#cc7a00] text-white hover:scale-105" },
+  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-[#00246b] hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "cog", class: "bg-zinc-800 hover:bg-zinc-700 border-zinc-600 text-white hover:scale-105" },
 ];
 
     fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
