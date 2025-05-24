@@ -1,65 +1,119 @@
 <!DOCTYPE html>
 <html lang="en" class="min-h-full text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tazo | Livestreamer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Tazo – live on Kick & Twitch" />
+    <meta name="author" content="Tazo" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="og:title" content="Tazo | Livestreamer" />
+    <meta property="og:description" content="IRL & gaming streams on Kick and Twitch" />
+    <meta property="og:image" content="https://tazo.wtf/assets/images/profile.jpg" />
+    <meta property="og:url" content="https://tazo.wtf/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/assets/images/profile.jpg" />
+    <link rel="preload" as="image" href="/assets/images/profile.jpg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Tazo | Livestreamer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Tazo – live on Kick & Twitch" />
-  <meta name="author" content="Tazo" />
-  <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Tazo | Livestreamer" />
-  <meta property="og:description" content="IRL & gaming streams on Kick and Twitch" />
-  <meta property="og:image" content="https://tazo.wtf/assets/images/profile.jpg" />
-  <meta property="og:url" content="https://tazo.wtf/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/assets/images/profile.jpg" />
-  <link rel="preload" as="image" href="/assets/images/profile.jpg" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap"
-    rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @keyframes gradientShift {
+  <body class="min-h-full">
+    <!-- Hero -->
+    <section class="relative h-72 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]"></div>
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="relative z-10 flex flex-col items-center justify-center h-full">
+        <img src="/assets/images/profile.jpg" alt="Tazo livestreamer profile photo" decoding="async" class="w-28 h-28 rounded-full shadow-md object-cover" fetchpriority="high" />
+        <h1 class="text-5xl uppercase mt-4 drop-shadow-md" style="font-family: 'Bebas Neue', sans-serif;">Tazo</h1>
+        <p class="text-zinc-300">Livestreamer from Australia</p>
+      </div>
+    </section>
 
-      0%,
-      100% {
-        background-position: 0% 50%;
+    <!-- Stream Embed -->
+    <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4"></div>
+
+    <!-- Links -->
+    <div class="py-8">
+      <div class="max-w-screen-md mx-auto px-3 sm:px-4">
+        <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+      </div>
+    </div>
+
+    <script defer>
+      const kickUser = 'tazo', twitchUser = 'tazo';
+      const streamEl = document.getElementById('stream');
+      const linksEl = document.getElementById('links');
+      let currentPlatform = null;
+
+      fetch('/links.json')
+        .then(res => res.json())
+        .then(links => {
+          links.filter(l => l.showOnHomepage).forEach(link => {
+            const icon = link.icon
+              ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
+              : `<span>${link.title}</span>`;
+            const a = document.createElement('a');
+            a.href = '/' + link.id;
+            a.target = '_blank';
+            a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition-transform duration-150 ease-out hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`;
+            a.innerHTML = icon;
+            linksEl.appendChild(a);
+          });
+        });
+
+      const markLive = id => {
+        const lbl = document.getElementById(id + '-lbl');
+        if (lbl && !lbl.innerHTML.includes('●')) {
+          lbl.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
+        }
+      };
+
+      const setIframe = src => {
+        streamEl.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.className = 'w-full aspect-video rounded-xl shadow-lg';
+        iframe.allowFullscreen = true;
+        iframe.loading = 'lazy';
+        streamEl.appendChild(iframe);
+      };
+
+      async function checkLive() {
+        let kickLive = false, twitchLive = false;
+
+        try {
+          const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
+          kickLive = !!(await res.json()).livestream;
+          if (kickLive) markLive('kick');
+        } catch {}
+
+        try {
+          const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
+          twitchLive = text.toLowerCase().includes('is live');
+          if (twitchLive) markLive('twitch');
+        } catch {}
+
+        if (kickLive && currentPlatform !== 'kick') {
+          setIframe(`https://kick.com/embed/${kickUser}?muted=true&chatEnabled=false`);
+          currentPlatform = 'kick';
+        } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
+          setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
+          currentPlatform = 'twitch';
+        } else if (!kickLive && !twitchLive && currentPlatform) {
+          streamEl.innerHTML = '';
+          currentPlatform = null;
+        }
       }
 
-      50% {
-        background-position: 100% 50%;
-      }
-    }
-  </style>
-</head>
-
-
-<body class="min-h-full">
-  <!-- Hero -->
-  <section class="relative h-72 overflow-hidden">
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]">
-    </div>
-    <div class="absolute inset-0 bg-black/60"></div>
-    <div class="relative z-10 flex flex-col items-center justify-center h-full">
-      <img src="/assets/images/profile.jpg" alt="Tazo avatar" decoding="async"
-        class="w-28 h-28 rounded-full shadow-md object-cover" />
-      <h1 class="text-5xl uppercase mt-4 drop-shadow-md" style="font-family: 'Bebas Neue', sans-serif;">Tazo</h1>
-      <p class="text-zinc-300">Livestreamer from Australia</p>
-    </div>
-  </section>
-
-  <!-- Stream Embed -->
-  <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4"></div>
-
-  <!-- Links -->
-  <div class="py-10">
-    <div class="max-w-screen-md mx-auto px-3 sm:px-4">
-      <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-    </div>
-  </div>
-
-  <script defer src="/js/main.js"></script>
-</body>
-
+      checkLive();
+      setInterval(checkLive, 60000);
+    </script>
+  </body>
 </html>
