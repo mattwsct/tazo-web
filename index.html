@@ -64,16 +64,16 @@
 
     const allLinks = [
   { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-white hover:scale-105" },
-  { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-white text-white hover:scale-105" },
-  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-white text-white hover:scale-105" },
-  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-transparent text-white hover:scale-105" },
+  { name: "Twitch (Live)", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-transparent hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "streamelements", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-transparent hover:scale-105 hover:opacity-90 text-white" },
   { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "kofi", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-transparent hover:scale-105 hover:opacity-90 text-white" },
+  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-transparent hover:scale-105" },
+  { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-transparent hover:scale-105 hover:opacity-90 text-white" },
+  { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-transparent text-white hover:scale-105" },
+  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-transparent text-white hover:scale-105" },
+  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-transparent text-white hover:scale-105" },
   { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-transparent text-white hover:scale-105" },
-  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "tool", class: "bg-zinc-800 hover:bg-zinc-700 border-transparent text-white hover:scale-105" },
+  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "kit", class: "bg-zinc-800 hover:bg-zinc-700 border-transparent text-white hover:scale-105" },
 ];
 
     fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
@@ -133,7 +133,7 @@
         const a = document.createElement("a");
         a.href = link.href;
         a.target = "_blank";
-        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border transition flex items-center justify-center gap-2 flex-wrap ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
+        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border transition flex items-center justify-center gap-2 flex-wrap outline-none shadow-none ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
 
         const img = document.createElement("img");
         img.src = `https://cdn.simpleicons.org/${link.icon}/FFFFFF`;
