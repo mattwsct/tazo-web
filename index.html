@@ -62,9 +62,8 @@
     let isKickLive = false;
     let isTwitchLive = false;
 
-    const allLinks = [
+    const allLinksMaster = [
   { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  
   { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-transparent hover:scale-105 hover:opacity-90 text-white" },
   { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "kofi", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-transparent hover:scale-105 hover:opacity-90 text-white" },
   { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-transparent hover:scale-105" },
@@ -73,7 +72,7 @@
   { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-transparent text-white hover:scale-105" },
   { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-transparent text-white hover:scale-105" },
   { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-transparent text-white hover:scale-105" },
-  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "kit", class: "bg-zinc-800 hover:bg-zinc-700 border-transparent text-white hover:scale-105" },
+  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "kit", class: "bg-zinc-800 hover:bg-zinc-700 border-transparent text-white hover:scale-105" }
 ];
 
     fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
@@ -93,9 +92,9 @@
       const iframe = document.createElement("iframe");
       iframe.src = `https://kick.com/embed/${kickUsername}?muted=true&chatEnabled=false`;
       iframe.width = "100%";
-      iframe.height = "480";
+      iframe.className = "rounded-xl shadow-lg aspect-video w-full";
       iframe.allowFullscreen = true;
-      iframe.className = "rounded-xl shadow-lg";
+      
       container.appendChild(iframe);
     }
 
@@ -129,13 +128,14 @@
       const iframe = document.createElement("iframe");
       iframe.src = `https://player.twitch.tv/?channel=${twitchUsername}&parent=${location.hostname}&muted=true&chat=false`;
       iframe.width = "100%";
-      iframe.height = "480";
+      iframe.className = "rounded-xl shadow-lg aspect-video w-full";
       iframe.allowFullscreen = true;
       iframe.className = "rounded-xl shadow-lg";
       container.appendChild(iframe);
     }
 
     function renderLinks() {
+  const allLinks = [...allLinksMaster];
   if (!isTwitchLive) {
     allLinks.unshift({ name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-transparent hover:scale-105 hover:opacity-90 text-white" });
   } else {
@@ -165,13 +165,13 @@
           wrapper.className = "flex items-center gap-2";
           wrapper.appendChild(dot);
           wrapper.appendChild(label);
-          span.replaceWith(wrapper);
+          a.appendChild(wrapper);
         } else {
           span.textContent = link.name;
         }
 
         a.appendChild(img);
-        a.appendChild(span);
+        if (span) a.appendChild(span);
         linkSection.appendChild(a);
       });
     }
