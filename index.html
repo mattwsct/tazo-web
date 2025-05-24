@@ -17,18 +17,18 @@
       theme: {
         extend: {
           colors: {
-            accent: '#22d3ee' // cyan-400
+            accent: '#22d3ee'
           }
         }
       }
     };
   </script>
   <style>
-    .border-accent {
-      border-color: #22d3ee;
-    }
-    .hover\:bg-accent:hover {
-      background-color: #22d3ee;
+    html { font-family: 'Inter', sans-serif; }
+    .icon {
+      width: 20px;
+      height: 20px;
+      display: block;
     }
   </style>
 </head>
@@ -106,9 +106,19 @@
         const container = document.getElementById("link-section");
         links.filter(link => link.showOnHomepage).forEach(link => {
           const a = document.createElement("a");
-          a.href = `/${link.id}`;
-          a.className = "bg-zinc-800 hover:bg-accent text-white py-3 px-5 rounded-xl text-center font-semibold transition flex items-center justify-center gap-2";
-          a.innerHTML = `<span>${link.title}</span>`;
+          a.href = link.url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.title = link.description;
+          const gradient = link.bg ? `bg-gradient-to-r ${link.bg}` : 'bg-zinc-900 hover:bg-accent hover:text-black';
+          a.className = `${gradient} text-white py-3 px-5 rounded-xl text-center font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-105`;
+
+          const iconName = link.icon.toLowerCase().replace(" ", "");
+          const iconURL = `https://cdn.simpleicons.org/${iconName}/ffffff`;
+
+          const iconHTML = `<img src="${iconURL}" alt="${link.icon} logo" class="icon" />`;
+          a.innerHTML = `${iconHTML}<span>${link.title}</span>`;
+
           container.appendChild(a);
         });
       })

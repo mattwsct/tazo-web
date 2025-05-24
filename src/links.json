@@ -2,50 +2,82 @@
   {
     "id": "kick",
     "url": "https://kick.com/tazo",
-    "title": "Watch Tazo on Kick",
+    "title": "Watch on Kick",
     "description": "Tazo is live on Kick — tune in!",
-    "showOnHomepage": true
+    "icon": "kick",
+    "showOnHomepage": true,
+    "bg": "from-green-500 to-green-700"
   },
   {
     "id": "twitch",
     "url": "https://twitch.tv/tazo",
-    "title": "Watch Tazo on Twitch",
+    "title": "Watch on Twitch",
     "description": "Streaming IRL and variety content",
-    "showOnHomepage": true
+    "icon": "twitch",
+    "showOnHomepage": true,
+    "bg": "from-purple-500 to-indigo-600"
+  },
+  {
+    "id": "youtube",
+    "url": "https://youtube.com/@HyperTazo",
+    "title": "YouTube VODs",
+    "description": "Watch Tazo’s content archive",
+    "icon": "youtube",
+    "showOnHomepage": true,
+    "bg": "from-red-500 to-red-700"
+  },
+  {
+    "id": "instagram",
+    "url": "https://instagram.com/HyperTazo",
+    "title": "Instagram",
+    "description": "Behind the scenes, reels, and more",
+    "icon": "instagram",
+    "showOnHomepage": true,
+    "bg": "from-pink-500 via-red-500 to-yellow-500"
+  },
+  {
+    "id": "twitter",
+    "url": "https://twitter.com/HyperTazo",
+    "title": "Twitter / X",
+    "description": "Latest updates and memes",
+    "icon": "x",
+    "showOnHomepage": true,
+    "bg": "from-sky-500 to-blue-700"
+  },
+  {
+    "id": "tiktok",
+    "url": "https://tiktok.com/@HyperTazo",
+    "title": "TikTok Shorts",
+    "description": "Watch short-form Tazo clips",
+    "icon": "tiktok",
+    "showOnHomepage": true,
+    "bg": "from-black to-fuchsia-600"
   },
   {
     "id": "discord",
     "url": "https://discord.gg/cEhQQR5WgY",
-    "title": "Join Tazo's Discord",
+    "title": "Join Discord",
     "description": "Be part of the Tazo community",
-    "showOnHomepage": true
+    "icon": "discord",
+    "showOnHomepage": true,
+    "bg": "from-indigo-500 to-indigo-800"
   },
   {
-    "id": "gear",
-    "url": "https://kit.co/HyperTazo/streaming-gear",
-    "title": "Tazo's Streaming Gear",
-    "description": "What I use to stream IRL and on the go",
-    "showOnHomepage": false
+    "id": "tips",
+    "url": "https://streamelements.com/tazo/tip",
+    "title": "Send a Tip",
+    "description": "Support the stream directly",
+    "icon": "cashapp",  
+    "showOnHomepage": true,
+    "bg": "from-yellow-400 to-yellow-600"
   },
   {
     "id": "wishlist",
-    "url": "https://amazon.jp/hz/wishlist/ls/2H67SISIKU69Y",
-    "title": "Tazo's Wishlist",
-    "description": "Support the stream — cool stuff I need",
-    "showOnHomepage": false
-  },
-  {
-    "id": "tts",
-    "url": "https://streamelements.com/tazo/tip",
-    "title": "Send a Tip",
-    "description": "Text-to-speech and direct support",
-    "showOnHomepage": true
-  },
-  {
-    "id": "parti",
-    "url": "https://parti.com/creator/parti/Tazo",
-    "title": "Tazo on Parti",
-    "description": "Streaming on Parti — when it happens",
-    "showOnHomepage": false
+    "url": "https://throne.com/tazo/wishlist",
+    "title": "Wishlist 🎁",
+    "description": "Spoil Tazo with something cool",
+    "icon": "amazon",
+    "showOnHomepage": true,
+    "bg": "from-rose-500 to-orange-500"
   }
 ]
