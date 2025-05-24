@@ -1,182 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" class="min-h-full overscroll-none bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Tazo is a livestreamer from Australia — live on Kick and Twitch." />
-    <title>Tazo | Livestreamer</title>
-    <!-- Social preview -->
-    <meta property="og:title" content="Tazo | Livestreamer" />
-    <meta property="og:description" content="Live on Kick and Twitch with IRL, gaming, and more." />
-    <meta property="og:image" content="https://tazo.wtf/profile.jpg" />
-    <meta property="og:url" content="https://tazo.wtf" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tazo | Livestreamer" />
-    <meta name="twitter:description" content="Live on Kick and Twitch with IRL, gaming, and more." />
-    <meta name="twitter:image" content="https://tazo.wtf/profile.jpg" />
-    <link rel="icon" href="/profile.jpg" type="image/jpeg">
-    <link rel="apple-touch-icon" href="/profile.jpg" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-$1
-});
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-  </head>
-  <body class="min-h-full bg-transparent text-white font-sans">
-    <!-- Hero / Profile Section -->
-    <div class="relative h-72 w-full overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] bg-[position:0%_50%] bg-no-repeat "></div>
-      <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-      <div class="relative z-10 flex flex-col items-center justify-center h-full animate-fade-in-up">
-        <img src="/profile.jpg"
-             class="rounded-full w-28 h-28 border-4 border-transparent shadow-md object-cover" alt="Tazo profile" />
-        <h1 class="text-5xl font-display font-bold mt-4 tracking-wide uppercase text-white drop-shadow-md">Tazo</h1>
-        <p class="text-zinc-300 text-base font-normal mt-1">Livestreamer from Australia</p>
-      </div>
+<html lang="en" class="min-h-full bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tazo | Livestreamer</title>
+  <meta name="description" content="Tazo – live on Kick & Twitch" />
+  <meta property="og:title" content="Tazo | Livestreamer" />
+  <meta property="og:description" content="IRL & gaming streams on Kick and Twitch" />
+  <meta property="og:image" content="https://tazo.wtf/profile.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/profile.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Bebas Neue','sans-serif']},colors:{accent:'#00ffe0'},animation:{fade:'fade .5s ease-out both'},keyframes:{fade:{'0%':{opacity:0,transform:'translateY(1rem)'},'100%':{opacity:1,transform:'translateY(0)'}}}}}};</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+</head>
+<body class="min-h-full text-white font-sans">
+  <!-- Hero -->
+  <section class="relative h-72 w-full overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%]"></div>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full animate-fade">
+      <img src="/profile.jpg" alt="Tazo" class="w-28 h-28 rounded-full shadow-md object-cover"/>
+      <h1 class="mt-4 text-5xl font-display uppercase drop-shadow-md">Tazo</h1>
+      <p class="text-zinc-300">Livestreamer from Australia</p>
     </div>
+  </section>
 
-    <!-- Stream Container -->
-    <div id="stream-container" class="w-full max-w-screen-md mx-auto mt-6 mb-6 px-4 animate-fade-in-up"></div>
-    <div id="twitch-indicator"></div>
+  <!-- Stream embed -->
+  <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4 animate-fade"></div>
 
-    <!-- Link Grid -->
-    <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-screen-md mx-auto mt-8 px-4 animate-fade-in-up">
-      <!-- Loading spinner -->
-      <div id="link-spinner" class="col-span-full flex justify-center py-8">
-        <svg class="animate-spin h-8 w-8 text-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-        </svg>
-      </div>
+  <!-- Links -->
+  <div class="max-w-screen-md mx-auto px-4 animate-fade">
+    <div id="spinner" class="flex justify-center py-10">
+      <svg class="w-8 h-8 animate-spin text-accent" viewBox="0 0 24 24" fill="none">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+        <path class="opacity-75" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor"/>
+      </svg>
     </div>
+    <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+  </div>
 
-    <script>
-    const kickUsername = "tazo";
-    const twitchUsername = "tazo";
-    const container = document.getElementById("stream-container");
-    const linkSection = document.getElementById("link-section");
-    const twitchIndicator = document.getElementById("twitch-indicator");
-
-    let isKickLive = false;
-    let isTwitchLive = false;
-
-    
-  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "Support on Ko-fi", href: "https://ko-fi.com/tazo", icon: "kofi", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-transparent hover:scale-105" },
-  { name: "YouTube", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-transparent hover:scale-105 hover:opacity-90 text-white" },
-  { name: "TikTok", href: "https://www.tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-transparent text-white hover:scale-105" },
-  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-transparent text-white hover:scale-105" },
-  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-transparent text-white hover:scale-105" },
-  { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-transparent text-white hover:scale-105" },
-  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "kit", class: "bg-zinc-800 hover:bg-zinc-700 border-transparent text-white hover:scale-105" }
-];
-
-    fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
-      .then(res => res.json())
-      .then(kickData => {
-        if (kickData.livestream) {
-          isKickLive = true;
-          embedKick();
-          checkTwitch("indicator");
-        } else {
-          checkTwitch("embed");
-        }
-      })
-      .catch(() => checkTwitch("embed"));
-
-    function embedKick() {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://kick.com/embed/${kickUsername}?muted=true&chatEnabled=false`;
-      iframe.width = "100%";
-      iframe.className = "rounded-xl shadow-lg aspect-video w-full";
-      iframe.allowFullscreen = true;
-      iframe.loading = "lazy";
-      
-      container.appendChild(iframe);
-    }
-
-    function checkTwitch(mode) {
-      fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUsername}`)
-        .then(res => res.json())
-        .then(twitchData => {
-          if (twitchData.stream) {
-            isTwitchLive = true;
-            if (mode === "embed") {
-              embedTwitch();
-            } else if (mode === "indicator") {
-              twitchIndicator.innerHTML = `
-              <div class="mt-4 flex justify-center">
-                <a href="https://twitch.tv/tazo" target="_blank" class="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#9146FF] to-[#772ce8] text-white font-semibold text-center hover:scale-105 transition">
-                  <img src="https://cdn.simpleicons.org/twitch/FFFFFF" class="w-5 h-5" alt="Twitch" />
-                  <span class="relative">
-                    <span class="absolute -left-3 top-1 w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                    🔴 Also live on Twitch
-                  </span>
-                </a>
-              </div>`;
-            }
-          }
-          renderLinks();
-        })
-        .catch(() => renderLinks());
-    }
-
-    function embedTwitch() {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://player.twitch.tv/?channel=${twitchUsername}&parent=${location.hostname}&muted=true&chat=false`;
-      iframe.width = "100%";
-      iframe.className = "rounded-xl shadow-lg aspect-video w-full";
-      iframe.allowFullscreen = true;
-      
-      container.appendChild(iframe);
-    }
-
-    function renderLinks() {
-        // remove spinner if present
-        const spin = document.getElementById('link-spinner');
-        if (spin) spin.remove();
-  const allLinks = [{ name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-transparent hover:scale-105 hover:opacity-90 text-white" }, ...allLinksMaster];
-  if (!isTwitchLive) {
-    allLinks.unshift({ name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-transparent hover:scale-105 hover:opacity-90 text-white" });
-  } else {
-    allLinks.unshift({ name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-transparent hover:scale-105 hover:opacity-90 text-white flex items-center gap-2" });
-  }
-  allLinks.forEach(link => {
-        
-
-        const a = document.createElement("a");
-        a.href = link.href;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border focus:outline-none focus:ring-2 focus:ring-accent/70 shadow-none transition duration-200 ease-in-out flex items-center justify-center gap-2 flex-wrap ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
-
-        const img = document.createElement("img");
-        img.src = `https://cdn.simpleicons.org/${link.icon}/FFFFFF`;
-        img.alt = link.name;
-        img.className = "w-5 h-5 shrink-0";
-        img.loading = "lazy";
-
-        const span = document.createElement("span");
-        span.textContent = link.name;
-        if ((link.id === "twitch" && isTwitchLive) || (link.id === "kick" && isKickLive)) {
-          const badge = document.createElement("span");
-          badge.textContent = " 🔴 Live";
-          badge.className = "text-red-500 font-semibold animate-pulse";
-          span.appendChild(badge);
-        }
-
-        a.appendChild(img);
-        a.appendChild(span);
-        linkSection.appendChild(a);
-      });
-    }
-  </script>
-  <div class="h-20"></div>
-  </body>
+<script>
+addEventListener('DOMContentLoaded',()=>{
+  const k='tazo', t='tazo', linksEl=$('#links'), spin=$('#spinner'), sEl=$('#stream');
+  let kLive=false, tLive=false;
+  const L=[
+    ['Kick',`https://kick.com/${k}`,'kick','from-[#53fc18] to-[#43d314]','kick'],
+    ['Twitch',`https://twitch.tv/${t}`,'twitch','from-[#9146FF] to-[#772ce8]','twitch'],
+    ['Tip / TTS','https://tip.tazo.wtf','paypal','from-[#003087] to-[#00246b]'],
+    ['Ko-fi','https://ko-fi.com/tazo','kofi','from-[#29abe0] to-[#219ac9]'],
+    ['Instagram','https://instagram.com/HyperTazo','instagram','from-pink-500 via-red-500 to-yellow-500'],
+    ['YouTube','https://youtube.com/@HyperTazo','youtube','from-[#FF0000] to-[#cc0000]'],
+    ['TikTok','https://www.tiktok.com/@HyperTazo','tiktok','bg-black hover:bg-zinc-800'],
+    ['Twitter / X','https://x.com/HyperTazo','x','bg-black hover:bg-zinc-800'],
+    ['Discord','https://discord.tazo.wtf','discord','bg-[#5865F2] hover:bg-[#4752c4]'],
+    ['Wishlist','https://wishlist.tazo.wtf','amazon','bg-[#FF9900] hover:bg-[#cc7a00]'],
+    ['Gear I Use','https://gear.tazo.wtf','kit','bg-zinc-800 hover:bg-zinc-700']
+  ];
+  fetch(`https://kick.com/api/v2/channels/${k}`).then(r=>r.json()).then(d=>{if(d.livestream){kLive=true;embed('kick');}}).finally(checkT);
+  function checkT(){fetch(`https://api.ivr.fi/v2/twitch/user/${t}`).then(r=>r.json()).then(d=>{if(d.stream){tLive=true;if(!kLive)embed('twitch');}}).finally(render);}  
+  function embed(p){const i=document.createElement('iframe');i.className='w-full aspect-video rounded-xl shadow-lg';i.loading='lazy';i.allowFullscreen=true;
+    i.src=p==='kick'?`https://kick.com/embed/${k}?muted=true&chatEnabled=false`:`https://player.twitch.tv/?channel=${t}&parent=${location.hostname}&muted=true&chat=false`;sEl.appendChild(i);}  
+  function render(){spin.remove();L.forEach(([n,h,ico,cls,id])=>{const a=document.createElement('a');a.href=h;a.target='_blank';a.rel='noopener noreferrer';a.className=`flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ${cls} transition hover:scale-105`;
+      const img=new Image();img.src=`https://cdn.simpleicons.org/${ico}/FFFFFF`;img.alt='';img.className='w-5 h-5';img.loading='lazy';a.appendChild(img);
+      const span=document.createElement('span');span.textContent=n;
+      if((id==='kick'&&kLive)||(id==='twitch'&&tLive))span.innerHTML+=' <span class="text-red-500 font-semibold animate-pulse">● Live</span>';
+      a.appendChild(span);linksEl.appendChild(a);});}
+  function $(q){return document.querySelector(q);} });
+</script>
+  <div class="h-12"></div>
+</body>
 </html>
