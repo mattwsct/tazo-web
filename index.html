@@ -97,90 +97,110 @@
 
     <!-- Main script ----------------------------------------------------->
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const kickUser = 'tazo';
-        const twitchUser = 'tazo';
+document.addEventListener('DOMContentLoaded', () => {
+  const kickUser = 'tazo';
+  const twitchUser = 'tazo';
+  const links = [
+    ['Kick', `https://kick.com/${kickUser}`, 'kick', 'from-[#53fc18] to-[#43d314]', 'kick'],
+    ['Twitch', `https://twitch.tv/${twitchUser}`, 'twitch', 'from-[#9146FF] to-[#772ce8]', 'twitch'],
+    ['Tip / TTS', 'https://tip.tazo.wtf', 'paypal', 'from-[#003087] to-[#00246b]'],
+    ['Ko-fi', 'https://ko-fi.com/tazo', 'kofi', 'from-[#29abe0] to-[#219ac9]'],
+    ['Discord', 'https://discord.tazo.wtf', 'discord', 'from-[#5865F2] to-[#4752c4]'],
+    ['YouTube', 'https://youtube.com/@HyperTazo', 'youtube', 'from-[#FF0000] to-[#cc0000]'],
+    ['Instagram', 'https://instagram.com/HyperTazo', 'instagram', 'from-pink-500 via-red-500 to-yellow-500'],
+    ['TikTok', 'https://www.tiktok.com/@HyperTazo', 'tiktok', 'from-[#25F4EE] to-[#FE2C55] hover:brightness-110'],
+    ['Twitter', 'https://x.com/HyperTazo', 'x', 'from-sky-500 to-sky-600 hover:brightness-110']
+  ];
 
-        const links = [
-          ['Kick',   `https://kick.com/${kickUser}`,   'kick',   'from-[#53fc18] to-[#43d314]', 'kick'],
-          ['Twitch', `https://twitch.tv/${twitchUser}`, 'twitch', 'from-[#9146FF] to-[#772ce8]', 'twitch'],
-          ['Tip / TTS','https://tip.tazo.wtf',          'paypal','from-[#003087] to-[#00246b]'],
-          ['Ko-fi',  'https://ko-fi.com/tazo',          'kofi',  'from-[#29abe0] to-[#219ac9]'],
-          ['Discord','https://discord.tazo.wtf',        'discord','from-[#5865F2] to-[#4752c4]'],
-          ['YouTube','https://youtube.com/@HyperTazo',  'youtube','from-[#FF0000] to-[#cc0000]'],
-          ['Instagram','https://instagram.com/HyperTazo','instagram','from-pink-500 via-red-500 to-yellow-500'],
-          ['TikTok','https://www.tiktok.com/@HyperTazo','tiktok','from-[#25F4EE] to-[#FE2C55] hover:brightness-110'],
-          ['Twitter','https://x.com/HyperTazo','x','from-sky-500 to-sky-600 hover:brightness-110']
-        ];
+  const linksEl = document.getElementById('links');
+  const streamEl = document.getElementById('stream');
+  let kickLive = false, twitchLive = false;
+  let kickEmbed = null, twitchEmbed = null;
 
-        const linksEl = document.getElementById('links');
-        const streamEl = document.getElementById('stream');
-        let kickLive = false,
-          twitchLive = false;
+  links.forEach(([name, href, icon, cls, id]) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ${cls} transition hover:scale-105`;
+    a.innerHTML = `<img src="https://cdn.simpleicons.org/${icon}/fff" class="w-5 h-5" loading="lazy" alt="" /><span id="${icon}-lbl">${name}</span>`;
+    linksEl.appendChild(a);
+  });
 
-        /* Render links immediately */
-        links.forEach(([name, href, icon, cls, id]) => {
-          const a = document.createElement('a');
-          a.href = href;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ${cls} transition hover:scale-105`;
-          a.innerHTML = `
-            <img src="https://cdn.simpleicons.org/${icon}/fff" class="w-5 h-5" loading="lazy" alt="" />
-            <span id="${icon}-lbl">${name}</span>
-          `;
-          linksEl.appendChild(a);
-        });
+  function markLive(id) {
+    const lbl = document.getElementById(`${id}-lbl`);
+    if (lbl && !lbl.innerHTML.includes('●')) {
+      lbl.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
+    }
+  }
 
-        /* Kick status */
-        fetch(`https://kick.com/api/v2/channels/${kickUser}`)
-          .then((r) => r.json())
-          .then((d) => {
-            if (d.livestream) {
-              kickLive = true;
-              markLive('kick');
-              embedKick();
-            }
-          })
-          .finally(checkTwitch);
+  function unmarkLive(id) {
+    const lbl = document.getElementById(`${id}-lbl`);
+    if (lbl) {
+      lbl.innerHTML = lbl.innerHTML.replace(/ <span class=\"text-red-500 animate-pulse\">●<\/span>/, '');
+    }
+  }
 
-        /* Twitch status */
-        function checkTwitch() {
-          fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUser}`)
-            .then((r) => r.json())
-            .then((d) => {
-              if (d.stream) {
-                twitchLive = true;
-                markLive('twitch');
-                if (!kickLive) embedTwitch();
+  function setIframe(src) {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.className = 'w-full aspect-video rounded-xl shadow-lg';
+    iframe.loading = 'lazy';
+    iframe.allowFullscreen = true;
+    return iframe;
+  }
+
+  function updateStreams() {
+    fetch(`https://kick.com/api/v2/channels/${kickUser}`)
+      .then(r => r.json())
+      .then(d => {
+        const live = !!d.livestream;
+        if (live && !kickLive) {
+          kickLive = true;
+          markLive('kick');
+          if (!kickEmbed) {
+            kickEmbed = setIframe(`https://kick.com/embed/${kickUser}?muted=true&chatEnabled=false`);
+            streamEl.innerHTML = '';
+            streamEl.appendChild(kickEmbed);
+          }
+        } else if (!live && kickLive) {
+          kickLive = false;
+          unmarkLive('kick');
+          if (kickEmbed) {
+            kickEmbed.remove();
+            kickEmbed = null;
+          }
+        }
+      })
+      .finally(() => {
+        fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUser}`)
+          .then(r => r.json())
+          .then(d => {
+            const live = !!d.stream;
+            if (live && !twitchLive && !kickLive) {
+              twitchLive = true;
+              markLive('twitch');
+              if (!twitchEmbed) {
+                twitchEmbed = setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
+                streamEl.innerHTML = '';
+                streamEl.appendChild(twitchEmbed);
               }
-            });
-        }
-
-        /* Helpers ------------------------------------------------------*/
-        function markLive(id) {
-          const lbl = document.getElementById(`${id}-lbl`);
-          if (lbl) lbl.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
-        }
-
-        function setIframe(src) {
-          const f = document.createElement('iframe');
-          f.src = src;
-          f.className = 'w-full aspect-video rounded-xl shadow-lg';
-          f.loading = 'lazy';
-          f.allowFullscreen = true;
-          streamEl.appendChild(f);
-        }
-        function embedKick() {
-          setIframe(`https://kick.com/embed/${kickUser}?muted=true&chatEnabled=false`);
-        }
-        function embedTwitch() {
-          setIframe(
-            `https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`
-          );
-        }
+            } else if (!live && twitchLive) {
+              twitchLive = false;
+              unmarkLive('twitch');
+              if (twitchEmbed) {
+                twitchEmbed.remove();
+                twitchEmbed = null;
+              }
+            }
+          });
       });
-    </script>
+  }
+
+  updateStreams();
+  setInterval(updateStreams, 60000);
+});
+</script>
 
     <div class="h-12"></div>
   </body>
