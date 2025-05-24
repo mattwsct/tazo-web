@@ -6,24 +6,12 @@
     <meta name="robots" content="noindex" />
     <title>404 – Page Not Found</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['"Bebas Neue"', 'sans-serif']
-            }
-          }
-        }
-      }
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
   <body class="flex flex-col items-center justify-center min-h-screen text-center px-4">
-    <h1 class="font-display text-6xl uppercase mb-6 drop-shadow-md">404</h1>
+    <h1 class="text-6xl uppercase mb-6 drop-shadow-md" style="font-family: 'Bebas Neue', sans-serif;">404</h1>
     <p class="text-lg text-zinc-400 mb-6">This page doesn’t exist.</p>
-    <a href="/" class="text-accent underline text-base hover:text-white">Return to tazo.wtf</a>
+    <a href="/" class="text-accent underline text-base hover:text-white transition">Return to tazo.wtf</a>
   </body>
 </html>
