@@ -20,9 +20,60 @@
     <p class="text-zinc-400">Livestreamer from Australia</p>
   </div>
 
+  <div id="stream-container" class="w-full max-w-3xl mx-auto px-4 mt-4"></div>
+  <div id="twitch-indicator" class="text-center mt-2"></div>
+
   <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4 pb-20"></div>
 
   <script>
+    const kickUsername = "tazo";
+    const twitchUsername = "tazo";
+
+    const streamContainer = document.getElementById("stream-container");
+    const indicator = document.getElementById("twitch-indicator");
+
+    function embedKick() {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://kick.com/embed/${kickUsername}?muted=true&chatEnabled=false`;
+      iframe.className = "rounded-xl shadow-md aspect-video w-full";
+      iframe.allowFullscreen = true;
+      streamContainer.appendChild(iframe);
+    }
+
+    function embedTwitch() {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://player.twitch.tv/?channel=${twitchUsername}&parent=${location.hostname}&muted=true&chat=false`;
+      iframe.className = "rounded-xl shadow-md aspect-video w-full";
+      iframe.allowFullscreen = true;
+      streamContainer.appendChild(iframe);
+    }
+
+    fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.livestream) {
+          embedKick();
+          checkTwitch("indicator");
+        } else {
+          checkTwitch("embed");
+        }
+      })
+      .catch(() => checkTwitch("embed"));
+
+    function checkTwitch(mode) {
+      fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUsername}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.stream) {
+            if (mode === "embed") {
+              embedTwitch();
+            } else {
+              indicator.innerHTML = `<a href='/twitch' class='text-red-500 font-semibold underline'>🔴 Also live on Twitch</a>`;
+            }
+          }
+        });
+    }
+
     fetch('/src/links.json')
       .then(res => res.json())
       .then(links => {
