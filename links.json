@@ -1,0 +1,92 @@
+[
+  {
+    "id": "kick",
+    "url": "https://kick.com/tazo",
+    "title": "Kick",
+    "description": "Watch Tazo on Kick",
+    "icon": "kick",
+    "showOnHomepage": true,
+    "bg": "from-[#53fc18] to-[#43d314]"
+  },
+  {
+    "id": "twitch",
+    "url": "https://twitch.tv/tazo",
+    "title": "Twitch",
+    "description": "Watch Tazo on Twitch",
+    "icon": "twitch",
+    "showOnHomepage": true,
+    "bg": "from-[#9146FF] to-[#772ce8]"
+  },
+  {
+    "id": "youtube",
+    "url": "https://youtube.com/@HyperTazo",
+    "title": "YouTube",
+    "description": "Tazo’s videos, shorts, and streams",
+    "icon": "youtube",
+    "showOnHomepage": true,
+    "bg": "from-[#FF0000] to-[#cc0000]"
+  },
+  {
+    "id": "instagram",
+    "url": "https://instagram.com/HyperTazo",
+    "title": "Instagram",
+    "description": "Photos, stories, and reels from Tazo",
+    "icon": "instagram",
+    "showOnHomepage": true,
+    "bg": "from-pink-500 via-red-500 to-yellow-500"
+  },
+  {
+    "id": "twitter",
+    "url": "https://x.com/HyperTazo",
+    "title": "Twitter / X",
+    "description": "Updates and posts from Tazo",
+    "icon": "x",
+    "showOnHomepage": true,
+    "bg": "from-sky-500 to-sky-600 hover:brightness-110"
+  },
+  {
+    "id": "tiktok",
+    "url": "https://www.tiktok.com/@HyperTazo",
+    "title": "TikTok",
+    "description": "Short clips and highlights",
+    "icon": "tiktok",
+    "showOnHomepage": true,
+    "bg": "from-[#25F4EE] to-[#FE2C55]"
+  },
+  {
+    "id": "discord",
+    "url": "https://discord.gg/cEhQQR5WgY",
+    "title": "Discord",
+    "description": "Join the Tazo community chat",
+    "icon": "discord",
+    "showOnHomepage": true,
+    "bg": "from-[#5865F2] to-[#4752c4]"
+  },
+  {
+    "id": "tips",
+    "url": "https://streamelements.com/tazo/tip",
+    "title": "Tips",
+    "description": "Send Tazo a direct tip",
+    "icon": "cashapp",
+    "showOnHomepage": true,
+    "bg": "from-yellow-400 to-yellow-600"
+  },
+  {
+    "id": "wishlist",
+    "url": "https://throne.com/tazo/wishlist",
+    "title": "Wishlist",
+    "description": "Send a gift to Tazo",
+    "icon": "amazon",
+    "showOnHomepage": true,
+    "bg": "from-rose-500 to-orange-500"
+  },
+  {
+    "id": "parti",
+    "url": "https://parti.com/creator/parti/Tazo",
+    "title": "Parti",
+    "description": "Watch Tazo on Parti",
+    "icon": "star",
+    "showOnHomepage": true,
+    "bg": "from-yellow-300 to-yellow-500"
+  }
+]
