@@ -1,58 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Tazo | IRL Streamer</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Space Grotesk"', 'sans-serif'],
-          },
-          colors: {
-            accent: '#00ffe0',
-          },
-          animation: {
-            gradient: 'gradientBG 6s ease infinite',
-          },
-          keyframes: {
-            gradientBG: {
-              '0%, 100%': { backgroundPosition: '0% 50%' },
-              '50%': { backgroundPosition: '100% 50%' },
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Tazo | IRL Streamer</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Space Grotesk"', 'sans-serif'],
+            },
+            colors: {
+              accent: '#00ffe0',
+            },
+            animation: {
+              gradient: 'gradientBG 6s ease infinite',
+            },
+            keyframes: {
+              gradientBG: {
+                '0%, 100%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+              },
             },
           },
         },
-      },
-    };
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-</head>
-<body class="bg-zinc-950 text-white font-sans">
-  <!-- Hero / Profile Section -->
-  <div class="relative h-72 w-full overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-gradient"></div>
-    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-    <div class="relative z-10 flex flex-col items-center justify-center h-full">
-      <img src="https://pbs.twimg.com/profile_images/1763153667551700992/oxm3W_t4_400x400.jpg"
-           class="rounded-full w-28 h-28 border-4 border-white shadow-md object-cover" alt="Tazo profile" />
-      <h1 class="text-3xl font-bold mt-4">Tazo</h1>
-      <p class="text-zinc-300 text-sm">IRL Streamer from the Gold Coast, Australia 💚</p>
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-zinc-950 text-white font-sans">
+    <!-- Hero / Profile Section -->
+    <div class="relative h-72 w-full overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-gradient"></div>
+      <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div class="relative z-10 flex flex-col items-center justify-center h-full">
+        <img src="/profile.jpg"
+             class="rounded-full w-28 h-28 border-4 border-white shadow-md object-cover" alt="Tazo profile" />
+        <h1 class="text-3xl font-bold mt-4">Tazo</h1>
+        <p class="text-zinc-300 text-sm">IRL Streamer from the Gold Coast, Australia 💚</p>
+      </div>
     </div>
-  </div>
 
-  <!-- Stream Embed -->
-  <div id="stream-container" class="w-full max-w-screen-md mx-auto mt-6 px-4"></div>
-  <div id="twitch-indicator" class="text-center text-red-500 font-semibold mt-2"></div>
+    <!-- Stream Container -->
+    <div id="stream-container" class="w-full max-w-screen-md mx-auto mt-6 px-4"></div>
+    <div id="twitch-indicator" class="text-center text-red-500 font-semibold mt-2"></div>
 
-  <!-- Link Grid -->
-  <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-screen-md mx-auto mt-8 px-4"></div>
+    <!-- Link Grid -->
+    <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-screen-md mx-auto mt-8 px-4"></div>
 
-  <!-- Stream Detection & Link Script -->
-  <script>
+    <script>
     const kickUsername = "tazo";
     const twitchUsername = "tazo";
     const container = document.getElementById("stream-container");
@@ -70,10 +69,10 @@
       { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok" },
       { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x" },
       { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord" },
-      { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "ko-fi" },
+      { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "heart" },
       { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon" },
       { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal" },
-      { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "gear" },
+      { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "tool" },
     ];
 
     fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
@@ -133,12 +132,12 @@
         const a = document.createElement("a");
         a.href = link.href;
         a.target = "_blank";
-        a.className = "bg-zinc-900 hover:bg-accent text-white font-semibold py-3 px-5 rounded-xl text-center border border-accent transition flex items-center justify-center gap-2";
+        a.className = "bg-zinc-900 hover:bg-accent text-white font-semibold py-3 px-5 rounded-xl text-center border border-accent transition flex items-center justify-center gap-2 flex-wrap";
 
         const img = document.createElement("img");
         img.src = `https://cdn.simpleicons.org/${link.icon}/00ffe0`;
         img.alt = link.name;
-        img.className = "w-5 h-5";
+        img.className = "w-5 h-5 shrink-0";
 
         const span = document.createElement("span");
         span.textContent = link.name;
@@ -149,5 +148,5 @@
       });
     }
   </script>
-</body>
+  </body>
 </html>
