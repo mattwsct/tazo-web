@@ -55,7 +55,7 @@ const indexMeta = `
   <meta property="og:url" content="${baseURL}/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tazo | Livestreamer from Australia" />
-  <meta name="twitter:description" content="Streaming live on Kick & Twitch — HyperTazo explores Australia, Asia, and beyond." />
+  <meta name="twitter:description" content="Streaming live on Kick & Twitch — Tazo explores Australia, Asia, and beyond." />
   <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg" />
 `;
 const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
