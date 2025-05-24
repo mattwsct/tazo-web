@@ -3,22 +3,27 @@ const streamEl = document.getElementById('stream');
 const linksEl = document.getElementById('links');
 let currentPlatform = null;
 
+// Load and display homepage buttons
 fetch('/links.json')
   .then(res => res.json())
   .then(links => {
     links.filter(l => l.showOnHomepage).forEach(link => {
-      const icon = link.icon
-        ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
-        : `<span>${link.title}</span>`;
       const a = document.createElement('a');
       a.href = '/' + link.id;
       a.target = '_blank';
-      a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition hover:scale-105`;
+      a.rel = 'noopener noreferrer';
+      a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition-transform duration-150 ease-out hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`;
+
+      const icon = link.icon
+        ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
+        : `<span>${link.title}</span>`;
+
       a.innerHTML = icon;
       linksEl.appendChild(a);
     });
   });
 
+// Add live dot to labels
 const markLive = id => {
   const lbl = document.getElementById(id + '-lbl');
   if (lbl && !lbl.innerHTML.includes('●')) {
@@ -26,6 +31,7 @@ const markLive = id => {
   }
 };
 
+// Create and insert stream iframe
 const setIframe = src => {
   streamEl.innerHTML = '';
   const iframe = document.createElement('iframe');
@@ -36,6 +42,7 @@ const setIframe = src => {
   streamEl.appendChild(iframe);
 };
 
+// Check livestream status and embed if live
 async function checkLive() {
   let kickLive = false, twitchLive = false;
 
