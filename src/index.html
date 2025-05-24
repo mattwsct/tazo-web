@@ -39,33 +39,72 @@
     <!-- Stream Embed -->
     <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4"></div>
 
-    <!-- Links -->
-    <div class="py-8">
-      <div class="max-w-screen-md mx-auto px-3 sm:px-4">
-        <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-      </div>
+    <!-- Link Groups -->
+    <div class="py-8 max-w-screen-md mx-auto px-3 sm:px-4">
+      <div id="link-groups" class="space-y-10"></div>
     </div>
 
     <script defer>
       const kickUser = 'tazo', twitchUser = 'tazo';
       const streamEl = document.getElementById('stream');
-      const linksEl = document.getElementById('links');
+      const linksContainer = document.getElementById('link-groups');
       let currentPlatform = null;
 
       fetch('/links.json')
         .then(res => res.json())
         .then(links => {
-          links.filter(l => l.showOnHomepage).forEach(link => {
-            const icon = link.icon
-              ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
-              : `<span>${link.title}</span>`;
-            const a = document.createElement('a');
-            a.href = '/' + link.id;
-            a.target = '_blank';
-            a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition-transform duration-150 ease-out hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`;
-            a.innerHTML = icon;
-            linksEl.appendChild(a);
-          });
+          const groups = {};
+
+          // Group links by category
+          for (const link of links) {
+            if (!link.showOnHomepage) continue;
+            const cat = link.category || 'other';
+            if (!groups[cat]) groups[cat] = [];
+            groups[cat].push(link);
+          }
+
+          const categoryOrder = ['stream', 'social', 'community', 'support', 'other'];
+          const categoryLabels = {
+            stream: 'Stream',
+            social: 'Social',
+            community: 'Community',
+            support: 'Support',
+            other: 'Other'
+          };
+
+          for (const category of categoryOrder) {
+            const group = groups[category];
+            if (!group) continue;
+
+            const section = document.createElement('section');
+            section.className = 'space-y-4';
+
+            const title = document.createElement('h2');
+            title.textContent = categoryLabels[category] || category;
+            title.className = 'text-xl font-bold text-zinc-300 tracking-wide pl-1';
+            section.appendChild(title);
+
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+
+            for (const link of group) {
+              const a = document.createElement('a');
+              a.href = '/' + link.id;
+              a.target = '_blank';
+              a.rel = 'noopener noreferrer';
+              a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition-transform duration-150 ease-out hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`;
+
+              const iconHTML = link.icon
+                ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
+                : `<span>${link.title}</span>`;
+
+              a.innerHTML = iconHTML;
+              grid.appendChild(a);
+            }
+
+            section.appendChild(grid);
+            linksContainer.appendChild(section);
+          }
         });
 
       const markLive = id => {
