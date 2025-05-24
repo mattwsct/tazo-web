@@ -28,10 +28,7 @@
 
   <!-- Stream embed (spinner shown until any embed added) -->
   <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4 flex justify-center">
-    <svg id="stream-spin" class="h-10 w-10 animate-spin text-accent" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/>
-      <path d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor" class="opacity-75"/>
-    </svg>
+    
   </div>
 
   <!-- Links -->
@@ -57,7 +54,6 @@ addEventListener('DOMContentLoaded',()=>{
   ];
   const linksEl=document.querySelector('#links');
   const streamEl=document.querySelector('#stream');
-  const spin=document.querySelector('#stream-spin');
   let kLive=false, tLive=false;
 
   /* render links immediately */
@@ -74,7 +70,7 @@ addEventListener('DOMContentLoaded',()=>{
 
   /* Twitch status */
   function checkTwitch(){
-    fetch(`https://api.ivr.fi/v2/twitch/user/${t}`).then(r=>r.json()).then(d=>{if(d.stream){tLive=true; markLive('twitch'); if(!kLive) embedTwitch();}}).finally(()=>spin.remove());
+    fetch(`https://api.ivr.fi/v2/twitch/user/${t}`).then(r=>r.json()).then(d=>{if(d.stream){tLive=true; markLive('twitch'); if(!kLive) embedTwitch();}});
   }
 
   function markLive(id){
