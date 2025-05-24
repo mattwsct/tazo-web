@@ -1,0 +1,51 @@
+[
+  {
+    "id": "kick",
+    "url": "https://kick.com/tazo",
+    "title": "Watch Tazo on Kick",
+    "description": "Tazo is live on Kick — tune in!",
+    "showOnHomepage": true
+  },
+  {
+    "id": "twitch",
+    "url": "https://twitch.tv/tazo",
+    "title": "Watch Tazo on Twitch",
+    "description": "Streaming IRL and variety content",
+    "showOnHomepage": true
+  },
+  {
+    "id": "discord",
+    "url": "https://discord.gg/cEhQQR5WgY",
+    "title": "Join Tazo's Discord",
+    "description": "Be part of the Tazo community",
+    "showOnHomepage": true
+  },
+  {
+    "id": "gear",
+    "url": "https://kit.co/HyperTazo/streaming-gear",
+    "title": "Tazo's Streaming Gear",
+    "description": "What I use to stream IRL and on the go",
+    "showOnHomepage": false
+  },
+  {
+    "id": "wishlist",
+    "url": "https://amazon.jp/hz/wishlist/ls/2H67SISIKU69Y",
+    "title": "Tazo's Wishlist",
+    "description": "Support the stream — cool stuff I need",
+    "showOnHomepage": false
+  },
+  {
+    "id": "tts",
+    "url": "https://streamelements.com/tazo/tip",
+    "title": "Send a Tip",
+    "description": "Text-to-speech and direct support",
+    "showOnHomepage": true
+  },
+  {
+    "id": "parti",
+    "url": "https://parti.com/creator/parti/Tazo",
+    "title": "Tazo on Parti",
+    "description": "Streaming on Parti — when it happens",
+    "showOnHomepage": false
+  }
+]
