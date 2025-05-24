@@ -1,11 +1,12 @@
 const kickUser = 'tazo';
 const twitchUser = 'tazo';
 
+const streamContainer = document.getElementById('stream-container');
 const streamEl = document.getElementById('stream');
 const linksEl = document.getElementById('links');
 let currentPlatform = null;
 
-// Load links from links.json
+// Load links from JSON
 fetch('/links.json')
   .then(res => res.json())
   .then(links => {
@@ -25,7 +26,6 @@ fetch('/links.json')
       });
   });
 
-// Show a red dot on a label
 function markLive(id) {
   const lbl = document.getElementById(`${id}-lbl`);
   if (lbl && !lbl.innerHTML.includes('●')) {
@@ -33,9 +33,10 @@ function markLive(id) {
   }
 }
 
-// Set embed iframe
 function setIframe(src) {
   streamEl.innerHTML = '';
+  streamContainer.classList.remove('hidden');
+
   const iframe = document.createElement('iframe');
   iframe.src = src;
   iframe.className = 'w-full aspect-video rounded-xl shadow-lg';
@@ -44,7 +45,6 @@ function setIframe(src) {
   streamEl.appendChild(iframe);
 }
 
-// Check both platforms for live status
 async function checkLive() {
   let kickLive = false;
   let twitchLive = false;
@@ -62,19 +62,18 @@ async function checkLive() {
     if (twitchLive) markLive('twitch');
   } catch {}
 
-  // Prioritize Kick
   if (kickLive && currentPlatform !== 'kick') {
     setIframe(`https://kick.com/embed/${kickUser}?muted=true&chatEnabled=false`);
     currentPlatform = 'kick';
   } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
     setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
     currentPlatform = 'twitch';
-  } else if (!kickLive && !twitchLive && currentPlatform) {
-    streamEl.innerHTML = '';
+  } else if (!kickLive && !twitchLive) {
+    if (currentPlatform) streamEl.innerHTML = '';
+    streamContainer.classList.add('hidden');
     currentPlatform = null;
   }
 }
 
-// Run and refresh every minute
 checkLive();
 setInterval(checkLive, 60000);
