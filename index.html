@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+<html lang="en" class="min-h-full overscroll-none bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -45,7 +45,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
   </head>
-  <body class="min-h-screen text-white font-sans">
+  <body class="min-h-full bg-transparent text-white font-sans touch-none">
     <!-- Hero / Profile Section -->
     <div class="relative h-72 w-full overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] bg-[position:0%_50%] bg-no-repeat "></div>
@@ -160,7 +160,7 @@
         const a = document.createElement("a");
         a.href = link.href;
         a.target = "_blank";
-        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border outline-none shadow-none transition duration-200 ease-in-out flex items-center justify-center gap-2 flex-wrap ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
+        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border focus:outline-none focus:ring-2 focus:ring-accent/70 shadow-none transition duration-200 ease-in-out flex items-center justify-center gap-2 flex-wrap ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
 
         const img = document.createElement("img");
         img.src = `https://cdn.simpleicons.org/${link.icon}/FFFFFF`;
