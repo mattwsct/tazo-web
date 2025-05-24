@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Tazo | Live Stream & Links</title>
+  <link rel="icon" href="https://twitter.com/HyperTazo/profile_image?size=original" type="image/png">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.5.10/css/pico.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #00ffe0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .links a {
+      padding: 1rem 2rem;
+      border: 2px solid #00ffe0;
+      border-radius: 6px;
+      color: #00ffe0;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+    }
+    .links a:hover {
+      background-color: #00ffe0;
+      color: #000;
+      transform: scale(1.05);
+    }
+    iframe {
+      max-width: 100%;
+      margin-top: 2rem;
+      border: none;
+    }
+    .live-indicator {
+      color: red;
+      font-weight: bold;
+      margin-top: 1rem;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tazo</h1>
+  <p>IRL Streamer | Tokyo Based</p>
+  <div id="stream-container"></div>
+  <div id="twitch-indicator" class="live-indicator"></div>
+  <div id="link-section" class="links" style="display: none;">
+    <a href="https://kick.com/tazo" target="_blank">Kick</a>
+    <a href="https://twitch.tv/tazo" target="_blank">Twitch</a>
+    <a href="https://youtube.com/@HyperTazo" target="_blank">YouTube (VODs)</a>
+    <a href="https://instagram.com/HyperTazo" target="_blank">Instagram</a>
+    <a href="https://tiktok.com/@HyperTazo" target="_blank">TikTok</a>
+    <a href="https://x.com/HyperTazo" target="_blank">Twitter</a>
+    <a href="https://discord.tazo.wtf" target="_blank">Discord</a>
+    <a href="https://ko-fi.com/HyperTazo" target="_blank">Buy Me a Coffee</a>
+    <a href="https://wishlist.tazo.wtf" target="_blank">Amazon Wishlist</a>
+    <a href="https://tip.tazo.wtf" target="_blank">Donate / TTS</a>
+    <a href="https://gear.tazo.wtf" target="_blank">Stream Gear</a>
+  </div>
+
+  <script>
+    const kickUsername = "tazo";
+    const twitchUsername = "tazo";
+    const container = document.getElementById("stream-container");
+    const linkSection = document.getElementById("link-section");
+    const twitchIndicator = document.getElementById("twitch-indicator");
+
+    let twitchIsLive = false;
+
+    fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
+      .then(res => res.json())
+      .then(kickData => {
+        if (kickData.livestream) {
+          embedKick();
+          checkTwitch("indicator");
+        } else {
+          checkTwitch("embed");
+        }
+      })
+      .catch(() => checkTwitch("embed"));
+
+    function embedKick() {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://kick.com/embed/${kickUsername}`;
+      iframe.width = "100%";
+      iframe.height = "480";
+      container.appendChild(iframe);
+    }
+
+    function checkTwitch(mode) {
+      fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUsername}`)
+        .then(res => res.json())
+        .then(twitchData => {
+          if (twitchData.stream) {
+            twitchIsLive = true;
+            if (mode === "embed") {
+              embedTwitch();
+            } else if (mode === "indicator") {
+              twitchIndicator.innerHTML = '<a href="https://twitch.tv/tazo" target="_blank">🔴 Also live on Twitch</a>';
+            }
+          } else {
+            showLinks();
+          }
+        })
+        .catch(() => showLinks());
+    }
+
+    function embedTwitch() {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://player.twitch.tv/?channel=${twitchUsername}&parent=${location.hostname}`;
+      iframe.width = "100%";
+      iframe.height = "480";
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+    }
+
+    function showLinks() {
+      linkSection.style.display = "flex";
+    }
+  </script>
+</body>
+</html>
