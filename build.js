@@ -6,7 +6,7 @@ const linksPath = path.join(__dirname, 'links.json');
 const srcDir = path.join(__dirname, 'src');
 const outputDir = path.join(__dirname, 'public');
 
-// Helper to copy folders recursively
+// Copy folders recursively
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
 
@@ -15,33 +15,28 @@ function copyDir(src, dest) {
     const destPath = path.join(dest, item);
     const stat = fs.statSync(srcPath);
 
-    if (stat.isDirectory()) {
-      copyDir(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
+    stat.isDirectory()
+      ? copyDir(srcPath, destPath)
+      : fs.copyFileSync(srcPath, destPath);
   }
 }
 
-// Clean and recreate output dir
-if (fs.existsSync(outputDir)) {
-  fs.rmSync(outputDir, { recursive: true, force: true });
-}
+// Clean and recreate public/
+if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir);
 
 // Copy everything from src into public
 copyDir(srcDir, outputDir);
 console.log('Copied src/ into public/');
 
-// Read links
+// Read links.json
 const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
 
-// Build redirect folders
+// Build redirect pages
 links.forEach(link => {
-  const folderPath = path.join(outputDir, link.id);
-  const filePath = path.join(folderPath, 'index.html');
-
-  if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+  const folder = path.join(outputDir, link.id);
+  const filepath = path.join(folder, 'index.html');
+  if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 
   const html = `<!DOCTYPE html>
 <html lang="en" class="min-h-full text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
@@ -67,8 +62,9 @@ links.forEach(link => {
       }
     </style>
   </head>
-  <body class="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-    <section class="relative w-full h-64 overflow-hidden">
+
+  <body class="min-h-screen flex flex-col bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+    <section class="relative w-full flex-grow overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]"></div>
       <div class="absolute inset-0 bg-black/60"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full">
@@ -77,7 +73,8 @@ links.forEach(link => {
         <p class="text-zinc-300 text-sm">Livestreamer from Australia</p>
       </div>
     </section>
-    <div class="mt-12 px-4">
+
+    <div class="flex flex-col items-center justify-center text-center py-12 px-4">
       <p class="text-lg">Redirecting to <strong>${link.title}</strong>…</p>
       <p class="text-sm text-zinc-400 mt-2">
         If nothing happens, <a href="${link.url}" class="underline text-accent">click here</a>.
@@ -86,22 +83,25 @@ links.forEach(link => {
         <a href="/" class="underline text-zinc-500">← Back to homepage</a>
       </p>
     </div>
+
     <script>
       setTimeout(() => { window.location.href = "${link.url}" }, 1000);
     </script>
   </body>
 </html>`;
 
-  fs.writeFileSync(filePath, html);
+  fs.writeFileSync(filepath, html);
   console.log(`Built /${link.id}/index.html`);
 });
 
-// Build robots.txt
+// robots.txt
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
-const robotsContent = `User-agent: *\nAllow: /\n${disallowed}\n`;
-fs.writeFileSync(path.join(outputDir, 'robots.txt'), robotsContent);
+fs.writeFileSync(
+  path.join(outputDir, 'robots.txt'),
+  `User-agent: *\nAllow: /\n${disallowed}\n`
+);
 console.log('Built robots.txt');
 
-// Copy links.json
+// links.json
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
 console.log('Copied links.json to /public/');

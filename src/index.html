@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="min-h-full text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+<html lang="en" class="min-h-screen flex flex-col text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
   <head>
     <meta charset="UTF-8" />
     <title>Tazo | IRL Streamer from Japan</title>
@@ -33,9 +33,9 @@
     </style>
   </head>
 
-  <body class="min-h-full">
+  <body class="flex flex-col flex-grow">
     <!-- Hero -->
-    <section class="relative h-72 overflow-hidden">
+    <section class="relative h-72 overflow-hidden flex-shrink-0">
       <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]"></div>
       <div class="absolute inset-0 bg-black/60"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full">
@@ -46,10 +46,10 @@
     </section>
 
     <!-- Stream Embed -->
-    <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4"></div>
+    <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4 w-full"></div>
 
     <!-- Link Grid -->
-    <div class="py-8 max-w-screen-md mx-auto px-3 sm:px-4">
+    <div class="py-8 max-w-screen-md mx-auto px-3 sm:px-4 w-full">
       <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
     </div>
 
