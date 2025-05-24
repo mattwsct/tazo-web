@@ -10,20 +10,44 @@
   <meta property="og:url" content="https://tazo.wtf" />
   <meta property="og:image" content="https://tazo.wtf/profile.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/profile.jpg" type="image/jpeg">
+  <link rel="icon" href="/profile.jpg" type="image/jpeg" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#22d3ee' // cyan-400
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .border-accent {
+      border-color: #22d3ee;
+    }
+    .hover\:bg-accent:hover {
+      background-color: #22d3ee;
+    }
+  </style>
 </head>
-<body class="bg-zinc-950 text-white font-sans">
-  <div class="text-center py-10">
-    <img src="/profile.jpg" alt="Tazo" class="w-24 h-24 rounded-full mx-auto border-4 border-accent" />
-    <h1 class="text-4xl font-bold mt-4">Tazo</h1>
-    <p class="text-zinc-400">Livestreamer from Australia</p>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-950 text-white font-sans min-h-screen">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- Hero Section -->
+    <div class="text-center py-16 bg-gradient-to-r from-accent/10 via-white/5 to-transparent rounded-2xl shadow-inner mb-8">
+      <img src="/profile.jpg" alt="Tazo" class="w-24 h-24 rounded-full mx-auto border-4 border-accent" />
+      <h1 class="text-4xl font-bold mt-4">Tazo</h1>
+      <p class="text-zinc-400">Livestreamer from Australia</p>
+    </div>
+
+    <!-- Stream Embed -->
+    <div id="stream-container" class="w-full max-w-3xl mx-auto px-4 mt-4"></div>
+    <div id="twitch-indicator" class="text-center mt-2"></div>
+
+    <!-- Link Buttons -->
+    <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4 pb-20"></div>
   </div>
-
-  <div id="stream-container" class="w-full max-w-3xl mx-auto px-4 mt-4"></div>
-  <div id="twitch-indicator" class="text-center mt-2"></div>
-
-  <div id="link-section" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto px-4 pb-20"></div>
 
   <script>
     const kickUsername = "tazo";
@@ -33,6 +57,7 @@
     const indicator = document.getElementById("twitch-indicator");
 
     function embedKick() {
+      streamContainer.innerHTML = "";
       const iframe = document.createElement("iframe");
       iframe.src = `https://kick.com/embed/${kickUsername}?muted=true&chatEnabled=false`;
       iframe.className = "rounded-xl shadow-md aspect-video w-full";
@@ -41,24 +66,13 @@
     }
 
     function embedTwitch() {
+      streamContainer.innerHTML = "";
       const iframe = document.createElement("iframe");
       iframe.src = `https://player.twitch.tv/?channel=${twitchUsername}&parent=${location.hostname}&muted=true&chat=false`;
       iframe.className = "rounded-xl shadow-md aspect-video w-full";
       iframe.allowFullscreen = true;
       streamContainer.appendChild(iframe);
     }
-
-    fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.livestream) {
-          embedKick();
-          checkTwitch("indicator");
-        } else {
-          checkTwitch("embed");
-        }
-      })
-      .catch(() => checkTwitch("embed"));
 
     function checkTwitch(mode) {
       fetch(`https://api.ivr.fi/v2/twitch/user/${twitchUsername}`)
@@ -74,6 +88,18 @@
         });
     }
 
+    fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.livestream) {
+          embedKick();
+          checkTwitch("indicator");
+        } else {
+          checkTwitch("embed");
+        }
+      })
+      .catch(() => checkTwitch("embed"));
+
     fetch('/src/links.json')
       .then(res => res.json())
       .then(links => {
@@ -85,7 +111,8 @@
           a.innerHTML = `<span>${link.title}</span>`;
           container.appendChild(a);
         });
-      });
+      })
+      .catch(err => console.error("Failed to load links.json", err));
   </script>
 </body>
 </html>
