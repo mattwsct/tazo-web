@@ -20,6 +20,15 @@
     "bg": "from-[#9146FF] to-[#772ce8]"
   },
   {
+    "id": "parti",
+    "url": "https://parti.com/creator/parti/Tazo",
+    "title": "Parti",
+    "description": "Watch Tazo on Parti",
+    "showOnHomepage": false,
+    "category": "stream",
+    "bg": "from-yellow-300 to-yellow-500"
+  },
+  {
     "id": "youtube",
     "url": "https://youtube.com/@HyperTazo",
     "title": "YouTube",
@@ -88,14 +97,5 @@
     "showOnHomepage": true,
     "category": "support",
     "bg": "from-rose-500 to-orange-500"
-  },
-  {
-    "id": "parti",
-    "url": "https://parti.com/creator/parti/Tazo",
-    "title": "Parti",
-    "description": "Watch Tazo on Parti",
-    "showOnHomepage": true,
-    "category": "stream",
-    "bg": "from-yellow-300 to-yellow-500"
   }
 ]
