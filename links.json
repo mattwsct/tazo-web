@@ -85,7 +85,7 @@
     "url": "https://parti.com/creator/parti/Tazo",
     "title": "Parti",
     "description": "Watch Tazo on Parti",
-    "icon": "star",
+    "icon": "internetexplorer",
     "showOnHomepage": true,
     "bg": "from-yellow-300 to-yellow-500"
   }
