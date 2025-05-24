@@ -5,101 +5,75 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tazo | Livestreamer</title>
 
-  <!-- Tailwind: config first, CDN second -->
+  <!-- 1️⃣  Tailwind CONFIG must be on tailwind.config *before* CDN -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['"Bebas Neue"', 'sans-serif'],
+            sans: ['Inter','system-ui','sans-serif'],
+            display: ['"Bebas Neue"','sans-serif'],
           },
-          animation: {
-            'gradient-x': 'gradient-x 8s ease infinite',
-          },
-          keyframes: {
-            'gradient-x': {
-              '0%,100%': { backgroundPosition: '0% 50%' },
-              '50%':     { backgroundPosition: '100% 50%' },
-            },
-          },
-        },
-      },
+          animation:{'gradient-x':'gradient-x 8s ease infinite'},
+          keyframes:{'gradient-x':{ '0%,100%':{backgroundPosition:'0% 50%'}, '50%':{backgroundPosition:'100% 50%'} }},
+        }
+      }
     };
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
-
-  <!-- Icons load faster -->
-  <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
+  <!-- 2️⃣  Load the fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
 <body class="min-h-full text-white font-sans">
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="relative h-72 overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-gradient-x"></div>
     <div class="absolute inset-0 bg-black/60"></div>
-
     <div class="relative z-10 flex flex-col items-center justify-center h-full">
-      <img src="/profile.jpg" alt="Tazo" class="w-28 h-28 rounded-full shadow-md object-cover" />
+      <img src="/profile.jpg" alt="Tazo" class="w-28 h-28 rounded-full shadow-md object-cover">
       <h1 class="mt-4 text-5xl font-display uppercase drop-shadow-md">TAZO</h1>
       <p class="text-zinc-300">Livestreamer from Australia</p>
     </div>
   </section>
 
-  <!-- Stream -->
+  <!-- STREAM -->
   <div id="stream" class="max-w-screen-md mx-auto mt-6 mb-6 px-4"></div>
 
-  <!-- Links -->
-  <div class="max-w-screen-md mx-auto px-4">
-    <div id="links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-  </div>
+  <!-- LINKS -->
+  <div id="links" class="max-w-screen-md mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
 
-  <!-- Minimal JS -->
   <script>
-    /* ---- links ---- */
+    /* ----- Links ----- */
     fetch('/links.json')
-      .then(r => r.json())
-      .then(links =>
-        links.filter(l => l.showOnHomepage).forEach(l => {
-          const a = document.createElement('a');
-          a.href = '/' + l.id;
-          a.target = '_blank';
-          a.rel   = 'noopener noreferrer';
-          a.className =
-            'flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ' +
-            l.bg +
-            ' transition hover:scale-105';
-          a.innerHTML =
-            (l.icon ? `<img src="https://cdn.simpleicons.org/${l.icon}/fff" class="w-5 h-5" alt="">` : '') +
-            `<span${l.icon ? ` id="${l.icon}-lbl"` : ''}>${l.title}</span>`;
-          document.getElementById('links').appendChild(a);
-        })
-      );
+      .then(r=>r.json())
+      .then(links=>links.filter(l=>l.showOnHomepage).forEach(l=>{
+        const a=document.createElement('a');
+        a.href='/' + l.id; a.target='_blank'; a.rel='noopener';
+        a.className='flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r '+l.bg;
+        a.innerHTML=(l.icon?`<img src="https://cdn.simpleicons.org/${l.icon}/fff" class="w-5 h-5" alt="">`:'')+
+                     `<span${l.icon?` id="${l.icon}-lbl"`:''}>${l.title}</span>`;
+        links.appendChild(a);
+      }));
 
-    /* ---- stream embeds ---- */
-    const kick = 'tazo', twitch = 'tazo';
+    /* ----- Stream embed ----- */
+    const kick='tazo', twitch='tazo';
     fetch(`https://kick.com/api/v2/channels/${kick}`)
-      .then(r => r.json())
-      .then(d => (d.livestream ? embed(`https://kick.com/embed/${kick}?muted=true&chatEnabled=false`) : checkTwitch()));
+      .then(r=>r.json())
+      .then(d=>d.livestream?embed(`https://kick.com/embed/${kick}?muted=true&chatEnabled=false`):checkTwitch());
 
-    function checkTwitch() {
+    function checkTwitch(){
       fetch(`https://api.ivr.fi/v2/twitch/user/${twitch}`)
-        .then(r => r.json())
-        .then(d => d.stream && embed(`https://player.twitch.tv/?channel=${twitch}&parent=${location.hostname}&muted=true&chat=false`));
+        .then(r=>r.json())
+        .then(d=>d.stream && embed(`https://player.twitch.tv/?channel=${twitch}&parent=${location.hostname}&muted=true&chat=false`));
     }
-
-    function embed(src) {
-      const f = document.createElement('iframe');
-      f.src = src;
-      f.title = 'Live stream player';
-      f.className = 'w-full aspect-video rounded-xl shadow-lg';
-      f.allowFullscreen = true;
-      document.getElementById('stream').appendChild(f);
+    function embed(src){
+      const f=document.createElement('iframe');
+      f.src=src; f.title='Live stream'; f.className='w-full aspect-video rounded-xl shadow-lg'; f.allowFullscreen=true;
+      stream.appendChild(f);
     }
   </script>
 </body>
