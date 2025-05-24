@@ -6,7 +6,7 @@
     "description": "Watch Tazo on Kick",
     "icon": "kick",
     "showOnHomepage": true,
-    "bg": "from-[#53fc18] to-[#43d314]"
+    "bg": "from-[#53fc18] to-[#3ab618]"
   },
   {
     "id": "twitch",
@@ -15,15 +15,15 @@
     "description": "Watch Tazo on Twitch",
     "icon": "twitch",
     "showOnHomepage": true,
-    "bg": "from-[#9146FF] to-[#772ce8]"
+    "bg": "from-[#9146FF] to-[#5c2ca4]"
   },
   {
     "id": "parti",
     "url": "https://parti.com/creator/parti/Tazo",
     "title": "Parti",
     "description": "Watch Tazo on Parti",
-    "showOnHomepage": true,
-    "bg": "from-yellow-300 to-yellow-500"
+    "showOnHomepage": false,
+    "bg": "from-[#facc15] to-[#eab308]"
   },
   {
     "id": "youtube",
@@ -32,7 +32,7 @@
     "description": "Tazo’s videos, shorts, and streams",
     "icon": "youtube",
     "showOnHomepage": true,
-    "bg": "from-[#FF0000] to-[#cc0000]"
+    "bg": "from-[#FF0000] to-[#b91c1c]"
   },
   {
     "id": "tiktok",
@@ -41,7 +41,7 @@
     "description": "Short clips and highlights",
     "icon": "tiktok",
     "showOnHomepage": true,
-    "bg": "from-[#25F4EE] to-[#FE2C55]"
+    "bg": "from-[#25F4EE] to-[#161823]"
   },
   {
     "id": "instagram",
@@ -50,7 +50,7 @@
     "description": "Photos, stories, and reels from Tazo",
     "icon": "instagram",
     "showOnHomepage": true,
-    "bg": "from-pink-500 via-red-500 to-yellow-500"
+    "bg": "from-[#f09433] via-[#e6683c] to-[#dc2743]"
   },
   {
     "id": "twitter",
@@ -59,7 +59,7 @@
     "description": "Updates and posts from Tazo",
     "icon": "x",
     "showOnHomepage": true,
-    "bg": "from-sky-500 to-sky-600 hover:brightness-110"
+    "bg": "from-black to-[#1DA1F2]"
   },
   {
     "id": "discord",
@@ -68,7 +68,7 @@
     "description": "Join the Tazo community chat",
     "icon": "discord",
     "showOnHomepage": true,
-    "bg": "from-[#5865F2] to-[#4752c4]"
+    "bg": "from-[#5865F2] to-[#404EED]"
   },
   {
     "id": "tips",
@@ -77,7 +77,7 @@
     "description": "Send Tazo a direct tip",
     "icon": "cashapp",
     "showOnHomepage": true,
-    "bg": "from-yellow-400 to-yellow-600"
+    "bg": "from-[#facc15] to-[#ca8a04]"
   },
   {
     "id": "wishlist",
@@ -86,6 +86,6 @@
     "description": "Send a gift to Tazo",
     "icon": "amazon",
     "showOnHomepage": true,
-    "bg": "from-rose-500 to-orange-500"
+    "bg": "from-[#f43f5e] to-[#f97316]"
   }
 ]

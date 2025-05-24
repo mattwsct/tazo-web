@@ -6,7 +6,7 @@ const linksPath = path.join(__dirname, 'links.json');
 const srcDir = path.join(__dirname, 'src');
 const outputDir = path.join(__dirname, 'public');
 
-// Copy folders recursively
+// Recursively copy folders
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
 
@@ -25,21 +25,21 @@ function copyDir(src, dest) {
 if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir);
 
-// Copy everything from src into public
+// Copy everything from src/
 copyDir(srcDir, outputDir);
 console.log('Copied src/ into public/');
 
-// Read links.json
+// Read and parse links.json
 const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
 
-// Build redirect pages
+// Generate redirect pages
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
   const filepath = path.join(folder, 'index.html');
   if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 
   const html = `<!DOCTYPE html>
-<html lang="en" class="min-h-full text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
+<html lang="en" class="min-h-screen flex flex-col text-white font-sans bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
   <head>
     <meta charset="UTF-8" />
     <title>Redirecting to ${link.title}</title>
@@ -64,7 +64,7 @@ links.forEach(link => {
   </head>
 
   <body class="min-h-screen flex flex-col bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-    <section class="relative w-full flex-grow overflow-hidden">
+    <section class="relative min-h-[288px] py-12 overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-[gradientShift_6s_ease_infinite]"></div>
       <div class="absolute inset-0 bg-black/60"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full">
@@ -102,6 +102,6 @@ fs.writeFileSync(
 );
 console.log('Built robots.txt');
 
-// links.json
+// Copy links.json to public/
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
 console.log('Copied links.json to /public/');
