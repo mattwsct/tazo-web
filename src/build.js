@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const linksPath = path.join(__dirname, 'src', 'links.json');
+const linksPath = path.join(__dirname, 'links.json');
 const outputDir = path.join(__dirname, 'public');
 
 // Load link data
