@@ -31,10 +31,10 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-zinc-950 text-white font-sans">
+  <body class="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 text-white font-sans">
     <!-- Hero / Profile Section -->
     <div class="relative h-72 w-full overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-r from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-gradient"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-[#00ffe0] via-purple-500 to-[#00ffe0] bg-[length:200%_200%] animate-gradient"></div>
       <div class="absolute inset-0 bg-black bg-opacity-60"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full">
         <img src="/profile.jpg"
@@ -62,18 +62,18 @@
     let isTwitchLive = false;
 
     const allLinks = [
-      { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick" },
-      { name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch" },
-      { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube" },
-      { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram" },
-      { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok" },
-      { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x" },
-      { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord" },
-      { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "heart" },
-      { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon" },
-      { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal" },
-      { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "tool" },
-    ];
+  { name: "Kick", href: "https://kick.com/tazo", id: "kick", icon: "kick", class: "bg-gradient-to-r from-[#53fc18] to-[#43d314] border-[#43d314] hover:opacity-90 text-white" },
+  { name: "Twitch", href: "https://twitch.tv/tazo", id: "twitch", icon: "twitch", class: "bg-gradient-to-r from-[#9146FF] to-[#772ce8] border-[#772ce8] hover:opacity-90 text-white""bg-[#9146FF] hover:bg-[#772ce8] border-[#772ce8]" },
+  { name: "YouTube VODs", href: "https://youtube.com/@HyperTazo", icon: "youtube", class: "bg-gradient-to-r from-[#FF0000] to-[#cc0000] border-[#cc0000] hover:opacity-90 text-white""bg-[#FF0000] hover:bg-[#cc0000] border-[#cc0000]" },
+  { name: "Instagram", href: "https://instagram.com/HyperTazo", icon: "instagram", class: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white border-white" },
+  { name: "TikTok", href: "https://tiktok.com/@HyperTazo", icon: "tiktok", class: "bg-black hover:bg-zinc-800 border-white" },
+  { name: "Twitter / X", href: "https://x.com/HyperTazo", icon: "x", class: "bg-black hover:bg-zinc-800 border-white" },
+  { name: "Join Discord", href: "https://discord.tazo.wtf", icon: "discord", class: "bg-[#5865F2] hover:bg-[#4752c4] border-[#4752c4]" },
+  { name: "Support on Ko-fi", href: "https://ko-fi.com/HyperTazo", icon: "handshake", class: "bg-gradient-to-r from-[#29abe0] to-[#219ac9] border-[#219ac9] hover:opacity-90 text-white""bg-[#29abe0] hover:bg-[#219ac9] border-[#219ac9]" },
+  { name: "Wishlist", href: "https://wishlist.tazo.wtf", icon: "amazon", class: "bg-[#FF9900] hover:bg-[#cc7a00] border-[#cc7a00]" },
+  { name: "Tip / TTS", href: "https://tip.tazo.wtf", icon: "paypal", class: "bg-gradient-to-r from-[#003087] to-[#00246b] border-[#00246b] hover:opacity-90 text-white""bg-[#003087] hover:bg-[#00246b] border-[#00246b]" },
+  { name: "Gear I Use", href: "https://gear.tazo.wtf", icon: "cog", class: "bg-zinc-800 hover:bg-zinc-700 border-zinc-600" },
+];
 
     fetch(`https://kick.com/api/v2/channels/${kickUsername}`)
       .then(res => res.json())
@@ -132,7 +132,7 @@
         const a = document.createElement("a");
         a.href = link.href;
         a.target = "_blank";
-        a.className = "bg-zinc-900 hover:bg-accent text-white font-semibold py-3 px-5 rounded-xl text-center border border-accent transition flex items-center justify-center gap-2 flex-wrap";
+        a.className = `text-white font-semibold py-3 px-5 rounded-xl text-center border transition flex items-center justify-center gap-2 flex-wrap ${link.class || 'bg-zinc-900 hover:bg-white hover:text-black border-accent'}`;
 
         const img = document.createElement("img");
         img.src = `https://cdn.simpleicons.org/${link.icon}/00ffe0`;
