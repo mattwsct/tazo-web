@@ -6,7 +6,6 @@
     "description": "Watch Tazo on Kick",
     "icon": "kick",
     "showOnHomepage": true,
-    "category": "stream",
     "bg": "from-[#53fc18] to-[#43d314]"
   },
   {
@@ -16,7 +15,6 @@
     "description": "Watch Tazo on Twitch",
     "icon": "twitch",
     "showOnHomepage": true,
-    "category": "stream",
     "bg": "from-[#9146FF] to-[#772ce8]"
   },
   {
@@ -24,8 +22,7 @@
     "url": "https://parti.com/creator/parti/Tazo",
     "title": "Parti",
     "description": "Watch Tazo on Parti",
-    "showOnHomepage": false,
-    "category": "stream",
+    "showOnHomepage": true,
     "bg": "from-yellow-300 to-yellow-500"
   },
   {
@@ -35,7 +32,6 @@
     "description": "Tazo’s videos, shorts, and streams",
     "icon": "youtube",
     "showOnHomepage": true,
-    "category": "stream",
     "bg": "from-[#FF0000] to-[#cc0000]"
   },
   {
@@ -45,7 +41,6 @@
     "description": "Short clips and highlights",
     "icon": "tiktok",
     "showOnHomepage": true,
-    "category": "social",
     "bg": "from-[#25F4EE] to-[#FE2C55]"
   },
   {
@@ -55,7 +50,6 @@
     "description": "Photos, stories, and reels from Tazo",
     "icon": "instagram",
     "showOnHomepage": true,
-    "category": "social",
     "bg": "from-pink-500 via-red-500 to-yellow-500"
   },
   {
@@ -65,7 +59,6 @@
     "description": "Updates and posts from Tazo",
     "icon": "x",
     "showOnHomepage": true,
-    "category": "social",
     "bg": "from-sky-500 to-sky-600 hover:brightness-110"
   },
   {
@@ -75,7 +68,6 @@
     "description": "Join the Tazo community chat",
     "icon": "discord",
     "showOnHomepage": true,
-    "category": "community",
     "bg": "from-[#5865F2] to-[#4752c4]"
   },
   {
@@ -85,7 +77,6 @@
     "description": "Send Tazo a direct tip",
     "icon": "cashapp",
     "showOnHomepage": true,
-    "category": "support",
     "bg": "from-yellow-400 to-yellow-600"
   },
   {
@@ -95,7 +86,6 @@
     "description": "Send a gift to Tazo",
     "icon": "amazon",
     "showOnHomepage": true,
-    "category": "support",
     "bg": "from-rose-500 to-orange-500"
   }
 ]
