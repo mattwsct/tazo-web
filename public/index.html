@@ -8,8 +8,10 @@
     <meta property="og:title" content="Tazo | Livestreamer" />
     <meta property="og:description" content="IRL & gaming streams on Kick and Twitch" />
     <meta property="og:image" content="https://tazo.wtf/profile.jpg" />
+    <meta property="og:url" content="https://tazo.wtf/" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/profile.jpg" />
+    <link rel="preload" as="image" href="/profile.jpg" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -17,28 +19,22 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'system-ui', 'sans-serif'],
-              display: ['Bebas Neue', 'sans-serif'],
+              display: ['Bebas Neue', 'sans-serif']
             },
             colors: {
-              accent: '#00ffe0',
+              accent: '#00ffe0'
             },
             animation: {
-              fade: 'fade .5s ease-out both',
+              fade: 'fade .5s ease-out both'
             },
             keyframes: {
               fade: {
-                '0%': {
-                  opacity: 0,
-                  transform: 'translateY(.75rem)',
-                },
-                '100%': {
-                  opacity: 1,
-                  transform: 'translateY(0)',
-                },
-              },
-            },
-          },
-        },
+                '0%': { opacity: 0, transform: 'translateY(.75rem)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' }
+              }
+            }
+          }
+        }
       };
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -67,7 +63,7 @@
     </div>
 
     <script>
-      const linksPath = '/src/links.json';
+      const linksPath = '/links.json';
       const kickUser = 'tazo';
       const twitchUser = 'tazo';
       const streamEl = document.getElementById('stream');
@@ -79,7 +75,7 @@
         .then(links => {
           links.filter(link => link.showOnHomepage).forEach(link => {
             const a = document.createElement('a');
-            a.href = `/${link.id}`; // branded shortlink
+            a.href = `/${link.id}`;
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
             a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl text-white font-semibold bg-gradient-to-r ${link.bg} transition hover:scale-105`;
