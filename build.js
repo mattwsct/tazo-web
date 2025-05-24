@@ -110,12 +110,10 @@ links.forEach(link => {
   console.log(`Built /${link.id}/index.html`);
 });
 
-// 5. robots.txt
+// 5. robots.txt (with sitemap line added)
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
-fs.writeFileSync(
-  path.join(outputDir, 'robots.txt'),
-  `User-agent: *\nAllow: /\n${disallowed}\n`
-);
+const robotsContent = `User-agent: *\nAllow: /\n${disallowed}\nSitemap: ${baseURL}/sitemap.xml`;
+fs.writeFileSync(path.join(outputDir, 'robots.txt'), robotsContent);
 console.log('Built robots.txt');
 
 // 6. sitemap.xml
