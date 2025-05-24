@@ -46,7 +46,7 @@ console.log('Copied static files into public/');
 const indexMeta = `
   <title>Tazo | Livestreamer from Australia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tazo is a livestreamer from Australia — live on Kick, Twitch, and more as HyperTazo." />
+  <meta name="description" content="Tazo is a livestreamer from Australia — live on Kick, Twitch, and more." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Tazo" />
   <meta property="og:title" content="Tazo | Livestreamer from Australia" />
