@@ -79,3 +79,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 
 fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), sitemap);
 console.log('Built sitemap.xml');
+
+fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
+console.log('Copied links.json to /public/');
+
