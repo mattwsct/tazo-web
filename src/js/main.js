@@ -44,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function unmarkLive() {
+    ['kick', 'twitch'].forEach(id => {
+      const label = document.getElementById(id + '-lbl');
+      if (label) label.innerHTML = label.innerHTML.replace(/ <span.*<\/span>/, '');
+    });
+  }
+
   function setIframe(src, platform) {
     streamEl.innerHTML = '';
     const iframe = document.createElement('iframe');
@@ -91,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       streamWrapper.querySelector('.stream-glow')?.remove();
       streamWrapper.classList.add('hidden');
       currentPlatform = null;
+      unmarkLive();
     }
   }
 
