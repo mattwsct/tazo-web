@@ -53,9 +53,9 @@
     "bg": "from-[#f09433] via-[#e6683c] to-[#dc2743]"
   },
   {
-    "id": "twitter",
+    "id": "x",
     "url": "https://x.com/HyperTazo",
-    "title": "Twitter / X",
+    "title": "X / Twitter",
     "description": "Updates and posts from Tazo",
     "icon": "x",
     "showOnHomepage": true,
@@ -78,6 +78,14 @@
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#facc15] to-[#ca8a04]"
+  },
+  {
+    "id": "tts",
+    "url": "https://kickbot.com/tips/tazo",
+    "title": "KickBot TTS",
+    "description": "Send a text-to-speech tip via KickBot",
+    "showOnHomepage": false,
+    "bg": "from-lime-400 to-lime-600"
   },
   {
     "id": "wishlist",
