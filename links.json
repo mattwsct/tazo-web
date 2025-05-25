@@ -76,7 +76,7 @@
     "title": "StreamElements Tips",
     "description": "Send Tazo a direct tip",
     "showOnHomepage": true,
-    "bg": "from-[#facc15] to-[#ca8a04]"
+    "bg": "from-[#1e90ff] to-[#7e5bef]"
   },
   {
     "id": "tts",
