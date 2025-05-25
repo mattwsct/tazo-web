@@ -53,7 +53,7 @@
     "bg": "from-[#f09433] via-[#e6683c] to-[#dc2743]"
   },
   {
-    "id": "x",
+    "id": "twitter",
     "url": "https://x.com/HyperTazo",
     "title": "X / Twitter",
     "description": "Updates and posts from Tazo",
@@ -71,7 +71,7 @@
     "bg": "from-[#5865F2] to-[#404EED]"
   },
   {
-    "id": "tips",
+    "id": "tip",
     "url": "https://streamelements.com/tazo/tip",
     "title": "Tips",
     "description": "Send Tazo a direct tip",
