@@ -1,7 +1,4 @@
-// Always clear redirect flag on homepage, even on bfcache restore
 document.addEventListener('DOMContentLoaded', () => {
-  sessionStorage.removeItem("redirected");
-
   const kickUser = 'tazo';
   const twitchUser = 'tazo';
   const streamWrapper = document.getElementById('streamWrapper');
@@ -107,9 +104,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   checkLive();
   setInterval(checkLive, 60000);
-});
-
-// Also clear redirect flag if page is restored from cache (mobile back)
-window.addEventListener('pageshow', () => {
-  sessionStorage.removeItem("redirected");
 });

@@ -37,6 +37,7 @@ function copyDir(src, dest) {
   }
 }
 copyDir(srcDir, outputDir);
+console.log('Copied static files from src/ to public/');
 
 function renderPage({ titleMeta, content }) {
   return layout
@@ -46,7 +47,7 @@ function renderPage({ titleMeta, content }) {
     .replace('{{content}}', content);
 }
 
-// index.html
+// Build index.html
 const indexMeta = `
   <title>Tazo | IRL Streamer from Australia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,8 +65,9 @@ const indexMeta = `
 `;
 const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
 fs.writeFileSync(path.join(outputDir, 'index.html'), indexFinal);
+console.log('Built index.html');
 
-// 404.html
+// Build 404.html
 const errorMeta = `
   <title>404 – Page Not Found</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,8 +75,9 @@ const errorMeta = `
 `;
 const errorFinal = renderPage({ titleMeta: errorMeta, content: errorTemplate });
 fs.writeFileSync(path.join(outputDir, '404.html'), errorFinal);
+console.log('Built 404.html');
 
-// Redirect pages
+// Build redirect pages (no sessionStorage logic)
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
   if (!fs.existsSync(folder)) fs.mkdirSync(folder);
@@ -99,14 +102,9 @@ links.forEach(link => {
     </div>
 
     <script>
-      if (sessionStorage.getItem("redirected") === "true") {
-        // Already redirected in this session
-      } else {
-        sessionStorage.setItem("redirected", "true");
-        setTimeout(() => {
-          window.location.href = "${link.url}";
-        }, 3000);
-      }
+      setTimeout(() => {
+        window.location.href = "${link.url}";
+      }, 3000);
     </script>
     <noscript>
       <meta http-equiv="refresh" content="3; url=${link.url}" />
@@ -115,16 +113,18 @@ links.forEach(link => {
 
   const redirectFinal = renderPage({ titleMeta: redirectMeta, content: redirectContent });
   fs.writeFileSync(filepath, redirectFinal);
+  console.log(`Built /${link.id}/index.html`);
 });
 
-// robots.txt
+// Build robots.txt
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
 fs.writeFileSync(
   path.join(outputDir, 'robots.txt'),
   `User-agent: *\nAllow: /\n${disallowed}\n\nSitemap: ${baseURL}/sitemap.xml`
 );
+console.log('Built robots.txt');
 
-// sitemap.xml
+// Build sitemap.xml
 const sitemapPages = [''];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   sitemapPages.map(page => `
@@ -136,6 +136,8 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
   </url>`).join('\n') +
   `\n</urlset>\n`;
 fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), sitemap.trim());
+console.log('Built sitemap.xml');
 
 // Copy links.json
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
+console.log('Copied links.json to /public/');
