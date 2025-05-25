@@ -73,7 +73,7 @@
   {
     "id": "tip",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Stream Tips",
+    "title": "SE Tips",
     "description": "Send Tazo a direct tip",
     "icon": "cashapp",
     "showOnHomepage": true,
