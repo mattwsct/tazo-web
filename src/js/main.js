@@ -60,7 +60,7 @@ async function checkLive() {
   } catch {}
 
   if (kickLive && currentPlatform !== 'kick') {
-    setIframe(`https://kick.com/embed/${kickUser}?muted=true&chatEnabled=false`);
+    setIframe(`https://player.kick.com/${kickUser}`);
     currentPlatform = 'kick';
   } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
     setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
