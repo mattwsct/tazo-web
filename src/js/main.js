@@ -1,42 +1,17 @@
 const kickUser = 'tazo';
 const twitchUser = 'tazo';
-
-const streamContainer = document.getElementById('stream-container');
 const streamEl = document.getElementById('stream');
-const linksEl = document.getElementById('links');
 let currentPlatform = null;
 
-// Load links from JSON
-fetch('/links.json')
-  .then(res => res.json())
-  .then(links => {
-    links
-      .filter(link => link.showOnHomepage)
-      .forEach(link => {
-        const a = document.createElement('a');
-        a.href = '/' + link.id;
-        a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition-transform transform hover:scale-[1.03]`;
-
-        const icon = link.icon
-          ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" /><span id="${link.icon}-lbl">${link.title}</span>`
-          : `<span>${link.title}</span>`;
-
-        a.innerHTML = icon;
-        linksEl.appendChild(a);
-      });
-  });
-
 function markLive(id) {
-  const lbl = document.getElementById(`${id}-lbl`);
-  if (lbl && !lbl.innerHTML.includes('●')) {
-    lbl.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
+  const label = document.getElementById(id + '-lbl');
+  if (label && !label.innerHTML.includes('●')) {
+    label.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
   }
 }
 
 function setIframe(src) {
   streamEl.innerHTML = '';
-  streamContainer.classList.remove('hidden');
-
   const iframe = document.createElement('iframe');
   iframe.src = src;
   iframe.className = 'w-full aspect-video rounded-xl shadow-lg';
@@ -46,19 +21,17 @@ function setIframe(src) {
 }
 
 async function checkLive() {
-  let kickLive = false;
-  let twitchLive = false;
+  let kickLive = false, twitchLive = false;
 
   try {
-    const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
-    const data = await res.json();
-    kickLive = !!data.livestream;
+    const kickRes = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
+    kickLive = !!(await kickRes.json()).livestream;
     if (kickLive) markLive('kick');
   } catch {}
 
   try {
-    const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
-    twitchLive = text.toLowerCase().includes('is live');
+    const twitchText = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
+    twitchLive = twitchText.toLowerCase().includes('is live');
     if (twitchLive) markLive('twitch');
   } catch {}
 
@@ -68,12 +41,12 @@ async function checkLive() {
   } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
     setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
     currentPlatform = 'twitch';
-  } else if (!kickLive && !twitchLive) {
-    if (currentPlatform) streamEl.innerHTML = '';
-    streamContainer.classList.add('hidden');
+  } else if (!kickLive && !twitchLive && currentPlatform) {
+    streamEl.innerHTML = '';
     currentPlatform = null;
   }
 }
 
+// Auto-check every 60 seconds
 checkLive();
 setInterval(checkLive, 60000);
