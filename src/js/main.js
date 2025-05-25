@@ -4,7 +4,7 @@ const streamEl = document.getElementById('stream');
 const linksEl = document.getElementById('links');
 let currentPlatform = null;
 
-// Render links from JSON
+// Render homepage links
 fetch('/links.json')
   .then(res => res.json())
   .then(links => {
@@ -12,12 +12,16 @@ fetch('/links.json')
       const a = document.createElement('a');
       a.href = '/' + link.id;
       a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03]`;
+
       if (link.icon) {
-        a.innerHTML = `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
-                       <span id="${link.icon}-lbl">${link.title}</span>`;
+        a.innerHTML = `
+          <img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
+          <span id="${link.icon}-lbl">${link.title}</span>
+        `;
       } else {
         a.innerHTML = `<span>${link.title}</span>`;
       }
+
       linksEl.appendChild(a);
     });
   });
