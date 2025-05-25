@@ -73,7 +73,7 @@
   {
     "id": "tip",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "StreamElements Tips",
+    "title": "Stream Tips",
     "description": "Send Tazo a direct tip",
     "icon": "cashapp",
     "showOnHomepage": true,
@@ -118,7 +118,7 @@
   {
     "id": "wishlist",
     "url": "https://www.amazon.co.jp/hz/wishlist/ls/2H67SISIKU69Y",
-    "title": "Amazon Wishlist",
+    "title": "Wishlist",
     "description": "Send a gift to Tazo",
     "icon": "amazon",
     "showOnHomepage": true,
