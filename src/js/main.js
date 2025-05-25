@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const kickUser = 'tazo';
   const twitchUser = 'tazo';
+  const streamWrapper = document.getElementById('streamWrapper');
+  const streamLabel = document.getElementById('streamLabel');
   const streamEl = document.getElementById('stream');
   const linksEl = document.getElementById('links');
   let currentPlatform = null;
@@ -38,11 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     streamEl.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = src;
-    iframe.className = 'w-full aspect-video rounded-xl shadow-lg';
+    iframe.className = 'w-full aspect-video rounded-lg';
     iframe.allowFullscreen = true;
     iframe.loading = 'lazy';
     streamEl.appendChild(iframe);
-    streamEl.classList.remove('hidden');
+    streamWrapper.classList.remove('hidden');
   }
 
   async function checkLive() {
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPlatform = 'twitch';
     } else if (!kickLive && !twitchLive && currentPlatform) {
       streamEl.innerHTML = '';
-      streamEl.classList.add('hidden');
+      streamWrapper.classList.add('hidden');
       currentPlatform = null;
     }
   }
