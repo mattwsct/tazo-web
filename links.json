@@ -80,7 +80,7 @@
     "bg": "from-[#1e90ff] to-[#7e5bef]"
   },
   {
-    "id": "kickbot",
+    "id": "tts",
     "url": "https://kickbot.com/tips/tazo",
     "title": "KickBot TTS",
     "description": "Send a text-to-speech tip via KickBot",
