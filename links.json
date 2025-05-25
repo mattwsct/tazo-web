@@ -21,7 +21,7 @@
     "id": "parti",
     "url": "https://parti.com/creator/parti/Tazo",
     "title": "Parti",
-    "description": "Alternate platform for Tazo's livestreams",
+    "description": "Another platform for Tazo's livestreams",
     "showOnHomepage": false,
     "bg": "from-[#fde68a] to-[#facc15]"
   },
@@ -64,7 +64,7 @@
   {
     "id": "discord",
     "url": "https://discord.gg/cEhQQR5WgY",
-    "title": "Join Discord",
+    "title": "Discord",
     "description": "Hang out in Tazo’s community server",
     "icon": "discord",
     "showOnHomepage": true,
@@ -73,7 +73,7 @@
   {
     "id": "tip",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "SE Tips",
+    "title": "Tip with SE",
     "description": "Support Tazo directly through StreamElements",
     "icon": "cashapp",
     "showOnHomepage": true,
@@ -82,7 +82,7 @@
   {
     "id": "tts",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "TTS Tip",
+    "title": "Tip with KickBot",
     "description": "Send a KickBot TTS message to Tazo",
     "icon": "streamlabs",
     "showOnHomepage": true,
