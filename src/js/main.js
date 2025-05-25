@@ -25,6 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
           a.innerHTML = `<span>${link.title}</span>`;
         }
 
+        a.addEventListener('click', () => {
+          gtag?.('event', 'click', {
+            event_category: 'Link',
+            event_label: link.title,
+            value: 1
+          });
+        });
+
         linksEl.appendChild(a);
       });
     });
@@ -36,14 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function setIframe(src) {
+  function setIframe(src, platform) {
     streamEl.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = src;
-    iframe.className = 'w-full aspect-video rounded-lg';
+    iframe.className = 'w-full aspect-video rounded-xl';
     iframe.allowFullscreen = true;
     iframe.loading = 'lazy';
     streamEl.appendChild(iframe);
+
+    // Remove existing glow if any
+    streamWrapper.querySelector('.stream-glow')?.remove();
+
+    // Add dynamic glow color
+    const glowColor = platform === 'kick' ? 'bg-green-500' : 'bg-purple-500';
+    const glowDiv = document.createElement('div');
+    glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl`;
+    streamWrapper.querySelector('.relative.z-10').prepend(glowDiv);
+
     streamWrapper.classList.remove('hidden');
   }
 
@@ -63,13 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {}
 
     if (kickLive && currentPlatform !== 'kick') {
-      setIframe(`https://player.kick.com/${kickUser}`);
       currentPlatform = 'kick';
+      setIframe(`https://player.kick.com/${kickUser}`, 'kick');
     } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
-      setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`);
       currentPlatform = 'twitch';
+      setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
     } else if (!kickLive && !twitchLive && currentPlatform) {
       streamEl.innerHTML = '';
+      streamWrapper.querySelector('.stream-glow')?.remove();
       streamWrapper.classList.add('hidden');
       currentPlatform = null;
     }
