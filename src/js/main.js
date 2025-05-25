@@ -5,7 +5,7 @@ const linksEl = document.getElementById('links');
 let currentPlatform = null;
 
 // Render homepage links
-fetch('/links.json')
+fetch('links.json')
   .then(res => res.json())
   .then(links => {
     links.filter(l => l.showOnHomepage).forEach(link => {
