@@ -82,7 +82,7 @@
   {
     "id": "tts",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "KickBot TTS",
+    "title": "KickBot Tips",
     "description": "Send a text-to-speech tip via KickBot",
     "icon": "streamlabs",
     "showOnHomepage": true,
