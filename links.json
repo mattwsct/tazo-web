@@ -86,7 +86,7 @@
     "description": "Send a text-to-speech tip via KickBot",
     "icon": "streamlabs",
     "showOnHomepage": true,
-    "bg": "from-[#bbf7d0] to-[#4ade80]"
+    "bg": "from-[#22c55e] to-[#15803d]"
   },
   {
     "id": "paypal",
