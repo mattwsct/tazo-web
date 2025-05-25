@@ -75,7 +75,6 @@
     "url": "https://streamelements.com/tazo/tip",
     "title": "StreamElements Tips",
     "description": "Send Tazo a direct tip",
-    "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#facc15] to-[#ca8a04]"
   },
