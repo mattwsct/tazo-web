@@ -1,25 +1,38 @@
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-X906823W60"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-X906823W60');
-</script>
-
-
+<!-- Favicon and preload -->
 <link rel="icon" href="/assets/images/profile.jpg" />
 <link rel="preload" as="image" href="/assets/images/profile.jpg" />
 
-<!-- Performance enhancements -->
+<!-- Google Fonts: Preload and load -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<meta name="referrer" content="no-referrer" />
-
-<!-- Fonts and Tailwind -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+<!-- Optional: Prevent flash of unstyled text -->
+<style>
+  html {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  html.fonts-loaded {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+</style>
+<script>
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      document.documentElement.classList.add('fonts-loaded');
+    });
+  } else {
+    document.documentElement.classList.add('fonts-loaded');
+  }
+</script>
+
+<!-- Tailwind and meta -->
+<meta name="referrer" content="no-referrer" />
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Animation support -->
