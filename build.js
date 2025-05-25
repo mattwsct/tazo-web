@@ -6,23 +6,19 @@ const linksPath = path.join(__dirname, 'links.json');
 const srcDir = path.join(__dirname, 'src');
 const outputDir = path.join(__dirname, 'public');
 
-// Partials
+// Load partials and templates
 const layout = fs.readFileSync(path.join(srcDir, 'layouts/layout.html'), 'utf-8');
 const head = fs.readFileSync(path.join(srcDir, 'partials/head.html'), 'utf-8');
 const hero = fs.readFileSync(path.join(srcDir, 'partials/hero.html'), 'utf-8');
-
-// Templates
 const indexTemplate = fs.readFileSync(path.join(srcDir, 'index.template.html'), 'utf-8');
 const errorTemplate = fs.readFileSync(path.join(srcDir, '404.template.html'), 'utf-8');
-
-// Links
 const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
 
-// Clean and recreate public dir
+// Rebuild /public
 if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir);
 
-// Copy all static files
+// Copy static files (except partials + templates)
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
   for (const item of fs.readdirSync(src)) {
@@ -37,8 +33,9 @@ function copyDir(src, dest) {
   }
 }
 copyDir(srcDir, outputDir);
-console.log('Copied static files from src/ to public/');
+console.log('Copied static assets.');
 
+// Render full pages
 function renderPage({ titleMeta, content }) {
   return layout
     .replace('{{head}}', head)
@@ -47,27 +44,27 @@ function renderPage({ titleMeta, content }) {
     .replace('{{content}}', content);
 }
 
-// Build index.html
+// Index page
 const indexMeta = `
-  <title>Tazo | IRL Streamer from Australia</title>
+  <title>Tazo | Livestreamer from Australia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tazo is a livestreamer based in Australia — streaming on Kick, Twitch, and more as HyperTazo." />
+  <meta name="description" content="Tazo is a livestreamer based in Australia — streaming on Kick, Twitch, and more." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Tazo" />
-  <meta property="og:title" content="Tazo | IRL Streamer from Australia" />
-  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — IRL content, travel, livestreams, and more." />
+  <meta property="og:title" content="Tazo | Livestreamer from Australia" />
+  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — livestream content, travel, and more." />
   <meta property="og:image" content="${baseURL}/assets/images/profile.jpg" />
   <meta property="og:url" content="${baseURL}/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tazo | IRL Streamer from Australia" />
-  <meta name="twitter:description" content="Streaming live on Kick & Twitch — HyperTazo explores Australia, Asia, and the world." />
+  <meta name="twitter:title" content="Tazo | Livestreamer from Australia" />
+  <meta name="twitter:description" content="Streaming live on Kick & Twitch — exploring Australia, Asia, and beyond." />
   <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg" />
 `;
 const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
 fs.writeFileSync(path.join(outputDir, 'index.html'), indexFinal);
 console.log('Built index.html');
 
-// Build 404.html
+// 404 page
 const errorMeta = `
   <title>404 – Page Not Found</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -77,11 +74,10 @@ const errorFinal = renderPage({ titleMeta: errorMeta, content: errorTemplate });
 fs.writeFileSync(path.join(outputDir, '404.html'), errorFinal);
 console.log('Built 404.html');
 
-// Build redirect pages (no sessionStorage logic)
+// Redirect pages
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
-  if (!fs.existsSync(folder)) fs.mkdirSync(folder);
-  const filepath = path.join(folder, 'index.html');
+  fs.mkdirSync(folder, { recursive: true });
 
   const redirectMeta = `
     <title>Redirecting to ${link.title}</title>
@@ -112,11 +108,11 @@ links.forEach(link => {
   `;
 
   const redirectFinal = renderPage({ titleMeta: redirectMeta, content: redirectContent });
-  fs.writeFileSync(filepath, redirectFinal);
+  fs.writeFileSync(path.join(folder, 'index.html'), redirectFinal);
   console.log(`Built /${link.id}/index.html`);
 });
 
-// Build robots.txt
+// robots.txt
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
 fs.writeFileSync(
   path.join(outputDir, 'robots.txt'),
@@ -124,7 +120,7 @@ fs.writeFileSync(
 );
 console.log('Built robots.txt');
 
-// Build sitemap.xml
+// sitemap.xml
 const sitemapPages = [''];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   sitemapPages.map(page => `
@@ -138,6 +134,6 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), sitemap.trim());
 console.log('Built sitemap.xml');
 
-// Copy links.json
+// links.json
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
-console.log('Copied links.json to /public/');
+console.log('Copied links.json.');

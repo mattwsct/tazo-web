@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const kickUser = 'tazo';
   const twitchUser = 'tazo';
   const streamWrapper = document.getElementById('streamWrapper');
-  const streamLabel = document.getElementById('streamLabel');
   const streamEl = document.getElementById('stream');
   const linksEl = document.getElementById('links');
   let currentPlatform = null;
@@ -11,34 +10,34 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('links.json')
     .then(res => res.json())
     .then(links => {
-      links.filter(l => l.showOnHomepage).forEach(link => {
-        const a = document.createElement('a');
-        a.href = '/' + link.id;
-        a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03]`;
+      links
+        .filter(link => link.showOnHomepage)
+        .forEach(link => {
+          const a = document.createElement('a');
+          a.href = `/${link.id}`;
+          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03]`;
 
-        if (link.icon) {
-          a.innerHTML = `
-            <img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
-            <span id="${link.icon}-lbl">${link.title}</span>
-          `;
-        } else {
-          a.innerHTML = `<span>${link.title}</span>`;
-        }
+          const icon = link.icon
+            ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
+               <span id="${link.icon}-lbl">${link.title}</span>`
+            : `<span>${link.title}</span>`;
 
-        a.addEventListener('click', () => {
-          gtag?.('event', 'click', {
-            event_category: 'Link',
-            event_label: link.title,
-            value: 1
+          a.innerHTML = icon;
+
+          a.addEventListener('click', () => {
+            gtag?.('event', 'click', {
+              event_category: 'Link',
+              event_label: link.title,
+              value: 1
+            });
           });
-        });
 
-        linksEl.appendChild(a);
-      });
+          linksEl.appendChild(a);
+        });
     });
 
   function markLive(id) {
-    const label = document.getElementById(id + '-lbl');
+    const label = document.getElementById(`${id}-lbl`);
     if (label && !label.innerHTML.includes('●')) {
       label.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
     }
@@ -46,13 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function unmarkLive() {
     ['kick', 'twitch'].forEach(id => {
-      const label = document.getElementById(id + '-lbl');
+      const label = document.getElementById(`${id}-lbl`);
       if (label) label.innerHTML = label.innerHTML.replace(/ <span.*<\/span>/, '');
     });
   }
 
   function setIframe(src, platform) {
     streamEl.innerHTML = '';
+
     const iframe = document.createElement('iframe');
     iframe.src = src;
     iframe.className = 'w-full aspect-video rounded-xl';
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     iframe.loading = 'lazy';
     streamEl.appendChild(iframe);
 
-    // Remove existing glow if any
+    // Remove old glow
     streamWrapper.querySelector('.stream-glow')?.remove();
 
-    // Add dynamic glow color
+    // Add new glow
     const glowColor = platform === 'kick' ? 'bg-green-500' : 'bg-purple-500';
     const glowDiv = document.createElement('div');
     glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl`;
@@ -73,17 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function checkLive() {
-    let kickLive = false, twitchLive = false;
+    let kickLive = false;
+    let twitchLive = false;
 
     try {
-      const kickRes = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
-      kickLive = !!(await kickRes.json()).livestream;
+      const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
+      const data = await res.json();
+      kickLive = !!data.livestream;
       if (kickLive) markLive('kick');
     } catch {}
 
     try {
-      const twitchText = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
-      twitchLive = twitchText.toLowerCase().includes('is live');
+      const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
+      twitchLive = text.toLowerCase().includes('is live');
       if (twitchLive) markLive('twitch');
     } catch {}
 
