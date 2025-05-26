@@ -20,7 +20,17 @@
     opacity: 1;
     transition: opacity 0.2s ease;
   }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-bg {
+    background: linear-gradient(135deg, #00c3ff 0%, #8e00ff 100%);
+  }
 </style>
+
 <script>
   if (document.fonts) {
     document.fonts.ready.then(() => {
@@ -34,11 +44,3 @@
 <!-- Tailwind and meta -->
 <meta name="referrer" content="no-referrer" />
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Animation support -->
-<style>
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-</style>
