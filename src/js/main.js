@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const glowColor = platform === 'kick' ? 'bg-green-500' : 'bg-purple-500';
     const glowDiv = document.createElement('div');
-    glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl`;
+    glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl z-0`;
     streamWrapper.querySelector('.relative.z-10').prepend(glowDiv);
 
     streamWrapper.classList.remove('hidden');

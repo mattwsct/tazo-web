@@ -90,7 +90,7 @@
     "description": "Send a message or media via PowerChat",
     "showOnHomepage": true,
     "liveOnly": true,
-    "bg": "from-[#00C2FF] to-[#007AFF]",
+    "bg": "from-[#38bdf8] to-[#0ea5e9]",
     "aliases": ["media"]
   },
   {
