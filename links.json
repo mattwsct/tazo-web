@@ -86,9 +86,9 @@
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
-    "title": "Tip for PowerChat Media",
+    "title": "Tip for Media",
     "description": "Send a message or media via PowerChat",
-    "showOnHomepage": false,
+    "showOnHomepage": true,
     "liveOnly": true,
     "bg": "from-[#00C2FF] to-[#007AFF]",
     "aliases": ["media"]
@@ -96,7 +96,7 @@
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip for StreamElements Music",
+    "title": "Tip for Music",
     "description": "Support Tazo directly through StreamElements",
     "showOnHomepage": true,
     "liveOnly": true,
