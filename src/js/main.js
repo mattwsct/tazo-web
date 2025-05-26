@@ -9,11 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPlatform = null;
 
   const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
-  const liveOnlyLinks = ['tip', 'tts'];
-
+  
   const liveLinkContainer = document.createElement('div');
   liveLinkContainer.id = 'liveLinks';
-  liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-6 hidden';
+  liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-3 mb-6 hidden';
   streamWrapper.appendChild(liveLinkContainer);
 
   // Render homepage links
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           });
 
-          if (liveOnlyLinks.includes(link.id)) {
+          if (link.liveOnly) {
             a.classList.add('live-only-link');
             a.style.display = 'none';
             liveLinkContainer.appendChild(a);

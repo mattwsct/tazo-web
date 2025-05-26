@@ -6,8 +6,7 @@
     "description": "Tazo is live or streaming on Kick",
     "icon": "kick",
     "showOnHomepage": true,
-    "bg": "from-[#53fc18] to-[#2f8f0b]",
-    "aliases": ["k"]
+    "bg": "from-[#53fc18] to-[#2f8f0b]"
   },
   {
     "id": "twitch",
@@ -16,8 +15,7 @@
     "description": "Tazo’s IRL and variety streams on Twitch",
     "icon": "twitch",
     "showOnHomepage": true,
-    "bg": "from-[#9146FF] to-[#6441A5]",
-    "aliases": ["tw"]
+    "bg": "from-[#9146FF] to-[#6441A5]"
   },
   {
     "id": "parti",
@@ -44,8 +42,7 @@
     "description": "Catch short clips from Tazo’s streams",
     "icon": "tiktok",
     "showOnHomepage": true,
-    "bg": "from-[#25F4EE] to-[#FE2C55]",
-    "aliases": ["tt"]
+    "bg": "from-[#25F4EE] to-[#FE2C55]"
   },
   {
     "id": "instagram",
@@ -74,28 +71,26 @@
     "description": "Hang out in Tazo’s community server",
     "icon": "discord",
     "showOnHomepage": true,
-    "bg": "from-[#5865F2] to-[#404EED]",
-    "aliases": ["chat"]
+    "bg": "from-[#5865F2] to-[#404EED]"
   },
   {
     "id": "tip",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip with SE",
+    "title": "TTS / Song Requests",
     "description": "Support Tazo directly through StreamElements",
-    "icon": "cashapp",
     "showOnHomepage": true,
+    "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["donate", "se"]
+    "aliases": ["donate", "music", "media"]
   },
   {
     "id": "tts",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "Tip with KickBot",
+    "title": "KickBot AI TTS",
     "description": "Send a KickBot TTS message to Tazo",
-    "icon": "streamlabs",
     "showOnHomepage": true,
-    "bg": "from-[#22c55e] to-[#15803d]",
-    "aliases": ["speak", "kickbot"]
+    "liveOnly": true,
+    "bg": "from-[#22c55e] to-[#15803d]"
   },
   {
     "id": "paypal",
@@ -104,8 +99,7 @@
     "description": "Send a one-time tip through PayPal",
     "icon": "paypal",
     "showOnHomepage": true,
-    "bg": "from-[#003087] to-[#0070BA]",
-    "aliases": ["pp"]
+    "bg": "from-[#003087] to-[#0070BA]"
   },
   {
     "id": "kofi",
@@ -124,8 +118,7 @@
     "description": "Everything Tazo uses to stream",
     "icon": "kit",
     "showOnHomepage": true,
-    "bg": "from-zinc-600 to-zinc-800",
-    "aliases": ["equipment", "setup"]
+    "bg": "from-zinc-600 to-zinc-800"
   },
   {
     "id": "wishlist",
@@ -134,7 +127,6 @@
     "description": "Send a gift directly to Tazo",
     "icon": "amazon",
     "showOnHomepage": true,
-    "bg": "from-[#ff9900] to-[#ff5e00]",
-    "aliases": ["gifts"]
+    "bg": "from-[#ff9900] to-[#ff5e00]"
   }
 ]
