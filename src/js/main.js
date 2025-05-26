@@ -1,3 +1,5 @@
+// ✅ Updated main.js with direct links, rel="me", and TTS/Tip under embed when live in a styled container
+
 document.addEventListener('DOMContentLoaded', () => {
   const kickUser = 'tazo';
   const twitchUser = 'tazo';
@@ -5,6 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const streamEl = document.getElementById('stream');
   const linksEl = document.getElementById('links');
   let currentPlatform = null;
+
+  const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
+  const liveOnlyLinks = ['tip', 'tts'];
+
+  const liveLinkContainer = document.createElement('div');
+  liveLinkContainer.id = 'liveLinks';
+  liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-6 hidden';
+  streamWrapper.appendChild(liveLinkContainer);
 
   // Render homepage links
   fetch('links.json')
@@ -14,7 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .filter(link => link.showOnHomepage)
         .forEach(link => {
           const a = document.createElement('a');
-          a.href = `/${link.id}`;
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = identityPlatforms.includes(link.id) ? 'me noopener' : 'noopener';
           a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03]`;
 
           const icon = link.icon
@@ -32,22 +44,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           });
 
-          linksEl.appendChild(a);
+          if (liveOnlyLinks.includes(link.id)) {
+            a.classList.add('live-only-link');
+            a.style.display = 'none';
+            liveLinkContainer.appendChild(a);
+          } else {
+            linksEl.appendChild(a);
+          }
         });
     });
 
   function markLive(id) {
     const label = document.getElementById(`${id}-lbl`);
     if (label && !label.innerHTML.includes('●')) {
-      label.innerHTML += ' <span class="text-red-500 animate-pulse">●</span>';
+      label.innerHTML += ' <span class="text-red-500 animate-pulse font-bold">● LIVE</span>';
     }
   }
 
   function unmarkLive() {
     ['kick', 'twitch'].forEach(id => {
       const label = document.getElementById(`${id}-lbl`);
-      if (label) label.innerHTML = label.innerHTML.replace(/ <span.*<\/span>/, '');
+      if (label) {
+        label.innerHTML = label.innerHTML.replace(/ <span.*?<\/span>/, '');
+      }
     });
+    document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'none');
+    document.getElementById('liveLinks').classList.add('hidden');
   }
 
   function setIframe(src, platform) {
@@ -60,16 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
     iframe.loading = 'lazy';
     streamEl.appendChild(iframe);
 
-    // Remove old glow
     streamWrapper.querySelector('.stream-glow')?.remove();
 
-    // Add new glow
     const glowColor = platform === 'kick' ? 'bg-green-500' : 'bg-purple-500';
     const glowDiv = document.createElement('div');
     glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl`;
     streamWrapper.querySelector('.relative.z-10').prepend(glowDiv);
 
     streamWrapper.classList.remove('hidden');
+    document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+    document.getElementById('liveLinks').classList.remove('hidden');
   }
 
   async function checkLive() {

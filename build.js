@@ -1,3 +1,4 @@
+// 🔧 Updated build.js with alias support
 const fs = require('fs');
 const path = require('path');
 
@@ -35,7 +36,6 @@ function copyDir(src, dest) {
 copyDir(srcDir, outputDir);
 console.log('Copied static assets.');
 
-// Render full pages
 function renderPage({ titleMeta, content }) {
   return layout
     .replace('{{head}}', head)
@@ -44,7 +44,6 @@ function renderPage({ titleMeta, content }) {
     .replace('{{content}}', content);
 }
 
-// Index page
 const indexMeta = `
   <title>Tazo | Livestreamer from Australia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,7 +63,6 @@ const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
 fs.writeFileSync(path.join(outputDir, 'index.html'), indexFinal);
 console.log('Built index.html');
 
-// 404 page
 const errorMeta = `
   <title>404 – Page Not Found</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -74,7 +72,7 @@ const errorFinal = renderPage({ titleMeta: errorMeta, content: errorTemplate });
 fs.writeFileSync(path.join(outputDir, '404.html'), errorFinal);
 console.log('Built 404.html');
 
-// Redirect pages
+// Build redirect pages for each link
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
   fs.mkdirSync(folder, { recursive: true });
@@ -100,19 +98,28 @@ links.forEach(link => {
     <script>
       setTimeout(() => {
         window.location.href = "${link.url}";
-      }, 3000);
+      }, 2000);
     </script>
     <noscript>
-      <meta http-equiv="refresh" content="3; url=${link.url}" />
+      <meta http-equiv="refresh" content="2; url=${link.url}" />
     </noscript>
   `;
 
   const redirectFinal = renderPage({ titleMeta: redirectMeta, content: redirectContent });
   fs.writeFileSync(path.join(folder, 'index.html'), redirectFinal);
   console.log(`Built /${link.id}/index.html`);
+
+  // Build alias pages
+  if (link.aliases && Array.isArray(link.aliases)) {
+    link.aliases.forEach(alias => {
+      const aliasFolder = path.join(outputDir, alias);
+      fs.mkdirSync(aliasFolder, { recursive: true });
+      fs.writeFileSync(path.join(aliasFolder, 'index.html'), redirectFinal);
+      console.log(`Built /${alias}/index.html`);
+    });
+  }
 });
 
-// robots.txt
 const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
 fs.writeFileSync(
   path.join(outputDir, 'robots.txt'),
@@ -120,7 +127,6 @@ fs.writeFileSync(
 );
 console.log('Built robots.txt');
 
-// sitemap.xml
 const sitemapPages = [''];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   sitemapPages.map(page => `
@@ -134,6 +140,5 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), sitemap.trim());
 console.log('Built sitemap.xml');
 
-// links.json
 fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
 console.log('Copied links.json.');
