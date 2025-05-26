@@ -76,7 +76,7 @@
   {
     "id": "kickbot",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "KickBot AI TTS",
+    "title": "Tip for AI TTS",
     "description": "Send a KickBot TTS message to Tazo",
     "showOnHomepage": true,
     "liveOnly": true,
@@ -86,22 +86,22 @@
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
-    "title": "PowerChat Media",
+    "title": "Tip for PowerChat Media",
     "description": "Send a message or media via PowerChat",
-    "showOnHomepage": true,
-    "liveOnly": false,
-    "bg": "from-[#facc15] to-[#eab308]",
+    "showOnHomepage": false,
+    "liveOnly": true,
+    "bg": "from-[#00C2FF] to-[#007AFF]",
     "aliases": ["media"]
   },
   {
-    "id": "se",
+    "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "StreamElements Music",
+    "title": "Tip for StreamElements Music",
     "description": "Support Tazo directly through StreamElements",
     "showOnHomepage": true,
     "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["tip", "donate", "music"]
+    "aliases": ["se", "tip", "donate", "music"]
   },
   {
     "id": "paypal",
@@ -127,7 +127,6 @@
     "url": "https://kit.co/HyperTazo/streaming-gear",
     "title": "Streaming Gear",
     "description": "Everything Tazo uses to stream",
-    "icon": "kit",
     "showOnHomepage": true,
     "bg": "from-zinc-600 to-zinc-800"
   },
