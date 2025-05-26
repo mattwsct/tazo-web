@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPlatform = null;
 
   const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
-  
+
   const liveLinkContainer = document.createElement('div');
   liveLinkContainer.id = 'liveLinks';
   liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-3 mb-6 hidden';
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
           a.href = link.url;
           a.target = '_blank';
           a.rel = identityPlatforms.includes(link.id) ? 'me noopener' : 'noopener';
-          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03]`;
+          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
 
           const icon = link.icon
             ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
