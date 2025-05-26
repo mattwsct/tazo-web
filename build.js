@@ -1,13 +1,12 @@
-// 🔧 Updated build.js with alias support
+// 🔧 Updated build.js with alias support and polished redirect styling
 const fs = require('fs');
 const path = require('path');
 
-const baseURL = 'https://tazo.wtf';
+const baseURL = process.env.BASE_URL || 'https://tazo.wtf';
 const linksPath = path.join(__dirname, 'links.json');
 const srcDir = path.join(__dirname, 'src');
 const outputDir = path.join(__dirname, 'public');
 
-// Load partials and templates
 const layout = fs.readFileSync(path.join(srcDir, 'layouts/layout.html'), 'utf-8');
 const head = fs.readFileSync(path.join(srcDir, 'partials/head.html'), 'utf-8');
 const hero = fs.readFileSync(path.join(srcDir, 'partials/hero.html'), 'utf-8');
@@ -15,11 +14,9 @@ const indexTemplate = fs.readFileSync(path.join(srcDir, 'index.template.html'), 
 const errorTemplate = fs.readFileSync(path.join(srcDir, '404.template.html'), 'utf-8');
 const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
 
-// Rebuild /public
 if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir);
 
-// Copy static files (except partials + templates)
 function copyDir(src, dest) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
   for (const item of fs.readdirSync(src)) {
@@ -72,7 +69,6 @@ const errorFinal = renderPage({ titleMeta: errorMeta, content: errorTemplate });
 fs.writeFileSync(path.join(outputDir, '404.html'), errorFinal);
 console.log('Built 404.html');
 
-// Build redirect pages for each link
 links.forEach(link => {
   const folder = path.join(outputDir, link.id);
   fs.mkdirSync(folder, { recursive: true });
@@ -85,16 +81,17 @@ links.forEach(link => {
   `;
 
   const redirectContent = `
-    <div class="flex flex-col items-center justify-center text-center py-12 px-4">
-      <p class="text-lg">Redirecting to <strong>${link.title}</strong>…</p>
+    <div class="flex flex-col items-center justify-center text-center min-h-[50vh] py-12 px-4">
+      <p class="text-lg text-white animate-pulse">
+        Redirecting to <strong>${link.title}</strong>…
+      </p>
       <p class="text-sm text-zinc-400 mt-2">
         If nothing happens, <a href="${link.url}" class="underline text-accent">click here</a>.
       </p>
-      <p class="text-xs text-zinc-500 mt-6">
-        <a href="/" class="underline text-zinc-500">← Back to homepage</a>
+      <p class="text-xs text-zinc-600 mt-6">
+        <a href="/" class="underline hover:text-accent transition">← Back to homepage</a>
       </p>
     </div>
-
     <script>
       setTimeout(() => {
         window.location.href = "${link.url}";
@@ -109,7 +106,6 @@ links.forEach(link => {
   fs.writeFileSync(path.join(folder, 'index.html'), redirectFinal);
   console.log(`Built /${link.id}/index.html`);
 
-  // Build alias pages
   if (link.aliases && Array.isArray(link.aliases)) {
     link.aliases.forEach(alias => {
       const aliasFolder = path.join(outputDir, alias);
