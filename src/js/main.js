@@ -1,5 +1,3 @@
-// ✅ Updated main.js with direct links, rel="me", and TTS/Tip under embed when live in a styled container
-
 document.addEventListener('DOMContentLoaded', () => {
   const kickUser = 'tazo';
   const twitchUser = 'tazo';
@@ -8,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const linksEl = document.getElementById('links');
   let currentPlatform = null;
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const debug = urlParams.get('debug');
+  const debugMode = ['1', 'on', 'true'].includes(debug);
   const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
 
   const liveLinkContainer = document.createElement('div');
@@ -94,21 +95,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function checkLive() {
-    let kickLive = false;
-    let twitchLive = false;
+    let kickLive = debug === 'kick' || debug === 'all';
+    let twitchLive = debug === 'twitch' || debug === 'all';
 
-    try {
-      const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
-      const data = await res.json();
-      kickLive = !!data.livestream;
-      if (kickLive) markLive('kick');
-    } catch {}
+    if (!kickLive) {
+      try {
+        const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
+        const data = await res.json();
+        kickLive = !!data.livestream;
+        if (kickLive) markLive('kick');
+      } catch {}
+    } else {
+      markLive('kick');
+    }
 
-    try {
-      const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
-      twitchLive = text.toLowerCase().includes('is live');
-      if (twitchLive) markLive('twitch');
-    } catch {}
+    if (!twitchLive) {
+      try {
+        const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
+        twitchLive = text.toLowerCase().includes('is live');
+        if (twitchLive) markLive('twitch');
+      } catch {}
+    } else {
+      markLive('twitch');
+    }
 
     if (kickLive && currentPlatform !== 'kick') {
       currentPlatform = 'kick';
@@ -116,15 +125,56 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
       currentPlatform = 'twitch';
       setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
-    } else if (!kickLive && !twitchLive && currentPlatform) {
+    } else if (!kickLive && !twitchLive && !debug && currentPlatform) {
       streamEl.innerHTML = '';
       streamWrapper.querySelector('.stream-glow')?.remove();
       streamWrapper.classList.add('hidden');
       currentPlatform = null;
       unmarkLive();
     }
+
+    if (kickLive || twitchLive) {
+      document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+      document.getElementById('liveLinks').classList.remove('hidden');
+    }
   }
 
   checkLive();
   setInterval(checkLive, 60000);
+
+  // ✅ Inject Debug Toggle Panel if ?debug=1
+  if (debugMode) {
+    const panel = document.createElement('div');
+    panel.innerHTML = `
+      <div class="fixed bottom-4 right-4 bg-zinc-800 text-white rounded-lg p-3 shadow-xl z-50 space-y-2 text-sm font-sans w-40">
+        <div class="font-semibold text-center">🛠 Debug Mode</div>
+        <button id="dbg-kick" class="w-full bg-green-600 hover:bg-green-700 py-1 rounded text-sm">Show Kick</button>
+        <button id="dbg-twitch" class="w-full bg-purple-600 hover:bg-purple-700 py-1 rounded text-sm">Show Twitch</button>
+        <button id="dbg-hide" class="w-full bg-zinc-600 hover:bg-zinc-700 py-1 rounded text-sm">Hide All</button>
+      </div>
+    `;
+    document.body.appendChild(panel);
+
+    document.getElementById('dbg-kick').onclick = () => {
+      setIframe(`https://player.kick.com/${kickUser}`, 'kick');
+      markLive('kick');
+      streamWrapper.classList.remove('hidden');
+      document.getElementById('liveLinks').classList.remove('hidden');
+      document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+    };
+
+    document.getElementById('dbg-twitch').onclick = () => {
+      setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
+      markLive('twitch');
+      streamWrapper.classList.remove('hidden');
+      document.getElementById('liveLinks').classList.remove('hidden');
+      document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+    };
+
+    document.getElementById('dbg-hide').onclick = () => {
+      streamEl.innerHTML = '';
+      streamWrapper.classList.add('hidden');
+      unmarkLive();
+    };
+  }
 });
