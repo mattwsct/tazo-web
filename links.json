@@ -127,6 +127,7 @@
     "url": "https://kit.co/HyperTazo/streaming-gear",
     "title": "Streaming Gear",
     "description": "Everything Tazo uses to stream",
+    "icon": "kit",
     "showOnHomepage": true,
     "bg": "from-zinc-600 to-zinc-800"
   },
