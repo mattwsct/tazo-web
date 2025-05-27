@@ -98,7 +98,7 @@
     "url": "https://streamelements.com/tazo/tip",
     "title": "Tip for Music",
     "description": "Support Tazo directly through StreamElements",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
     "aliases": ["se", "tip", "donate", "music"]
