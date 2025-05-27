@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const text = await fetch(`https://decapi.me/twitch/status/${twitchUser.toLowerCase()}`).then(r => r.text());
-      twitchLive = text.toLowerCase().includes('is live');
+      twitchLive = !/is\s+offline/i.test(text);
     } catch {}
 
     if (kickLive) markLive('kick');
