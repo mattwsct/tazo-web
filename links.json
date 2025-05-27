@@ -69,7 +69,7 @@
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
-    "title": "Tip for TTS / Media",
+    "title": "Tip for Media Requests / TTS",
     "description": "Send a message or media via PowerChat",
     "showOnHomepage": true,
     "moveToLive": true,
@@ -79,9 +79,9 @@
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip for TTS / Music",
+    "title": "Tip for StreamElements TTS / Music",
     "description": "Support Tazo directly through StreamElements",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
     "aliases": ["se", "tip", "donate", "music"]
@@ -98,10 +98,11 @@
   {
     "id": "kofi",
     "url": "https://ko-fi.com/tazo",
-    "title": "Buy a Ko-fi",
+    "title": "Buy Tazo Coffee",
     "description": "Buy Tazo a coffee on Ko-fi",
     "icon": "kofi",
     "showOnHomepage": true,
+    "moveToLive": true,
     "bg": "from-[#ff5f5f] to-[#ff8fa3]",
     "aliases": ["coffee"]
   },
