@@ -4,14 +4,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const streamWrapper = document.getElementById('streamWrapper');
   const streamEl = document.getElementById('stream');
   const linksEl = document.getElementById('links');
-  let currentPlatform = null;
-
   const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
+  const debug = new URLSearchParams(location.search).get('debug') === '1';
+  let currentPlatform = null;
+  let forceKick = false;
+  let forceTwitch = false;
 
   const liveLinkContainer = document.createElement('div');
   liveLinkContainer.id = 'liveLinks';
   liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-3 mb-6 hidden';
   streamWrapper.appendChild(liveLinkContainer);
+
+  if (debug) {
+    const debugControls = document.createElement('div');
+    debugControls.className = 'fixed top-4 right-4 bg-zinc-900 p-4 rounded-xl z-50 flex gap-3';
+    debugControls.innerHTML = `
+      <button id="debug-kick" class="px-3 py-1 bg-green-600 text-white rounded">Toggle Kick</button>
+      <button id="debug-twitch" class="px-3 py-1 bg-purple-600 text-white rounded">Toggle Twitch</button>
+    `;
+    document.body.appendChild(debugControls);
+
+    document.getElementById('debug-kick').onclick = () => {
+      forceKick = !forceKick;
+      currentPlatform = null;
+      checkLive();
+    };
+    document.getElementById('debug-twitch').onclick = () => {
+      forceTwitch = !forceTwitch;
+      currentPlatform = null;
+      checkLive();
+    };
+  }
 
   function markLive(id) {
     const label = document.getElementById(`${id}-lbl`);
@@ -23,9 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function unmarkLive() {
     ['kick', 'twitch'].forEach(id => {
       const label = document.getElementById(`${id}-lbl`);
-      if (label) {
-        label.innerHTML = label.innerHTML.replace(/ <span.*?<\/span>/, '');
-      }
+      if (label) label.innerHTML = label.innerHTML.replace(/ <span.*?<\/span>/, '');
     });
     document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'none');
     document.getElementById('liveLinks').classList.add('hidden');
@@ -33,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setIframe(src, platform) {
     streamEl.innerHTML = '';
+    streamWrapper.querySelector('.stream-glow')?.remove();
 
     const iframe = document.createElement('iframe');
     iframe.src = src;
@@ -41,15 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     iframe.loading = 'lazy';
     streamEl.appendChild(iframe);
 
-    streamWrapper.querySelector('.stream-glow')?.remove();
-
-    const glowColor = platform === 'kick' ? 'bg-green-500' : 'bg-purple-500';
-    const glowDiv = document.createElement('div');
-    glowDiv.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${glowColor} animate-pulse rounded-xl z-0`;
-    streamWrapper.querySelector('.relative.z-10').prepend(glowDiv);
+    const glow = document.createElement('div');
+    glow.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${
+      platform === 'kick' ? 'bg-green-500' : 'bg-purple-500'
+    } animate-pulse rounded-xl z-0`;
+    streamWrapper.querySelector('.relative.z-10')?.prepend(glow);
 
     streamWrapper.classList.remove('hidden');
-    document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+    document.querySelectorAll('.live-only-link').forEach(el => (el.style.display = 'flex'));
     document.getElementById('liveLinks').classList.remove('hidden');
   }
 
@@ -57,22 +78,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let kickLive = false;
     let twitchLive = false;
 
-    try {
-      const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
-      const data = await res.json();
-      kickLive = !!data.livestream;
-    } catch {}
+    if (debug && forceKick) kickLive = true;
+    if (debug && forceTwitch) twitchLive = true;
 
-    try {
-      const text = await fetch(`https://decapi.me/twitch/status/${twitchUser.toLowerCase()}`).then(r => r.text());
-      twitchLive = !/is\s+offline/i.test(text);
-    } catch {}
+    if (!debug || (!forceKick && !forceTwitch)) {
+      try {
+        const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
+        const data = await res.json();
+        kickLive ||= !!data.livestream;
+      } catch {}
+
+      try {
+        const text = await fetch(`https://decapi.me/twitch/uptime/${twitchUser.toLowerCase()}`).then(r => r.text());
+        twitchLive ||= !/is\s+offline/i.test(text);
+      } catch {}
+    }
 
     if (kickLive) markLive('kick');
     if (twitchLive) markLive('twitch');
 
     if (kickLive || twitchLive) {
-      document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'flex');
+      document.querySelectorAll('.live-only-link').forEach(el => (el.style.display = 'flex'));
       document.getElementById('liveLinks').classList.remove('hidden');
     }
 
@@ -81,7 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
       setIframe(`https://player.kick.com/${kickUser}`, 'kick');
     } else if (!kickLive && twitchLive && currentPlatform !== 'twitch') {
       currentPlatform = 'twitch';
-      setIframe(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
+      setIframe(
+        `https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`,
+        'twitch'
+      );
     } else if (!kickLive && !twitchLive && currentPlatform) {
       streamEl.innerHTML = '';
       streamWrapper.querySelector('.stream-glow')?.remove();
@@ -91,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load and render links, then run live check
   fetch('links.json')
     .then(res => res.json())
     .then(links => {
@@ -104,12 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
           a.rel = identityPlatforms.includes(link.id) ? 'me noopener' : 'noopener';
           a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
 
-          const icon = link.icon
+          a.innerHTML = link.icon
             ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
                <span id="${link.id}-lbl">${link.title}</span>`
             : `<span id="${link.id}-lbl">${link.title}</span>`;
-
-          a.innerHTML = icon;
 
           a.addEventListener('click', () => {
             gtag?.('event', 'click', {
@@ -128,8 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-      // ✅ Delay first live check slightly to ensure DOM is ready
-      setTimeout(checkLive, 200);
+      checkLive();
       setInterval(checkLive, 60000);
     });
 });
