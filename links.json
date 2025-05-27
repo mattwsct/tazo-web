@@ -70,7 +70,7 @@
     "url": "https://kickbot.com/tips/tazo",
     "title": "Tip for AI TTS",
     "description": "Send a KickBot TTS message to Tazo",
-    "icon": "kick",
+    "icon": "cashapp",
     "showOnHomepage": false,
     "moveToLive": true,
     "bg": "from-[#22c55e] to-[#15803d]",
@@ -81,8 +81,8 @@
     "url": "https://powerchat.live/tazo",
     "title": "Tip for TTS / Media",
     "description": "Send a message or media via PowerChat",
+    "icon": "cashapp",
     "showOnHomepage": true,
-    "moveToLive": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
     "aliases": ["media", "tts"]
   },
@@ -91,8 +91,8 @@
     "url": "https://streamelements.com/tazo/tip",
     "title": "Tip for TTS / Music",
     "description": "Support Tazo directly through StreamElements",
+    "icon": "cashapp",
     "showOnHomepage": false,
-    "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
     "aliases": ["se", "tip", "donate", "music"]
   },

@@ -1,140 +1,102 @@
-// 🔧 Updated build.js with alias support and polished redirect styling
 const fs = require('fs');
 const path = require('path');
 
-const baseURL = process.env.BASE_URL || 'https://tazo.wtf';
-const linksPath = path.join(__dirname, 'links.json');
-const srcDir = path.join(__dirname, 'src');
-const outputDir = path.join(__dirname, 'public');
+const baseURL = 'https://tazo.wtf';
+const links = JSON.parse(fs.readFileSync('links.json', 'utf-8'));
+const src = 'src', out = 'public';
 
-const layout = fs.readFileSync(path.join(srcDir, 'layouts/layout.html'), 'utf-8');
-const head = fs.readFileSync(path.join(srcDir, 'partials/head.html'), 'utf-8');
-const hero = fs.readFileSync(path.join(srcDir, 'partials/hero.html'), 'utf-8');
-const indexTemplate = fs.readFileSync(path.join(srcDir, 'index.template.html'), 'utf-8');
-const errorTemplate = fs.readFileSync(path.join(srcDir, '404.template.html'), 'utf-8');
-const links = JSON.parse(fs.readFileSync(linksPath, 'utf-8'));
+const read = f => fs.readFileSync(path.join(src, f), 'utf-8');
+const layout = read('layouts/layout.html');
+const head = read('partials/head.html');
+const hero = read('partials/hero.html');
+const indexContent = read('index.template.html');
+const errorContent = read('404.template.html');
 
-if (fs.existsSync(outputDir)) fs.rmSync(outputDir, { recursive: true, force: true });
-fs.mkdirSync(outputDir);
+if (fs.existsSync(out)) fs.rmSync(out, { recursive: true });
+fs.mkdirSync(out, { recursive: true });
 
-function copyDir(src, dest) {
-  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
-  for (const item of fs.readdirSync(src)) {
-    const srcPath = path.join(src, item);
-    const destPath = path.join(dest, item);
+const copyDir = (from, to) => {
+  for (const file of fs.readdirSync(from)) {
+    const srcPath = path.join(from, file);
+    const destPath = path.join(to, file);
     const stat = fs.statSync(srcPath);
     if (stat.isDirectory()) {
-      if (!['partials', 'layouts'].includes(item)) copyDir(srcPath, destPath);
-    } else if (!item.endsWith('.template.html')) {
+      if (!['partials', 'layouts'].includes(file)) {
+        fs.mkdirSync(destPath, { recursive: true });
+        copyDir(srcPath, destPath);
+      }
+    } else if (!file.endsWith('.template.html')) {
+      fs.mkdirSync(path.dirname(destPath), { recursive: true });
       fs.copyFileSync(srcPath, destPath);
     }
   }
-}
-copyDir(srcDir, outputDir);
-console.log('Copied static assets.');
+};
+copyDir(src, out);
 
-function renderPage({ titleMeta, content }) {
-  return layout
-    .replace('{{head}}', head)
-    .replace('{{hero}}', hero)
-    .replace('{{titleMeta}}', titleMeta)
-    .replace('{{content}}', content);
-}
+const render = (meta, body) => layout
+  .replace('{{head}}', head)
+  .replace('{{hero}}', hero)
+  .replace('{{titleMeta}}', meta)
+  .replace('{{content}}', body);
 
-const indexMeta = `
+fs.writeFileSync(path.join(out, 'index.html'), render(`
   <title>Tazo | Livestreamer from Australia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Tazo is a livestreamer based in Australia — streaming on Kick, Twitch, and more." />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="Tazo" />
-  <meta property="og:title" content="Tazo | Livestreamer from Australia" />
-  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — livestream content, travel, and more." />
-  <meta property="og:image" content="${baseURL}/assets/images/profile.jpg" />
-  <meta property="og:url" content="${baseURL}/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tazo | Livestreamer from Australia" />
-  <meta name="twitter:description" content="Streaming live on Kick & Twitch — exploring Australia, Asia, and beyond." />
-  <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg" />
-`;
-const indexFinal = renderPage({ titleMeta: indexMeta, content: indexTemplate });
-fs.writeFileSync(path.join(outputDir, 'index.html'), indexFinal);
-console.log('Built index.html');
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tazo is a livestreamer based in Australia — streaming on Kick, Twitch, and more.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Tazo | Livestreamer from Australia">
+  <meta property="og:description" content="Watch Tazo live on Kick and Twitch — livestream content, travel, and more.">
+  <meta property="og:image" content="${baseURL}/assets/images/profile.jpg">
+  <meta property="og:url" content="${baseURL}/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tazo | Livestreamer from Australia">
+  <meta name="twitter:description" content="Streaming live on Kick & Twitch — exploring Australia, Asia, and beyond.">
+  <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg">
+`, indexContent));
 
-const errorMeta = `
+fs.writeFileSync(path.join(out, '404.html'), render(`
   <title>404 – Page Not Found</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex" />
-`;
-const errorFinal = renderPage({ titleMeta: errorMeta, content: errorTemplate });
-fs.writeFileSync(path.join(outputDir, '404.html'), errorFinal);
-console.log('Built 404.html');
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+`, errorContent));
 
-links.forEach(link => {
-  const folder = path.join(outputDir, link.id);
-  fs.mkdirSync(folder, { recursive: true });
+const redirectHTML = (title, url) => render(`
+  <title>Redirecting to ${title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="${url}">
+`, `
+  <div class="flex flex-col items-center justify-center text-center min-h-[50vh] py-12 px-4">
+    <p class="text-lg text-white animate-pulse">Redirecting to <strong>${title}</strong>…</p>
+    <p class="text-sm text-zinc-400 mt-2">If nothing happens, <a href="${url}" class="underline text-accent">click here</a>.</p>
+    <p class="text-xs text-zinc-600 mt-6"><a href="/" class="underline hover:text-accent transition">← Back to homepage</a></p>
+  </div>
+  <script>setTimeout(() => { location.href = "${url}" }, 2000);</script>
+  <noscript><meta http-equiv="refresh" content="2; url=${url}"></noscript>
+`);
 
-  const redirectMeta = `
-    <title>Redirecting to ${link.title}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="${link.url}" />
-  `;
-
-  const redirectContent = `
-    <div class="flex flex-col items-center justify-center text-center min-h-[50vh] py-12 px-4">
-      <p class="text-lg text-white animate-pulse">
-        Redirecting to <strong>${link.title}</strong>…
-      </p>
-      <p class="text-sm text-zinc-400 mt-2">
-        If nothing happens, <a href="${link.url}" class="underline text-accent">click here</a>.
-      </p>
-      <p class="text-xs text-zinc-600 mt-6">
-        <a href="/" class="underline hover:text-accent transition">← Back to homepage</a>
-      </p>
-    </div>
-    <script>
-      setTimeout(() => {
-        window.location.href = "${link.url}";
-      }, 2000);
-    </script>
-    <noscript>
-      <meta http-equiv="refresh" content="2; url=${link.url}" />
-    </noscript>
-  `;
-
-  const redirectFinal = renderPage({ titleMeta: redirectMeta, content: redirectContent });
-  fs.writeFileSync(path.join(folder, 'index.html'), redirectFinal);
-  console.log(`Built /${link.id}/index.html`);
-
-  if (link.aliases && Array.isArray(link.aliases)) {
-    link.aliases.forEach(alias => {
-      const aliasFolder = path.join(outputDir, alias);
-      fs.mkdirSync(aliasFolder, { recursive: true });
-      fs.writeFileSync(path.join(aliasFolder, 'index.html'), redirectFinal);
-      console.log(`Built /${alias}/index.html`);
-    });
+for (const link of links) {
+  const paths = [link.id, ...(link.aliases || [])];
+  for (const slug of paths) {
+    const folder = path.join(out, slug);
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(folder, 'index.html'), redirectHTML(link.title, link.url));
   }
-});
+}
 
-const disallowed = links.map(link => `Disallow: /${link.id}/`).join('\n');
-fs.writeFileSync(
-  path.join(outputDir, 'robots.txt'),
-  `User-agent: *\nAllow: /\n${disallowed}\n\nSitemap: ${baseURL}/sitemap.xml`
+fs.writeFileSync(path.join(out, 'robots.txt'),
+  `User-agent: *\nAllow: /\n${links.map(l => `Disallow: /${l.id}/`).join('\n')}\n\nSitemap: ${baseURL}/sitemap.xml`
 );
-console.log('Built robots.txt');
 
-const sitemapPages = [''];
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  sitemapPages.map(page => `
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>${baseURL}/${page}</loc>
+    <loc>${baseURL}/</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>`).join('\n') +
-  `\n</urlset>\n`;
-fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), sitemap.trim());
-console.log('Built sitemap.xml');
+  </url>
+</urlset>`;
+fs.writeFileSync(path.join(out, 'sitemap.xml'), sitemap.trim());
 
-fs.copyFileSync(linksPath, path.join(outputDir, 'links.json'));
-console.log('Copied links.json.');
+fs.copyFileSync('links.json', path.join(out, 'links.json'));

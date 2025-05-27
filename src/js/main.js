@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const SW = document.getElementById('streamWrapper');
   const SE = document.getElementById('stream');
   const linksEl = document.getElementById('links');
-  const liveLinksEl = document.getElementById('liveLinks');
 
   let live = { kick: false, twitch: false }, force = { kick: false, twitch: false };
   let cooldown = { kick: 0, twitch: 0 }, current = null;
@@ -16,23 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     lbl.innerHTML = lbl.textContent.replace(/\s*● LIVE/, '') + (on ? ' <span class="ml-1 text-red-500 animate-pulse font-bold">● LIVE</span>' : '');
   };
 
-  const showLive = on => {
-    liveLinksEl?.classList.toggle('hidden', !on);
-    document.querySelectorAll('.live-only-link').forEach(el => el.classList.toggle('hidden', !on));
-  };
-
   const embed = (src, plat) => {
     SE.innerHTML = '';
     SW.querySelector('.stream-glow')?.remove();
-
     SE.appendChild(Object.assign(document.createElement('iframe'), {
       src, className: 'w-full aspect-video rounded-xl', allowFullscreen: true, loading: 'lazy'
     }));
-
     const glow = document.createElement('div');
     glow.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${plat === 'kick' ? 'bg-green-500' : 'bg-purple-500'} animate-pulse rounded-xl z-0`;
     SW.querySelector('.relative.z-10')?.prepend(glow);
-
     SW.classList.remove('hidden');
     current = plat;
   };
@@ -68,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     badge('kick', live.kick);
     badge('twitch', live.twitch);
-    showLive(live.kick || live.twitch);
 
     if (live.kick) embed(`https://player.kick.com/${user.kick}`, 'kick');
     else if (live.twitch) embed(`https://player.twitch.tv/?channel=${user.twitch}&parent=tazo.wtf&muted=true`, 'twitch');
@@ -100,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       a.innerHTML = link.icon
         ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5"/><span id="${link.id}-lbl">${link.title}</span>`
         : `<span id="${link.id}-lbl">${link.title}</span>`;
-      (link.liveOnly ? liveLinksEl : linksEl).appendChild(a);
-      if (link.liveOnly) a.classList.add('live-only-link', 'hidden');
+      linksEl.appendChild(a);
     });
 
     setTimeout(() => {
