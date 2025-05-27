@@ -87,13 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function refresh() {
     ['kick', 'twitch'].forEach(id => setBadge(id, false));
+    kickLive = twitchLive = false;
 
     if (debugMode) {
       kickLive = forceKick;
       twitchLive = forceTwitch;
     } else {
       const now = Date.now();
-      kickLive = twitchLive = false;
 
       if (now > kickFailUntil) {
         try {
