@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const kickUser   = 'tazo';
+  const kickUser = 'tazo';
   const twitchUser = 'tazo';
-  const debugMode  = new URLSearchParams(location.search).get('debug') === '1';
+  const debugMode = new URLSearchParams(location.search).get('debug') === '1';
 
   const SW = document.getElementById('streamWrapper');
   const SE = document.getElementById('stream');
@@ -13,7 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const lbl = id => document.getElementById(`${id}-lbl`);
   const setBadge = (id, on) =>
-    lbl(id)?.classList[on ? 'add' : 'remove']('after:content-["●_LIVE"]', 'after:text-red-500', 'after:animate-pulse', 'after:font-bold');
+    lbl(id)?.classList[on ? 'add' : 'remove'](
+      'after:content-["●_LIVE"]',
+      'after:text-red-500',
+      'after:animate-pulse',
+      'after:font-bold'
+    );
 
   const showLiveLinks = on => {
     document.querySelectorAll('.live-only-link')
@@ -60,12 +65,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnK = document.getElementById('dbgKick');
     const btnT = document.getElementById('dbgTwitch');
+
     const updateLabels = () => {
-      btnK.textContent = (kickLive ? 'Hide ' : 'Show ') + 'Kick';
-      btnT.textContent = (twitchLive ? 'Hide ' : 'Show ') + 'Twitch';
+      btnK.textContent = (forceKick ? 'Hide ' : 'Show ') + 'Kick';
+      btnT.textContent = (forceTwitch ? 'Hide ' : 'Show ') + 'Twitch';
     };
-    btnK.onclick = () => { forceKick = !forceKick; refresh(); updateLabels(); };
-    btnT.onclick = () => { forceTwitch = !forceTwitch; refresh(); updateLabels(); };
+
+    btnK.onclick = () => {
+      forceKick = !forceKick;
+      kickLive = forceKick;
+      refresh();
+      updateLabels();
+    };
+
+    btnT.onclick = () => {
+      forceTwitch = !forceTwitch;
+      twitchLive = forceTwitch;
+      refresh();
+      updateLabels();
+    };
+
+    updateLabels();
   }
 
   async function refresh() {
@@ -77,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
       twitchLive = forceTwitch;
     } else {
       const now = Date.now();
+
       if (now > kickFailUntil) {
         try {
           kickLive = !!(await fetch(`https://kick.com/api/v2/channels/${kickUser}`).then(r => r.json())).livestream;
@@ -84,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
           kickFailUntil = now + 300000;
         }
       }
+
       if (now > twitchFailUntil) {
         try {
           const txt = await fetch(`https://decapi.me/twitch/uptime/${twitchUser}`).then(r => r.text());
@@ -101,13 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (kickLive) {
       mountEmbed(`https://player.kick.com/${kickUser}`, 'kick');
     } else if (twitchLive) {
-      mountEmbed(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
+      mountEmbed(
+        `https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`,
+        'twitch'
+      );
     } else {
       clearEmbed();
     }
   }
 
-  /* ───── Render links, then refresh and poll ───── */
   fetch('links.json').then(r => r.json()).then(data => {
     data.filter(link => link.showOnHomepage).forEach(link => {
       const a = document.createElement('a');
@@ -123,11 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
         : `<span id="${link.id}-lbl">${link.title}</span>`;
 
       if (link.liveOnly) a.classList.add('live-only-link', 'hidden');
-
       linksEl.appendChild(a);
     });
 
-    refresh();
-    if (!debugMode) setInterval(refresh, 60000);
+    // Delay first refresh until all links exist
+    setTimeout(() => {
+      refresh();
+      if (!debugMode) setInterval(refresh, 60000);
+    }, 100);
   });
 });
