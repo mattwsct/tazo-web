@@ -1,21 +1,23 @@
 <section class="relative min-h-[288px] py-12 overflow-hidden">
+  <!-- Gradient Background + Overlay -->
   <div class="absolute inset-0 hero-bg"></div>
   <div class="absolute inset-0 bg-black/60"></div>
 
-  <div class="relative z-10 flex flex-col items-center justify-center h-full">
-    <a href="/" class="block">
+  <!-- Hero Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center">
+    <a href="/" aria-label="Home">
       <img
         src="/assets/images/profile.jpg"
         alt="Tazo avatar"
-        decoding="async"
         loading="eager"
+        decoding="async"
         width="112"
         height="112"
-        style="aspect-ratio: 1 / 1;"
         class="w-28 h-28 rounded-full shadow-md object-cover hero-glow"
+        style="aspect-ratio: 1 / 1;"
       />
     </a>
-    <h1 class="text-5xl uppercase mt-4 drop-shadow-md tazo-name" style="font-family: 'Bebas Neue', sans-serif;">Tazo</h1>
+    <h1 class="text-5xl uppercase mt-4 drop-shadow-md tazo-name font-[bebas]">Tazo</h1>
     <p class="text-zinc-300">Livestreamer from Australia</p>
   </div>
 </section>
