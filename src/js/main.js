@@ -72,14 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnK.onclick = () => {
       forceKick = !forceKick;
-      kickLive = forceKick;
       refresh();
       updateLabels();
     };
 
     btnT.onclick = () => {
       forceTwitch = !forceTwitch;
-      twitchLive = forceTwitch;
       refresh();
       updateLabels();
     };
@@ -89,13 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function refresh() {
     ['kick', 'twitch'].forEach(id => setBadge(id, false));
-    kickLive = twitchLive = false;
 
     if (debugMode) {
       kickLive = forceKick;
       twitchLive = forceTwitch;
     } else {
       const now = Date.now();
+      kickLive = twitchLive = false;
 
       if (now > kickFailUntil) {
         try {
@@ -119,9 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setBadge('twitch', twitchLive);
     showLiveLinks(kickLive || twitchLive);
 
-    if (kickLive && (!current || current === 'kick')) {
+    if (kickLive) {
       mountEmbed(`https://player.kick.com/${kickUser}`, 'kick');
-    } else if (twitchLive && (!kickLive || current !== 'kick')) {
+    } else if (twitchLive) {
       mountEmbed(`https://player.twitch.tv/?channel=${twitchUser}&parent=tazo.wtf&muted=true`, 'twitch');
     } else {
       clearEmbed();
