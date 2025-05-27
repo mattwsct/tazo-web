@@ -72,7 +72,6 @@
     "description": "Send a KickBot TTS message to Tazo",
     "icon": "cashapp",
     "showOnHomepage": false,
-    "moveToLive": true,
     "bg": "from-[#22c55e] to-[#15803d]",
     "aliases": []
   },
@@ -84,7 +83,7 @@
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
-    "aliases": ["media", "tts"]
+    "aliases": ["media", "music", "tts", "tip", "donate", "dono"]
   },
   {
     "id": "streamelements",
@@ -94,7 +93,7 @@
     "icon": "cashapp",
     "showOnHomepage": false,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["se", "tip", "donate", "music"]
+    "aliases": ["se"]
   },
   {
     "id": "paypal",
