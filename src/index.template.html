@@ -1,5 +1,5 @@
-<section class="py-12 px-4">
-  <!-- ─── Stream (injected by JS) ───────────────────────────── -->
+<section class="py-12 px-4 overflow-visible">
+  <!-- ── Stream wrapper (unchanged) ─────────────────────────── -->
   <div id="streamWrapper" class="max-w-screen-md mx-auto mb-8 hidden relative">
     <div id="streamLabel"
          class="text-sm font-bold uppercase mb-2 text-center tracking-widest text-white">
@@ -8,21 +8,20 @@
     </div>
 
     <div class="relative z-10">
-      <!-- glow injected by JS -->
       <div id="stream" class="bg-zinc-900 p-0 rounded-xl relative z-10"></div>
     </div>
   </div>
 
-  <!-- ─── Links grid (JS injects buttons here) ──────────────── -->
+  <!-- ── Links grid ─────────────────────────────────────────── -->
   <div
     id="links"
     class="
       grid gap-3
-      grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4     <!-- responsive columns -->
-      w-full max-w-6xl mx-auto
-      overflow-visible                                              <!-- ✨ no clipping -->
+      grid-cols-1       sm:grid-cols-2      <!-- 1-col mobile, 2-col desktop -->
+      max-w-screen-md   mx-auto w-full
+      overflow-visible                              <!-- never clip rows -->
     ">
-    <!-- buttons injected via main.js -->
+    <!-- Buttons injected by main.js -->
   </div>
 </section>
 
