@@ -13,44 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
   liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-3 mb-6 hidden';
   streamWrapper.appendChild(liveLinkContainer);
 
-  // Render homepage links
-  fetch('links.json')
-    .then(res => res.json())
-    .then(links => {
-      links
-        .filter(link => link.showOnHomepage)
-        .forEach(link => {
-          const a = document.createElement('a');
-          a.href = link.url;
-          a.target = '_blank';
-          a.rel = identityPlatforms.includes(link.id) ? 'me noopener' : 'noopener';
-          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
-
-          const icon = link.icon
-            ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
-               <span id="${link.icon}-lbl">${link.title}</span>`
-            : `<span>${link.title}</span>`;
-
-          a.innerHTML = icon;
-
-          a.addEventListener('click', () => {
-            gtag?.('event', 'click', {
-              event_category: 'Link',
-              event_label: link.title,
-              value: 1
-            });
-          });
-
-          if (link.liveOnly) {
-            a.classList.add('live-only-link');
-            a.style.display = 'none';
-            liveLinkContainer.appendChild(a);
-          } else {
-            linksEl.appendChild(a);
-          }
-        });
-    });
-
   function markLive(id) {
     const label = document.getElementById(`${id}-lbl`);
     if (label && !label.innerHTML.includes('●')) {
@@ -129,6 +91,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  checkLive();
-  setInterval(checkLive, 60000);
+  // Load and render links, then check live status
+  fetch('links.json')
+    .then(res => res.json())
+    .then(links => {
+      links
+        .filter(link => link.showOnHomepage)
+        .forEach(link => {
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.rel = identityPlatforms.includes(link.id) ? 'me noopener' : 'noopener';
+          a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg} transition scale-[1] hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
+
+          const icon = link.icon
+            ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
+               <span id="${link.icon}-lbl">${link.title}</span>`
+            : `<span id="${link.id}-lbl">${link.title}</span>`;
+
+          a.innerHTML = icon;
+
+          a.addEventListener('click', () => {
+            gtag?.('event', 'click', {
+              event_category: 'Link',
+              event_label: link.title,
+              value: 1
+            });
+          });
+
+          if (link.liveOnly) {
+            a.classList.add('live-only-link');
+            a.style.display = 'none';
+            liveLinkContainer.appendChild(a);
+          } else {
+            linksEl.appendChild(a);
+          }
+        });
+
+      // ✅ Run checkLive after slight delay to ensure DOM is fully ready
+      setTimeout(checkLive, 200);
+      setInterval(checkLive, 60000);
+    });
 });
