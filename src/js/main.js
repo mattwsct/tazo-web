@@ -6,35 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const linksEl = document.getElementById('links');
   const identityPlatforms = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'];
   const debug = new URLSearchParams(location.search).get('debug') === '1';
+
   let currentPlatform = null;
   let forceKick = false;
   let forceTwitch = false;
+  let kickLive = false;
+  let twitchLive = false;
 
   const liveLinkContainer = document.createElement('div');
   liveLinkContainer.id = 'liveLinks';
   liveLinkContainer.className = 'flex flex-col sm:flex-row justify-center gap-3 mt-3 mb-6 hidden';
   streamWrapper.appendChild(liveLinkContainer);
-
-  if (debug) {
-    const debugControls = document.createElement('div');
-    debugControls.className = 'fixed top-4 right-4 bg-zinc-900 p-4 rounded-xl z-50 flex gap-3';
-    debugControls.innerHTML = `
-      <button id="debug-kick" class="px-3 py-1 bg-green-600 text-white rounded">Toggle Kick</button>
-      <button id="debug-twitch" class="px-3 py-1 bg-purple-600 text-white rounded">Toggle Twitch</button>
-    `;
-    document.body.appendChild(debugControls);
-
-    document.getElementById('debug-kick').onclick = () => {
-      forceKick = !forceKick;
-      currentPlatform = null;
-      checkLive();
-    };
-    document.getElementById('debug-twitch').onclick = () => {
-      forceTwitch = !forceTwitch;
-      currentPlatform = null;
-      checkLive();
-    };
-  }
 
   function markLive(id) {
     const label = document.getElementById(`${id}-lbl`);
@@ -48,8 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const label = document.getElementById(`${id}-lbl`);
       if (label) label.innerHTML = label.innerHTML.replace(/ <span.*?<\/span>/, '');
     });
-    document.querySelectorAll('.live-only-link').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.live-only-link').forEach(el => (el.style.display = 'none'));
     document.getElementById('liveLinks').classList.add('hidden');
+  }
+
+  function updateDebugLabels() {
+    if (!debug) return;
+    document.getElementById('debug-kick').textContent = kickLive ? 'Hide Kick' : 'Show Kick';
+    document.getElementById('debug-twitch').textContent = twitchLive ? 'Hide Twitch' : 'Show Twitch';
   }
 
   function setIframe(src, platform) {
@@ -75,22 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function checkLive() {
-    let kickLive = false;
-    let twitchLive = false;
+    unmarkLive();
+    kickLive = false;
+    twitchLive = false;
 
-    if (debug && forceKick) kickLive = true;
-    if (debug && forceTwitch) twitchLive = true;
-
-    if (!debug || (!forceKick && !forceTwitch)) {
+    if (debug) {
+      kickLive = forceKick;
+      twitchLive = forceTwitch;
+    } else {
       try {
         const res = await fetch(`https://kick.com/api/v2/channels/${kickUser}`);
         const data = await res.json();
-        kickLive ||= !!data.livestream;
+        kickLive = !!data.livestream;
       } catch {}
 
       try {
         const text = await fetch(`https://decapi.me/twitch/uptime/${twitchUser.toLowerCase()}`).then(r => r.text());
-        twitchLive ||= !/is\s+offline/i.test(text);
+        twitchLive = !/is\s+offline/i.test(text);
       } catch {}
     }
 
@@ -116,8 +105,30 @@ document.addEventListener('DOMContentLoaded', () => {
       streamWrapper.querySelector('.stream-glow')?.remove();
       streamWrapper.classList.add('hidden');
       currentPlatform = null;
-      unmarkLive();
     }
+
+    updateDebugLabels();
+  }
+
+  if (debug) {
+    const debugControls = document.createElement('div');
+    debugControls.className = 'fixed top-4 right-4 bg-zinc-900 p-4 rounded-xl z-50 flex gap-3';
+    debugControls.innerHTML = `
+      <button id="debug-kick" class="px-3 py-1 bg-green-600 text-white rounded">Show Kick</button>
+      <button id="debug-twitch" class="px-3 py-1 bg-purple-600 text-white rounded">Show Twitch</button>
+    `;
+    document.body.appendChild(debugControls);
+
+    document.getElementById('debug-kick').onclick = () => {
+      forceKick = !forceKick;
+      currentPlatform = null;
+      checkLive();
+    };
+    document.getElementById('debug-twitch').onclick = () => {
+      forceTwitch = !forceTwitch;
+      currentPlatform = null;
+      checkLive();
+    };
   }
 
   fetch('links.json')
