@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {}
 
     try {
-      const text = await fetch(`https://decapi.me/twitch/status/${twitchUser}`).then(r => r.text());
+      const text = await fetch(`https://decapi.me/twitch/status/${twitchUser.toLowerCase()}`).then(r => r.text());
       twitchLive = text.toLowerCase().includes('is live');
     } catch {}
 
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load and render links, then check live status
+  // Load and render links, then run live check
   fetch('links.json')
     .then(res => res.json())
     .then(links => {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const icon = link.icon
             ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.icon}" />
-               <span id="${link.icon}-lbl">${link.title}</span>`
+               <span id="${link.id}-lbl">${link.title}</span>`
             : `<span id="${link.id}-lbl">${link.title}</span>`;
 
           a.innerHTML = icon;
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-      // ✅ Run checkLive after slight delay to ensure DOM is fully ready
+      // ✅ Delay first live check slightly to ensure DOM is ready
       setTimeout(checkLive, 200);
       setInterval(checkLive, 60000);
     });
