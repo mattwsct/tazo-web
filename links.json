@@ -112,7 +112,6 @@
     "description": "Buy Tazo a coffee on Ko-fi",
     "icon": "kofi",
     "showOnHomepage": true,
-    "moveToLive": true,
     "bg": "from-[#ff5f5f] to-[#ff8fa3]",
     "aliases": ["coffee"]
   },
