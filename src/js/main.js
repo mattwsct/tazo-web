@@ -16,11 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const setBadge = (id, on) => {
     const label = lbl(id);
     if (!label) return;
-    label.innerHTML = label.textContent.trim().replace(/\s*\u25CF\s*LIVE/, '') + (on ? ' <span class="ml-1 text-red-500 animate-pulse font-bold">● LIVE</span>' : '');
+    label.innerHTML = label.textContent.trim().replace(/\s*\u25CF\s*LIVE/, '') +
+      (on ? ' <span class="ml-1 text-red-500 animate-pulse font-bold">● LIVE</span>' : '');
   };
 
   const showLiveLinks = on => {
-    document.getElementById('liveLinks')?.classList.toggle('hidden', !on);
+    liveLinksEl?.classList.toggle('hidden', !on);
     document.querySelectorAll('.live-only-link')
       .forEach(el => el.classList.toggle('hidden', !on));
   };
@@ -143,15 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (link.liveOnly) {
         a.classList.add('live-only-link', 'hidden');
         liveLinksEl.appendChild(a);
-      } else if (link.moveToLive) {
-        a.classList.add('live-only-link');
-        if (!kickLive && !twitchLive && !debugMode) {
-          a.classList.remove('live-only-link');
-          linksEl.appendChild(a);
-        } else {
-          a.classList.add('hidden');
-          liveLinksEl.appendChild(a);
-        }
       } else {
         linksEl.appendChild(a);
       }
