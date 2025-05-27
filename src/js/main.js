@@ -118,6 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setBadge('kick', kickLive);
     setBadge('twitch', twitchLive);
     showLiveLinks(kickLive || twitchLive);
+
+    if (kickLive && (!current || current === 'kick')) {
+      mountEmbed(`https://player.kick.com/${kickUser}`, 'kick');
+    } else if (twitchLive && (!kickLive || current !== 'kick')) {
+      mountEmbed(`https://player.twitch.tv/?channel=${twitchUser}&parent=tazo.wtf&muted=true`, 'twitch');
+    } else {
+      clearEmbed();
+    }
   }
 
   fetch('links.json').then(r => r.json()).then(data => {
