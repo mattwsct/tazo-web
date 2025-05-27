@@ -1,27 +1,24 @@
 <section class="py-12 px-4 overflow-visible">
-  <!-- ── Stream wrapper (unchanged) ─────────────────────────── -->
+  <!-- ── Stream wrapper ── -->
   <div id="streamWrapper" class="max-w-screen-md mx-auto mb-8 hidden relative">
     <div id="streamLabel"
          class="text-sm font-bold uppercase mb-2 text-center tracking-widest text-white">
       <span class="inline-block w-2 h-2 rounded-full bg-red-500 align-middle mr-2"></span>
       Live&nbsp;Now
     </div>
-
     <div class="relative z-10">
       <div id="stream" class="bg-zinc-900 p-0 rounded-xl relative z-10"></div>
     </div>
   </div>
 
-  <!-- ── Links grid ─────────────────────────────────────────── -->
-  <div
-    id="links"
-    class="
-      grid gap-3
-      grid-cols-1       sm:grid-cols-2      <!-- 1-col mobile, 2-col desktop -->
-      max-w-screen-md   mx-auto w-full
-      overflow-visible                              <!-- never clip rows -->
-    ">
-    <!-- Buttons injected by main.js -->
+  <!-- ── Live-only links ── -->
+  <div id="liveLinks" class="grid gap-3 grid-cols-1 sm:grid-cols-2 max-w-screen-md mx-auto mb-6 hidden">
+    <!-- Live-only buttons injected by main.js -->
+  </div>
+
+  <!-- ── Regular links ── -->
+  <div id="links" class="grid gap-3 grid-cols-1 sm:grid-cols-2 max-w-screen-md mx-auto w-full overflow-visible">
+    <!-- Regular buttons injected by main.js -->
   </div>
 </section>
 

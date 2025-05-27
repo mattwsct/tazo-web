@@ -6,21 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const SW = document.getElementById('streamWrapper');
   const SE = document.getElementById('stream');
   const linksEl = document.getElementById('links');
+  const liveLinksEl = document.getElementById('liveLinks');
 
   let kickLive = false, twitchLive = false, current = null;
   let forceKick = false, forceTwitch = false;
   let kickFailUntil = 0, twitchFailUntil = 0;
 
   const lbl = id => document.getElementById(`${id}-lbl`);
-  const setBadge = (id, on) =>
-    lbl(id)?.classList[on ? 'add' : 'remove'](
-      'after:content-["●_LIVE"]',
-      'after:text-red-500',
-      'after:animate-pulse',
-      'after:font-bold'
-    );
+  const setBadge = (id, on) => {
+    const label = lbl(id);
+    if (!label) return;
+    label.innerHTML = label.textContent.trim().replace(/\s*\u25CF\s*LIVE/, '') + (on ? ' <span class="ml-1 text-red-500 animate-pulse font-bold">● LIVE</span>' : '');
+  };
 
   const showLiveLinks = on => {
+    document.getElementById('liveLinks')?.classList.toggle('hidden', !on);
     document.querySelectorAll('.live-only-link')
       .forEach(el => el.classList.toggle('hidden', !on));
   };
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     current = null;
   };
 
-  /* ───── Debug panel ───── */
   if (debugMode) {
     const p = document.createElement('div');
     p.className = 'fixed top-4 right-4 bg-zinc-900 p-4 rounded-xl z-50 flex gap-3';
@@ -123,10 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (kickLive) {
       mountEmbed(`https://player.kick.com/${kickUser}`, 'kick');
     } else if (twitchLive) {
-      mountEmbed(
-        `https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`,
-        'twitch'
-      );
+      mountEmbed(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
     } else {
       clearEmbed();
     }
@@ -146,11 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5"/><span id="${link.id}-lbl">${link.title}</span>`
         : `<span id="${link.id}-lbl">${link.title}</span>`;
 
-      if (link.liveOnly) a.classList.add('live-only-link', 'hidden');
-      linksEl.appendChild(a);
+      if (link.liveOnly) {
+        a.classList.add('live-only-link', 'hidden');
+        liveLinksEl.appendChild(a);
+      } else {
+        linksEl.appendChild(a);
+      }
     });
 
-    // Delay first refresh until all links exist
     setTimeout(() => {
       refresh();
       if (!debugMode) setInterval(refresh, 60000);
