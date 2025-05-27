@@ -118,14 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setBadge('kick', kickLive);
     setBadge('twitch', twitchLive);
     showLiveLinks(kickLive || twitchLive);
-
-    if (kickLive) {
-      mountEmbed(`https://player.kick.com/${kickUser}`, 'kick');
-    } else if (twitchLive) {
-      mountEmbed(`https://player.twitch.tv/?channel=${twitchUser}&parent=${location.hostname}&muted=true&chat=false`, 'twitch');
-    } else {
-      clearEmbed();
-    }
   }
 
   fetch('links.json').then(r => r.json()).then(data => {
@@ -136,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       a.rel = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'].includes(link.id)
         ? 'me noopener'
         : 'noopener';
-      a.className = `flex items-center gap-2 justify-center py-3 px-5 rounded-xl font-semibold bg-gradient-to-r ${link.bg}
+      a.className = `flex items-center gap-2 justify-center py-3 px-4 sm:px-5 rounded-xl font-semibold w-full sm:w-auto bg-gradient-to-r ${link.bg}
                      transition hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
       a.innerHTML = link.icon
         ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5"/><span id="${link.id}-lbl">${link.title}</span>`
@@ -145,6 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (link.liveOnly) {
         a.classList.add('live-only-link', 'hidden');
         liveLinksEl.appendChild(a);
+      } else if (link.moveToLive) {
+        a.classList.add('live-only-link');
+        if (!kickLive && !twitchLive && !debugMode) {
+          a.classList.remove('live-only-link');
+          linksEl.appendChild(a);
+        } else {
+          a.classList.add('hidden');
+          liveLinksEl.appendChild(a);
+        }
       } else {
         linksEl.appendChild(a);
       }

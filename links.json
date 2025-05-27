@@ -18,14 +18,6 @@
     "bg": "from-[#9146FF] to-[#6441A5]"
   },
   {
-    "id": "parti",
-    "url": "https://parti.com/creator/parti/Tazo",
-    "title": "Parti",
-    "description": "Another platform for Tazo's livestreams",
-    "showOnHomepage": false,
-    "bg": "from-[#fde68a] to-[#facc15]"
-  },
-  {
     "id": "youtube",
     "url": "https://youtube.com/@HyperTazo",
     "title": "YouTube",
@@ -73,32 +65,23 @@
     "showOnHomepage": true,
     "bg": "from-[#5865F2] to-[#404EED]"
   },
-  {
-    "id": "kickbot",
-    "url": "https://kickbot.com/tips/tazo",
-    "title": "Tip for AI TTS",
-    "description": "Send a KickBot TTS message to Tazo",
-    "showOnHomepage": false,
-    "liveOnly": false,
-    "bg": "from-[#22c55e] to-[#15803d]",
-    "aliases": ["tts"]
-  },
+
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
     "title": "Tip for TTS / Media",
     "description": "Send a message or media via PowerChat",
     "showOnHomepage": true,
-    "liveOnly": true,
+    "moveToLive": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
-    "aliases": ["media"]
+    "aliases": ["media", "tts"]
   },
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
     "title": "Tip for TTS / Music",
     "description": "Support Tazo directly through StreamElements",
-    "showOnHomepage": false,
+    "showOnHomepage": true,
     "liveOnly": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
     "aliases": ["se", "tip", "donate", "music"]
