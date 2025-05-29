@@ -73,7 +73,7 @@
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#22c55e] to-[#15803d]",
-    "aliases": []
+    "aliases": ["tts"]
   },
   {
     "id": "powerchat",
