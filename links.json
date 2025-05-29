@@ -71,7 +71,7 @@
     "title": "Tip for AI TTS",
     "description": "Send a KickBot TTS message to Tazo",
     "icon": "cashapp",
-    "showOnHomepage": false,
+    "showOnHomepage": true,
     "bg": "from-[#22c55e] to-[#15803d]",
     "aliases": []
   },
@@ -81,9 +81,9 @@
     "title": "Tip for TTS / Media",
     "description": "Send a message or media via PowerChat",
     "icon": "cashapp",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
-    "aliases": ["media", "music", "tts", "tip", "donate", "dono"]
+    "aliases": ["media"]
   },
   {
     "id": "streamelements",
@@ -91,9 +91,9 @@
     "title": "Tip for TTS / Music",
     "description": "Support Tazo directly through StreamElements",
     "icon": "cashapp",
-    "showOnHomepage": false,
+    "showOnHomepage": true,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["se"]
+    "aliases": ["se", "music", "tip", "donate", "dono"]
   },
   {
     "id": "paypal",
