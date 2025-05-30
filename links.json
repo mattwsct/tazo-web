@@ -96,15 +96,6 @@
     "aliases": ["se", "music", "tip", "donate", "dono"]
   },
   {
-    "id": "paypal",
-    "url": "https://paypal.me/tazo",
-    "title": "PayPal",
-    "description": "Send a one-time tip through PayPal",
-    "icon": "paypal",
-    "showOnHomepage": true,
-    "bg": "from-[#003087] to-[#0070BA]"
-  },
-  {
     "id": "kofi",
     "url": "https://ko-fi.com/tazo",
     "title": "Buy Tazo Coffee",
@@ -113,6 +104,15 @@
     "showOnHomepage": true,
     "bg": "from-[#ff5f5f] to-[#ff8fa3]",
     "aliases": ["coffee"]
+  },
+  {
+    "id": "paypal",
+    "url": "https://paypal.me/tazo",
+    "title": "PayPal",
+    "description": "Send a one-time tip through PayPal",
+    "icon": "paypal",
+    "showOnHomepage": true,
+    "bg": "from-[#003087] to-[#0070BA]"
   },
   {
     "id": "gear",
