@@ -81,9 +81,9 @@
     "title": "Tip for TTS / Media",
     "description": "Send a message or media via PowerChat",
     "icon": "cashapp",
-    "showOnHomepage": false,
+    "showOnHomepage": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
-    "aliases": ["media"]
+    "aliases": ["media", "music", "tip", "donate", "dono"]
   },
   {
     "id": "streamelements",
@@ -91,9 +91,9 @@
     "title": "Tip for TTS / Music",
     "description": "Support Tazo directly through StreamElements",
     "icon": "cashapp",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["se", "music", "tip", "donate", "dono"]
+    "aliases": ["se"]
   },
   {
     "id": "kofi",
@@ -111,7 +111,7 @@
     "title": "PayPal",
     "description": "Send a one-time tip through PayPal",
     "icon": "paypal",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-[#003087] to-[#0070BA]"
   },
   {
