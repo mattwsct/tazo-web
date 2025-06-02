@@ -71,7 +71,7 @@
     "title": "OnlyFans",
     "description": "Exclusive behind-the-scenes from Tazo",
     "icon": "onlyfans",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-[#00AFF0] to-[#005C80]",
     "aliases": ["fans", "of"]
   },
