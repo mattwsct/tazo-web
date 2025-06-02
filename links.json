@@ -68,7 +68,7 @@
   {
     "id": "kickbot",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "Tip for AI TTS",
+    "title": "Tip for TTS",
     "description": "Send a KickBot TTS message to Tazo",
     "icon": "cashapp",
     "showOnHomepage": true,
@@ -78,7 +78,7 @@
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
-    "title": "Tip for TTS / Media",
+    "title": "Tip for Media",
     "description": "Send a message or media via PowerChat",
     "icon": "cashapp",
     "showOnHomepage": true,
@@ -88,7 +88,7 @@
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip for TTS / Music",
+    "title": "Tip for Music",
     "description": "Support Tazo directly through StreamElements",
     "icon": "cashapp",
     "showOnHomepage": false,
@@ -98,7 +98,7 @@
   {
     "id": "kofi",
     "url": "https://ko-fi.com/tazo",
-    "title": "Buy Tazo Coffee",
+    "title": "Buy Tazo a Drink",
     "description": "Buy Tazo a coffee on Ko-fi",
     "icon": "kofi",
     "showOnHomepage": true,
