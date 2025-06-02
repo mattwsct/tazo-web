@@ -66,6 +66,16 @@
     "bg": "from-[#5865F2] to-[#404EED]"
   },
   {
+    "id": "onlyfans",
+    "url": "https://onlyfans.com/tazowtf",
+    "title": "OnlyFans",
+    "description": "Exclusive behind-the-scenes from Tazo",
+    "icon": "onlyfans",
+    "showOnHomepage": true,
+    "bg": "from-[#00AFF0] to-[#005C80]",
+    "aliases": ["fans", "of"]
+  }
+  {
     "id": "kickbot",
     "url": "https://kickbot.com/tips/tazo",
     "title": "Tip for TTS",
