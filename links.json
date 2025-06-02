@@ -19,7 +19,7 @@
   },
   {
     "id": "youtube",
-    "url": "https://youtube.com/@HyperTazo",
+    "url": "https://youtube.com/@TazoWTF",
     "title": "YouTube",
     "description": "Watch Tazo’s VODs, shorts, and clips",
     "icon": "youtube",
@@ -29,7 +29,7 @@
   },
   {
     "id": "tiktok",
-    "url": "https://tiktok.com/@HyperTazo",
+    "url": "https://tiktok.com/@tazowtf",
     "title": "TikTok",
     "description": "Catch short clips from Tazo’s streams",
     "icon": "tiktok",
@@ -38,7 +38,7 @@
   },
   {
     "id": "instagram",
-    "url": "https://instagram.com/HyperTazo",
+    "url": "https://instagram.com/tazowtf",
     "title": "Instagram",
     "description": "Behind-the-scenes reels and stories",
     "icon": "instagram",
@@ -48,7 +48,7 @@
   },
   {
     "id": "twitter",
-    "url": "https://x.com/HyperTazo",
+    "url": "https://x.com/TazoWTF",
     "title": "Twitter / X",
     "description": "Live updates and thoughts from Tazo",
     "icon": "x",
@@ -83,17 +83,17 @@
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
-    "aliases": ["media", "music", "tip", "donate", "dono"]
+    "aliases": ["media", "music"]
   },
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip for Music",
+    "title": "Tip for TTS / Music",
     "description": "Support Tazo directly through StreamElements",
     "icon": "cashapp",
     "showOnHomepage": false,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
-    "aliases": ["se"]
+    "aliases": ["se", "tip", "donate", "dono"]
   },
   {
     "id": "kofi",
@@ -116,7 +116,7 @@
   },
   {
     "id": "gear",
-    "url": "https://kit.co/HyperTazo/streaming-gear",
+    "url": "https://kit.co/TazoWTF/streaming-gear",
     "title": "Streaming Gear",
     "description": "Everything Tazo uses to stream",
     "icon": "kit",
