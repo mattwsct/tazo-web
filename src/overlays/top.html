@@ -1,86 +1,83 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+    }
 
-        .stack {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            pointer-events: none;
-        }
+    .stack {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      pointer-events: none;
+    }
 
-        #top-right {
-            top: 5px;
-            right: 5px;
-            align-items: flex-end;
-        }
+    #top-right {
+      top: 5px;
+      right: 5px;
+      align-items: flex-end;
+    }
 
-        #top-left {
-            top: 5px;
-            left: 5px;
-            align-items: flex-start;
-        }
+    #top-left {
+      top: 5px;
+      left: 5px;
+      align-items: flex-start;
+    }
 
-        iframe {
-            border: none;
-            width: auto;
-            height: auto;
-            pointer-events: none;
-        }
-    </style>
+    iframe {
+      border: none;
+      width: auto;
+      height: auto;
+      pointer-events: none;
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Top Left: Heart Rate -->
-    <div id="top-left" class="stack">
-        <iframe id="hr-frame" src="https://pulsoid.net/widget/view/de778d90-e48c-4c0b-8dc6-ce54a809e333" width="250"
-            height="100"></iframe>
+  <!-- Top Right: Time, Location, Temp C + F -->
+  <div id="top-right" class="stack" style="gap: 0px;">
+    <iframe
+      src="https://overlays.rtirl.com/datetime/luxon.html?key=dpkn4we2kdxhij4m&lang=en&format=t&css=I3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiA0MHB4OyBtYXJnaW4tcmlnaHQ6IDVweDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0=&font=https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+    ></iframe>
+
+    <iframe
+      src="https://overlays.rtirl.com/neighborhood.html?key=dpkn4we2kdxhij4m&lang=en&format=${data.place ? data.place.text + ', ' : ''}${data.country ? data.country.text : ''}&css=I3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiAyMHB4OyB0ZXh0LWFsaWduOiByaWdodDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0=&font=https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+    ></iframe>
+
+    <div style="display: flex; gap: 4px;">
+      <iframe
+        id="temp-c"
+        src="https://overlays.rtirl.com/weather/feels_like/C.html?key=dpkn4we2kdxhij4m&css=I3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiAyMHB4OyB0ZXh0LWFsaWduOiByaWdodDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0=&font=https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+      ></iframe>
+      <iframe
+        id="temp-f"
+        src="https://overlays.rtirl.com/weather/feels_like/F.html?key=dpkn4we2kdxhij4m&css=I3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiAyMHB4OyB0ZXh0LWFsaWduOiByaWdodDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0=&font=https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+      ></iframe>
     </div>
-    <!-- Top Right: Time, Location, Temp C + F -->
-    <div id="top-right" class="stack" style="gap: 0px;">
-        <iframe
-            src="https://overlays.rtirl.com/datetime/luxon.html?key=dpkn4we2kdxhij4m&lang=en&format=t&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKCmJvZHkgewogIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMCwgMCwgMCwgMCk7CiAgbWFyZ2luOiAwcHggYXV0bzsKICBvdmVyZmxvdzogaGlkZGVuOwp9CgojdGV4dCB7CiAgZm9udC1mYW1pbHk6ICdNb250c2VycmF0Jywgc2Fucy1zZXJpZjsKICBmb250LXdlaWdodDogNjAwOwogIGZvbnQtc2l6ZTogNDBweDsKICBtYXJnaW4tcmlnaHQ6IDVweDsKICBmaWx0ZXI6IGRyb3Atc2hhZG93KGJsYWNrIDFweCAxcHggMXB4KTsKfQ==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="></iframe>
+  </div>
 
-        <iframe
-            src="https://overlays.rtirl.com/neighborhood.html?key=dpkn4we2kdxhij4m&lang=en&format=%24%7Bdata.place%20%3F%20data.place.text%20%2B%20'%2C%20'%20%3A%20''%7D%24%7Bdata.country%20%3F%20data.country.text%20%3A%20''%7D&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHdoaXRlOwpmb250LWZhbWlseTogJ01vbnRzZXJyYXQnLCBzYW5zLXNlcmlmOwpmb250LXdlaWdodDogNjAwOwpmb250LXNpemU6IDIwcHg7CnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCm1hcmdpbjogMDsKcGFkZGluZzogMDsKYm9yZGVyOiBub25lOw==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="></iframe>
-
-        <div style="display: flex; gap: 4px;">
-            <iframe id="temp-c"
-                src="https://overlays.rtirl.com/weather/feels_like/C.html?key=dpkn4we2kdxhij4m&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHdoaXRlOwpmb250LWZhbWlseTogJ01vbnRzZXJyYXQnLCBzYW5zLXNlcmlmOwpmb250LXdlaWdodDogNjAwOwpmb250LXNpemU6IDIwcHg7CnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCm1hcmdpbjogMDsKcGFkZGluZzogMDsKYm9yZGVyOiBub25lOw==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="></iframe>
-            <iframe id="temp-f"
-                src="https://overlays.rtirl.com/weather/feels_like/F.html?key=dpkn4we2kdxhij4m&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHdoaXRlOwpmb250LWZhbWlseTogJ01vbnRzZXJyYXQnLCBzYW5zLXNlcmlmOwpmb250LXdlaWdodDogNjAwOwpmb250LXNpemU6IDIwcHg7CnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCm1hcmdpbjogMDsKcGFkZGluZzogMDsKYm9yZGVyOiBub25lOw==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="></iframe>
-        </div>
-    </div>
-
-    <script>
-        // Refresh temperature overlays every hour
-        const refresh = (id) => {
-            const el = document.getElementById(id);
-            if (el) {
-                const base = el.src.split("&_ts=")[0];
-                el.src = `${base}&_ts=${Date.now()}`;
-            }
-        };
-        setInterval(() => {
-            refresh("temp-c");
-            refresh("temp-f");
-        }, 3600000);
-    </script>
+  <script>
+    // Refresh temperature overlays every hour
+    const refresh = (id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const base = el.src.split("&_ts=")[0];
+        el.src = `${base}&_ts=${Date.now()}`;
+      }
+    };
+    setInterval(() => {
+      refresh("temp-c");
+      refresh("temp-f");
+    }, 3600000);
+  </script>
 </body>
-
 </html>
