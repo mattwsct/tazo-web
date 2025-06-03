@@ -28,11 +28,7 @@
       align-items: flex-end;
     }
 
-    #top-left {
-      top: 5px;
-      left: 5px;
-      align-items: flex-start;
-    }
+    
 
     iframe {
       border: none;
@@ -45,8 +41,8 @@
 <body>
   <!-- Top Right: Time, Location, Temp C + F -->
   <div id="top-right" class="stack" style="gap: 0px;">
-    <iframe
-      src="https://overlays.rtirl.com/datetime/luxon.html?key=dpkn4we2kdxhij4m&lang=en&format=t&css=I3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiA0MHB4OyBtYXJnaW4tcmlnaHQ6IDVweDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0=&font=https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap"
+    <iframe style="height: 1em; display: inline-block;" style="height: 1em; display: inline-block;" style="height: 1em; display: block;"
+      src="https://overlays.rtirl.com/datetime/luxon.html?key=dpkn4we2kdxhij4m&lang=en&format=t&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdCZkaXNwbGF5PXN3YXAnKTsKI3RleHQgeyBmb250LWZhbWlseTogTW9udHNlcnJhdCwgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6IDYwMDsgZm9udC1zaXplOiA0MHB4OyBtYXJnaW4tcmlnaHQ6IDVweDsgZmlsdGVyOiBkcm9wLXNoYWRvdyhibGFjayAxcHggMXB4IDFweCk7IH0="
     ></iframe>
 
     <iframe
@@ -64,6 +60,8 @@
       ></iframe>
     </div>
   </div>
+
+  
 
   <script>
     // Refresh temperature overlays every hour
