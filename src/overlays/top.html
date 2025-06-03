@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .stack {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      pointer-events: none;
+    }
+
+    #top-right {
+      top: 5px;
+      right: 5px;
+      align-items: flex-end;
+    }
+
+    #top-left {
+      top: 5px;
+      left: 5px;
+      align-items: flex-start;
+    }
+
+    iframe {
+      border: none;
+      width: auto;
+      height: auto;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Right: Time, Location, Temp C + F -->
+  <div id="top-right" class="stack">
+    <iframe
+      src="https://overlays.rtirl.com/datetime/luxon.html?key=dpkn4we2kdxhij4m&lang=en&format=t&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMSk7CmZvbnQtZmFtaWx5OiAnTW9udHNlcnJhdCcsIHNhbnMtc2VyaWY7CmZvbnQtd2VpZ2h0OiA2MDA7CmZvbnQtc2l6ZTogMjRweDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDApOwpiYWxsOiBub25lOwpiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsKcGFkZGluZzogMHB4Ow==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="
+    ></iframe>
+
+    <iframe
+      src="https://overlays.rtirl.com/neighborhood.html?key=dpkn4we2kdxhij4m&lang=en&format=%24%7Bdata.place%20%3F%20data.place.text%20%2B%20'%2C%20'%20%3A%20''%7D%24%7Bdata.country%20%3F%20data.country.text%20%3A%20''%7D&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMSk7CmZvbnQtZmFtaWx5OiAnTW9udHNlcnJhdCcsIHNhbnMtc2VyaWY7CmZvbnQtd2VpZ2h0OiA2MDA7CmZvbnQtc2l6ZTogMjRweDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDApOwpiYWxsOiBub25lOwpiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsKcGFkZGluZzogMHB4Ow==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="
+    ></iframe>
+
+    <div style="display: flex; gap: 8px;">
+      <iframe
+        id="temp-c"
+        src="https://overlays.rtirl.com/weather/feels_like/C.html?key=dpkn4we2kdxhij4m&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMSk7CmZvbnQtZmFtaWx5OiAnTW9udHNlcnJhdCcsIHNhbnMtc2VyaWY7CmZvbnQtd2VpZ2h0OiA2MDA7CmZvbnQtc2l6ZTogMjRweDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDApOwpiYWxsOiBub25lOwpiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsKcGFkZGluZzogMHB4Ow==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="
+      ></iframe>
+      <iframe
+        id="temp-f"
+        src="https://overlays.rtirl.com/weather/feels_like/F.html?key=dpkn4we2kdxhij4m&css=QGltcG9ydCB1cmwoJ2h0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9TW9udHNlcnJhdDp3Z2h0QDYwMCZkaXNwbGF5PXN3YXAnKTsKY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMSk7CmZvbnQtZmFtaWx5OiAnTW9udHNlcnJhdCcsIHNhbnMtc2VyaWY7CmZvbnQtd2VpZ2h0OiA2MDA7CmZvbnQtc2l6ZTogMjRweDsKZmlsdGVyOiBkcm9wLXNoYWRvdygxcHggMXB4IDFweCBibGFjazspCnRleHQtYWxpZ246IHJpZ2h0OwpiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDApOwpiYWxsOiBub25lOwpiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsKcGFkZGluZzogMHB4Ow==&font=aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Nb250c2VycmF0JmRpc3BsYXk9c3dhcA=="
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Top Left: Heart Rate -->
+  <div id="top-left" class="stack">
+    <iframe
+      id="hr-frame"
+      src="https://pulsoid.net/widget/view/de778d90-e48c-4c0b-8dc6-ce54a809e333"
+      width="250"
+      height="100"
+    ></iframe>
+  </div>
+
+  <script>
+    // Refresh temperature overlays every hour
+    const refresh = (id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const base = el.src.split("&_ts=")[0];
+        el.src = `${base}&_ts=${Date.now()}`;
+      }
+    };
+    setInterval(() => {
+      refresh("temp-c");
+      refresh("temp-f");
+    }, 3600000);
+
+    // Inject custom CSS into Pulsoid heart rate widget
+    const hrFrame = document.getElementById("hr-frame");
+    hrFrame.addEventListener("load", () => {
+      try {
+        const doc = hrFrame.contentDocument;
+        const style = doc.createElement("style");
+        style.innerHTML = `
+          @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+          body {
+            background-color: rgba(0, 0, 0, 0);
+            margin: 0px auto;
+            overflow: hidden;
+          }
+          .view_widget_container {
+            filter: drop-shadow(3px 3px 1px black);
+          }
+          #heartRate {
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 90px !important;
+            font-weight: 600;
+            padding: 0px 20px !important;
+            filter: drop-shadow(5px 5px 5px black);
+          }
+          #heartRate svg {
+            margin-right: 25px !important;
+          }
+          #text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            margin-right: 5px;
+            filter: drop-shadow(black 1px 1px 1px);
+          }
+        `;
+        doc.head.appendChild(style);
+      } catch (err) {
+        console.warn("Failed to inject Pulsoid CSS", err);
+      }
+    });
+  </script>
+</body>
+</html>
