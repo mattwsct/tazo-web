@@ -130,7 +130,7 @@
     "title": "Streaming Gear",
     "description": "Everything Tazo uses to stream",
     "icon": "kit",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-zinc-600 to-zinc-800"
   },
   {
