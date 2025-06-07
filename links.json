@@ -138,8 +138,7 @@
     "url": "https://amazon.co.jp/hz/wishlist/ls/2H67SISIKU69Y",
     "title": "Amazon Wishlist",
     "description": "Send a gift directly to Tazo",
-    "icon": "amazon",
-    "showOnHomepage": true,
+    "showOnHomepage": false,
     "bg": "from-[#ff9900] to-[#ff5e00]"
   }
 ]
