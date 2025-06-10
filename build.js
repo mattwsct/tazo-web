@@ -33,6 +33,11 @@ const copyDir = (from, to) => {
 };
 copyDir(src, out);
 
+const escapeHTML = str =>
+  str.replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
 const render = (meta, body) => layout
   .replace('{{head}}', head)
   .replace('{{hero}}', hero)
@@ -60,27 +65,40 @@ fs.writeFileSync(path.join(out, '404.html'), render(`
   <meta name="robots" content="noindex">
 `, errorContent));
 
-const redirectHTML = (title, url) => render(`
-  <title>Redirecting to ${title}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
-  <link rel="canonical" href="${url}">
-`, `
-  <div class="flex flex-col items-center justify-center text-center min-h-[50vh] py-12 px-4">
-    <p class="text-lg text-white animate-pulse">Redirecting to <strong>${title}</strong>…</p>
-    <p class="text-sm text-zinc-400 mt-2">If nothing happens, <a href="${url}" class="underline text-accent">click here</a>.</p>
-    <p class="text-xs text-zinc-600 mt-6"><a href="/" class="underline hover:text-accent transition">← Back to homepage</a></p>
-  </div>
-  <script>setTimeout(() => { location.href = "${url}" }, 2000);</script>
-  <noscript><meta http-equiv="refresh" content="2; url=${url}"></noscript>
-`);
+const redirectHTML = link => {
+  const title = escapeHTML(link.title || 'Redirect');
+  const description = escapeHTML(link.description || `Redirecting to ${title}`);
+  const url = link.url;
+
+  return render(`
+    <title>${title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="description" content="${description}">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${description}">
+    <meta property="og:url" content="${baseURL}/${link.id}/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${title}">
+    <meta name="twitter:description" content="${description}">
+    <link rel="canonical" href="${url}">
+  `, `
+    <div class="flex flex-col items-center justify-center text-center min-h-[50vh] py-12 px-4">
+      <p class="text-lg text-white animate-pulse">Redirecting to <strong>${title}</strong>…</p>
+      <p class="text-sm text-zinc-400 mt-2">If nothing happens, <a href="${url}" class="underline text-accent">click here</a>.</p>
+      <p class="text-xs text-zinc-600 mt-6"><a href="/" class="underline hover:text-accent transition">← Back to homepage</a></p>
+    </div>
+    <script>setTimeout(() => { location.href = "${url}" }, 2000);</script>
+    <noscript><meta http-equiv="refresh" content="2; url=${url}"></noscript>
+  `);
+};
 
 for (const link of links) {
   const paths = [link.id, ...(link.aliases || [])];
   for (const slug of paths) {
     const folder = path.join(out, slug);
     fs.mkdirSync(folder, { recursive: true });
-    fs.writeFileSync(path.join(folder, 'index.html'), redirectHTML(link.title, link.url));
+    fs.writeFileSync(path.join(folder, 'index.html'), redirectHTML(link));
   }
 }
 

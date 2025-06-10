@@ -2,8 +2,8 @@
   {
     "id": "kick",
     "url": "https://kick.com/tazo",
-    "title": "Kick",
-    "description": "Tazo is live or streaming on Kick",
+    "title": "Tazo on Kick",
+    "description": "Watch Tazo live on Kick.com — IRL, travel, and more.",
     "icon": "kick",
     "showOnHomepage": true,
     "bg": "from-[#53fc18] to-[#2f8f0b]"
@@ -11,8 +11,8 @@
   {
     "id": "twitch",
     "url": "https://twitch.tv/tazo",
-    "title": "Twitch",
-    "description": "Tazo’s IRL and variety streams on Twitch",
+    "title": "Tazo on Twitch",
+    "description": "Catch Tazo’s IRL and variety streams on Twitch.tv.",
     "icon": "twitch",
     "showOnHomepage": true,
     "bg": "from-[#9146FF] to-[#6441A5]"
@@ -20,8 +20,8 @@
   {
     "id": "youtube",
     "url": "https://youtube.com/@TazoWTF",
-    "title": "YouTube",
-    "description": "Watch Tazo’s VODs, shorts, and clips",
+    "title": "Tazo on YouTube",
+    "description": "Watch VODs, clips, and shorts from Tazo’s streams.",
     "icon": "youtube",
     "showOnHomepage": true,
     "bg": "from-[#FF0000] to-[#991b1b]",
@@ -30,8 +30,8 @@
   {
     "id": "tiktok",
     "url": "https://tiktok.com/@tazowtf",
-    "title": "TikTok",
-    "description": "Catch short clips from Tazo’s streams",
+    "title": "Tazo on TikTok",
+    "description": "Short stream highlights and behind-the-scenes clips.",
     "icon": "tiktok",
     "showOnHomepage": true,
     "bg": "from-[#25F4EE] to-[#FE2C55]"
@@ -39,8 +39,8 @@
   {
     "id": "instagram",
     "url": "https://instagram.com/tazowtf",
-    "title": "Instagram",
-    "description": "Behind-the-scenes reels and stories",
+    "title": "Tazo on Instagram",
+    "description": "Stories, reels, and casual moments from Tazo.",
     "icon": "instagram",
     "showOnHomepage": true,
     "bg": "from-[#f09433] via-[#e6683c] to-[#dc2743]",
@@ -49,8 +49,8 @@
   {
     "id": "twitter",
     "url": "https://x.com/TazoWTF",
-    "title": "Twitter / X",
-    "description": "Live updates and thoughts from Tazo",
+    "title": "Tazo on Twitter / X",
+    "description": "Updates, stream thoughts, and daily tweets from Tazo.",
     "icon": "x",
     "showOnHomepage": true,
     "bg": "from-[#1DA1F2] to-[#0f1419]",
@@ -59,8 +59,8 @@
   {
     "id": "discord",
     "url": "https://discord.gg/cEhQQR5WgY",
-    "title": "Discord",
-    "description": "Hang out in Tazo’s community server",
+    "title": "Tazo’s Discord",
+    "description": "Join the community — stream chats, updates, and more.",
     "icon": "discord",
     "showOnHomepage": true,
     "bg": "from-[#5865F2] to-[#404EED]"
@@ -68,8 +68,8 @@
   {
     "id": "onlyfans",
     "url": "https://onlyfans.com/tazowtf",
-    "title": "OnlyFans",
-    "description": "Exclusive behind-the-scenes from Tazo",
+    "title": "Tazo on OnlyFans",
+    "description": "Exclusive behind-the-scenes content from Tazo.",
     "icon": "onlyfans",
     "showOnHomepage": false,
     "bg": "from-[#00AFF0] to-[#005C80]",
@@ -78,8 +78,8 @@
   {
     "id": "kickbot",
     "url": "https://kickbot.com/tips/tazo",
-    "title": "Tip for TTS",
-    "description": "Send a KickBot TTS message to Tazo",
+    "title": "Send TTS via KickBot",
+    "description": "Send a text-to-speech message to Tazo’s stream on Kick.",
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#22c55e] to-[#15803d]",
@@ -88,8 +88,8 @@
   {
     "id": "powerchat",
     "url": "https://powerchat.live/tazo",
-    "title": "Tip for Media",
-    "description": "Send a message or media via PowerChat",
+    "title": "Send Media via PowerChat",
+    "description": "Send a message, media, or music to Tazo’s stream.",
     "icon": "cashapp",
     "showOnHomepage": true,
     "bg": "from-[#38bdf8] to-[#0ea5e9]",
@@ -98,8 +98,8 @@
   {
     "id": "streamelements",
     "url": "https://streamelements.com/tazo/tip",
-    "title": "Tip for TTS / Music",
-    "description": "Support Tazo directly through StreamElements",
+    "title": "Tip Tazo via StreamElements",
+    "description": "Send a direct tip or TTS/media to support Tazo.",
     "icon": "cashapp",
     "showOnHomepage": false,
     "bg": "from-[#1e90ff] to-[#7e5bef]",
@@ -108,8 +108,8 @@
   {
     "id": "kofi",
     "url": "https://ko-fi.com/tazo",
-    "title": "Buy Tazo a Drink",
-    "description": "Buy Tazo a coffee on Ko-fi",
+    "title": "Buy Tazo a Coffee",
+    "description": "Support Tazo with a coffee or drink on Ko-fi.",
     "icon": "kofi",
     "showOnHomepage": true,
     "bg": "from-[#ff5f5f] to-[#ff8fa3]",
@@ -118,8 +118,8 @@
   {
     "id": "paypal",
     "url": "https://paypal.me/tazo",
-    "title": "PayPal",
-    "description": "Send a one-time tip through PayPal",
+    "title": "Tip via PayPal",
+    "description": "Send a one-time payment to Tazo via PayPal.",
     "icon": "paypal",
     "showOnHomepage": false,
     "bg": "from-[#003087] to-[#0070BA]"
@@ -127,8 +127,8 @@
   {
     "id": "gear",
     "url": "https://kit.co/TazoWTF/streaming-gear",
-    "title": "Streaming Gear",
-    "description": "Everything Tazo uses to stream",
+    "title": "Tazo’s Streaming Gear",
+    "description": "Everything Tazo uses to stream — gear, audio, and tech.",
     "icon": "kit",
     "showOnHomepage": false,
     "bg": "from-zinc-600 to-zinc-800"
@@ -136,8 +136,8 @@
   {
     "id": "wishlist",
     "url": "https://amazon.co.jp/hz/wishlist/ls/2H67SISIKU69Y",
-    "title": "Amazon Wishlist",
-    "description": "Send a gift directly to Tazo",
+    "title": "Tazo’s Amazon Wishlist",
+    "description": "Send a gift directly to Tazo via Amazon Japan.",
     "showOnHomepage": false,
     "bg": "from-[#ff9900] to-[#ff5e00]"
   }

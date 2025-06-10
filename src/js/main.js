@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         : 'noopener noreferrer';
       a.className = `flex items-center gap-2 justify-center py-3 px-4 sm:px-5 rounded-xl font-semibold w-full sm:w-auto bg-gradient-to-r ${link.bg} transition hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
       a.innerHTML = link.icon
-        ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5"/><span id="${link.id}-lbl">${link.title}</span>`
+        ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5" alt="${link.title} icon"/><span id="${link.id}-lbl">${link.title}</span>`
         : `<span id="${link.id}-lbl">${link.title}</span>`;
       linksEl.appendChild(a);
     });
