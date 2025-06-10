@@ -16,10 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const embed = (src, plat) => {
+    if (current === plat) return;
     SE.innerHTML = '';
     SW.querySelector('.stream-glow')?.remove();
     SE.appendChild(Object.assign(document.createElement('iframe'), {
-      src, className: 'w-full aspect-video rounded-xl', allowFullscreen: true, loading: 'lazy'
+      src,
+      className: 'w-full aspect-video rounded-xl',
+      allowFullscreen: true,
+      loading: 'lazy'
     }));
     const glow = document.createElement('div');
     glow.className = `stream-glow absolute -inset-2 blur-2xl opacity-20 ${plat === 'kick' ? 'bg-green-500' : 'bg-purple-500'} animate-pulse rounded-xl z-0`;
@@ -36,33 +40,45 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const refresh = async () => {
-    ['kick', 'twitch'].forEach(p => badge(p, false));
-    live = { kick: false, twitch: false };
+    const now = Date.now();
+    const prevLive = { ...live };
+    const nextLive = { kick: prevLive.kick, twitch: prevLive.twitch };
 
     if (debug) {
-      live.kick = force.kick;
-      live.twitch = force.twitch;
+      nextLive.kick = force.kick;
+      nextLive.twitch = force.twitch;
     } else {
-      const now = Date.now();
       if (now > cooldown.kick) {
         try {
-          live.kick = !!(await fetch(`https://kick.com/api/v2/channels/${user.kick}`).then(r => r.json())).livestream;
-        } catch { cooldown.kick = now + 300000; }
+          const data = await fetch(`https://kick.com/api/v2/channels/${user.kick}`).then(r => r.json());
+          nextLive.kick = !!data.livestream;
+        } catch {
+          cooldown.kick = now + 300000;
+        }
       }
+
       if (now > cooldown.twitch) {
         try {
           const txt = await fetch(`https://decapi.me/twitch/uptime/${user.twitch}`).then(r => r.text());
-          live.twitch = !/is\s+offline/i.test(txt);
-        } catch { cooldown.twitch = now + 300000; }
+          nextLive.twitch = !/is\s+offline/i.test(txt);
+        } catch {
+          cooldown.twitch = now + 300000;
+        }
       }
     }
+
+    live = nextLive;
 
     badge('kick', live.kick);
     badge('twitch', live.twitch);
 
-    if (live.kick) embed(`https://player.kick.com/${user.kick}`, 'kick');
-    else if (live.twitch) embed(`https://player.twitch.tv/?channel=${user.twitch}&parent=tazo.wtf&muted=true`, 'twitch');
-    else clear();
+    if (live.kick && current !== 'kick') {
+      embed(`https://player.kick.com/${user.kick}`, 'kick');
+    } else if (!live.kick && live.twitch && current !== 'twitch') {
+      embed(`https://player.twitch.tv/?channel=${user.twitch}&parent=${location.hostname}&muted=true`, 'twitch');
+    } else if (!live.kick && !live.twitch && current !== null) {
+      clear();
+    }
   };
 
   if (debug) {
@@ -85,7 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const a = document.createElement('a');
       a.href = link.url;
       a.target = '_blank';
-      a.rel = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'].includes(link.id) ? 'me noopener' : 'noopener';
+      a.rel = ['twitter', 'x', 'instagram', 'youtube', 'tiktok'].includes(link.id)
+        ? 'me noopener noreferrer'
+        : 'noopener noreferrer';
       a.className = `flex items-center gap-2 justify-center py-3 px-4 sm:px-5 rounded-xl font-semibold w-full sm:w-auto bg-gradient-to-r ${link.bg} transition hover:scale-[1.03] hover:ring-2 hover:ring-white/10`;
       a.innerHTML = link.icon
         ? `<img src="https://cdn.simpleicons.org/${link.icon}/fff" class="w-5 h-5"/><span id="${link.id}-lbl">${link.title}</span>`
@@ -95,7 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       refresh();
-      if (!debug) setInterval(refresh, 60000);
+      if (!debug) {
+        (async function refreshLoop() {
+          while (true) {
+            await refresh();
+            await new Promise(r => setTimeout(r, 60000));
+          }
+        })();
+      }
     }, 100);
   });
 });
