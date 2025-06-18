@@ -51,12 +51,12 @@ fs.writeFileSync(path.join(out, 'index.html'), render(`
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="Tazo | Livestreamer from Australia">
   <meta property="og:description" content="Watch Tazo live on Kick and Twitch — livestream content, travel, and more.">
-  <meta property="og:image" content="${baseURL}/assets/images/profile.jpg">
+  <meta property="og:image" content="${baseURL}/assets/images/preview.png">
   <meta property="og:url" content="${baseURL}/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tazo | Livestreamer from Australia">
   <meta name="twitter:description" content="Streaming live on Kick & Twitch — exploring Australia, Asia, and beyond.">
-  <meta name="twitter:image" content="${baseURL}/assets/images/profile.jpg">
+  <meta name="twitter:image" content="${baseURL}/assets/images/preview.png">
 `, indexContent));
 
 fs.writeFileSync(path.join(out, '404.html'), render(`
