@@ -10,4 +10,14 @@
       {{content}}
     </main>
   </body>
+  <footer class="mt-12 py-6 text-center text-sm text-zinc-400">
+    <div class="max-w-screen-md mx-auto px-4">
+      © <span id="year">2025</span> Tazo — 
+      <a href="mailto:info@tazo.wtf" class="hover:underline">info@tazo.wtf</a>
+    </div>
+  </footer>
+  <script>
+    const y = new Date().getFullYear();
+    if (y > 2025) document.getElementById('year').textContent = y;
+  </script>
 </html>
