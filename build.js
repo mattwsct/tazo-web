@@ -88,8 +88,8 @@ const redirectHTML = link => {
       <p class="text-sm text-zinc-400 mt-2">If nothing happens, <a href="${url}" class="underline text-accent">click here</a>.</p>
       <p class="text-xs text-zinc-600 mt-6"><a href="/" class="underline hover:text-accent transition">← Back to homepage</a></p>
     </div>
-    <script>setTimeout(() => { location.href = "${url}" }, 2000);</script>
-    <noscript><meta http-equiv="refresh" content="2; url=${url}"></noscript>
+    <script>setTimeout(() => { location.href = "${url}" }, 1500);</script>
+    <noscript><meta http-equiv="refresh" content="1.5; url=${url}"></noscript>
   `);
 };
 
